@@ -27,6 +27,7 @@
 //==========================================
 #include"enum.h"
 #include"commonMacroFunction.h"
+#include"globalValue.h"
 #include"vector2.h"
 #include"Input.h"
 #include"imageManager.h"

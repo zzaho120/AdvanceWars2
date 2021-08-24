@@ -1,2 +1,27 @@
 #pragma once
 
+enum class ENVIRONMENT_TYPE
+{
+	NONE,
+	PLAIN,
+	WOOD,
+	MOUNTAIN,
+	RIVER,
+	BRIDGE,
+	ROAD,
+	SEA
+};
+
+enum class BUILDING_TYPE
+{
+	NONE,
+	HEADQUATERS,
+	FACTORY
+};
+
+enum class PLAYER_TYPE
+{
+	NONE,
+	PLAYER1,
+	PLAYER2
+};

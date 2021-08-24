@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+
 class CObject : public gameNode
 {
 protected:

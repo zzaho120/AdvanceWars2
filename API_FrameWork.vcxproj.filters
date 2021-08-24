@@ -43,11 +43,29 @@
     <Filter Include="에이슷하">
       <UniqueIdentifier>{d6da94a8-d55e-4cc4-b47c-98bc84efa10d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="class">
+    <Filter Include="Class">
       <UniqueIdentifier>{21985008-db27-4774-b9a8-8ae93d4859b5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="class\Object">
+    <Filter Include="Class\Object">
       <UniqueIdentifier>{cd66a7a1-0144-444a-be2d-224b94db9547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\TileMap">
+      <UniqueIdentifier>{ee643981-644b-44fa-ad4f-5770380a956f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Map">
+      <UniqueIdentifier>{08c21ad6-974b-4de2-8e42-0ac773efb975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\MapTool">
+      <UniqueIdentifier>{35fe68ac-b1fe-45d8-8cb5-801a9264073a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\Buliding">
+      <UniqueIdentifier>{cfbea72d-5b87-4bb1-955c-0c91c556ce6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Facade">
+      <UniqueIdentifier>{fca9051c-ba62-4248-a31b-94d72e604844}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\Environmnet">
+      <UniqueIdentifier>{6b8b772c-fb00-4a95-85d2-e07f1470ccba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -118,13 +136,34 @@
       <Filter>에이슷하</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
-      <Filter>class\Object</Filter>
+      <Filter>Class\Object</Filter>
     </ClInclude>
     <ClInclude Include="vector2.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="enum.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Class\Object\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="MapTool.h">
+      <Filter>Class\MapTool</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Class\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Class\Object\Buliding</Filter>
+    </ClInclude>
+    <ClInclude Include="globalValue.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Facade.h">
+      <Filter>Class\Facade</Filter>
+    </ClInclude>
+    <ClInclude Include="Environment.h">
+      <Filter>Class\Object\Environmnet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +216,25 @@
       <Filter>에이슷하</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
-      <Filter>class\Object</Filter>
+      <Filter>Class\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Class\Object\TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="MapTool.cpp">
+      <Filter>Class\MapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Class\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Class\Object\Buliding</Filter>
+    </ClCompile>
+    <ClCompile Include="Facade.cpp">
+      <Filter>Class\Facade</Filter>
+    </ClCompile>
+    <ClCompile Include="Environment.cpp">
+      <Filter>Class\Object\Environmnet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
