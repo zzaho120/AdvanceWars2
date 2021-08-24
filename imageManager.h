@@ -8,9 +8,7 @@ private:
 	typedef map<string, image*> mapImageList;
 	typedef map<string, image*>::iterator mapImageListIter;
 
-
 	mapImageList _mImageList;
-
 public:
 	imageManager();
 	~imageManager();
@@ -44,7 +42,8 @@ public:
 	//프레임
 	void frameRender(string strKey, HDC hdc, const int destX, const int destY);
 	void frameRender(string strKey, HDC hdc, const int destX, const int destY, const int currentFrameX, const int currentFrameY);
-
+	void alphaFrameRender(string strKey, HDC hdc, const int destX, const int destY, const int currentFrameX, const int currentFrameY, BYTE alpha);
+	
 	//루프
 	void loopRender(string strKey, HDC hdc, const LPRECT drawArea, int offSetX, int offSetY);
 	void loopAlphaRender(string strKey, HDC hdc, const LPRECT drawArea, int offSetX, int offSetY, BYTE alpha);

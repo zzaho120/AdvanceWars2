@@ -36,7 +36,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	wndClass.hInstance = hInstance;
 	wndClass.lpfnWndProc = (WNDPROC)WndProc;
-	wndClass.lpszClassName = m_lpszClass;
+	wndClass.lpszClassName = WINNAME;
 	wndClass.lpszMenuName = NULL;
 
 	wndClass.style = CS_HREDRAW | CS_VREDRAW;

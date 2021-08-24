@@ -1,6 +1,5 @@
 #pragma once
 #include"image.h"
-#include"globalTank.h"
 
 static image* _backBuffer = IMAGE->addImage("backBuffer", WINSIZEX, WINSIZEY);
 class gameNode

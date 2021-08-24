@@ -39,6 +39,7 @@ inline void RectangleMake(HDC hdc,RECT rect)
 {
 	Rectangle(hdc, rect.left, rect.top, rect.right, rect.bottom);
 }
+
 inline void RectangleMakeCenter(HDC hdc, int x, int y, int width, int height)
 {
 	Rectangle(hdc, x - (width / 2), y - (height / 2), x + (width / 2), y + (height / 2));
@@ -49,6 +50,7 @@ inline void EllipseMake(HDC hdc, int x, int y, int width, int height)
 {
 	Ellipse(hdc, x, y, x + width, y + height);
 }
+
 inline void ElllipseMakeCenter(HDC hdc, int x, int y, int width, int height)
 {
 	Ellipse(hdc, x - (width / 2), y - (height / 2), x + (width / 2), y + (height / 2));
@@ -59,5 +61,3 @@ inline void BeginSolidColor(HDC hdc, HBRUSH* brush, COLORREF color)
 	*brush = CreateSolidBrush(color);
 	*brush = (HBRUSH)SelectObject(hdc,*brush);
 }
-
-

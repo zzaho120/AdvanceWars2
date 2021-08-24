@@ -25,7 +25,9 @@
 //==========================================
 //				 내가만든 헤더파일
 //==========================================
+#include"enum.h"
 #include"commonMacroFunction.h"
+#include"vector2.h"
 #include"Input.h"
 #include"imageManager.h"
 #include"timeManager.h"
@@ -35,8 +37,6 @@
 #include"effectManager.h"
 #include"randomFunction.h"
 #include"utils.h"
-#include"txtData.h"
-
 //======================================
 //##			매니저들			  ##
 //======================================
@@ -44,7 +44,6 @@
 #define RND				RandomFunction::getSingleton()
 #define IMAGE			imageManager::getSingleton()
 #define TIME			timeManager::getSingleton()
-#define TXT				txtData::getSingleton()
 #define SCENE			SceneManager::getSingleton()
 #define SOUND			soundManager::getSingleton()
 #define ANIMATION		animationManager::getSingleton()
@@ -52,7 +51,7 @@
 //==========================================
 //				 매크로 설정
 //==========================================
-#define WINNAME			(LPTSTR)(TEXT("지옥으로 떠나는 여행"))
+#define WINNAME			(LPTSTR)(TEXT("20210823~20210910_개인프로젝트_어드밴스워즈2"))
 #define WINSTARTX		100
 #define WINSTARTY		100
 #define WINSIZEX		1024

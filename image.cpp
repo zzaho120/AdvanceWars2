@@ -610,14 +610,11 @@ void image::alphaRender(HDC hdc, BYTE alpha)
 	{
 		AlphaBlend(hdc, _imageInfo->x, _imageInfo->y, _imageInfo->width, _imageInfo->height,
 			_imageInfo->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height, _blendFunc);
-
 	}
-
 }
 
 void image::alphaRender(HDC hdc, const int destX, const int destY, BYTE alpha)
 {
-
 	//알파값 초기화
 	_blendFunc.SourceConstantAlpha = alpha;
 
@@ -636,7 +633,6 @@ void image::alphaRender(HDC hdc, const int destX, const int destY, BYTE alpha)
 	{
 		AlphaBlend(hdc, destX, destY, _imageInfo->width, _imageInfo->height,
 			_imageInfo->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height, _blendFunc);
-
 	}
 }
 
@@ -662,6 +658,50 @@ void image::alphaRender(HDC hdc, const int destX, const int destY, const int sou
 
 	}
 }
+
+void image::alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha)
+{
+	_blendFunc.SourceConstantAlpha = alpha;
+
+	_imageInfo->currentFrameX = currentFrameX;
+	_imageInfo->currentFrameY = currentFrameY;
+
+	if (_isTrans)
+	{
+		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight,
+			hdc, destX, destY, SRCCOPY);
+
+		GdiTransparentBlt(_blendImage->hMemDC,
+			0,
+			0,
+			_imageInfo->frameWidth,
+			_imageInfo->frameHeight,
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,
+			_imageInfo->frameWidth,
+			_imageInfo->frameHeight,
+			_transColor);
+
+		AlphaBlend(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight, _blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, _blendFunc);
+	}
+	else
+	{
+		BitBlt(hdc, destX, destY,
+			_imageInfo->frameWidth,
+			_imageInfo->frameHeight,
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,
+			SRCCOPY);
+
+		AlphaBlend(hdc, destX, destY, _imageInfo->frameWidth,
+			_imageInfo->frameHeight,
+			_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth,
+			_imageInfo->frameHeight, _blendFunc);
+	}
+}
+
 
 void image::aniRender(HDC hdc, const int destX, const int destY, animation* ani)
 {

@@ -205,6 +205,12 @@ void imageManager::frameRender(string strKey, HDC hdc, const int destX, const in
 	if (img) img->frameRender(hdc, destX, destY, currentFrameX, currentFrameY);
 }
 
+void imageManager::alphaFrameRender(string strKey, HDC hdc, const int destX, const int destY, const int currentFrameX, const int currentFrameY, BYTE alpha)
+{
+	image* img = findImage(strKey);
+	if (img) img->alphaFrameRender(hdc, destX, destY, currentFrameX, currentFrameY, alpha);
+}
+
 void imageManager::loopRender(string strKey, HDC hdc, const LPRECT drawArea,int offSetX, int offSetY)
 {
 	image* img = findImage(strKey);

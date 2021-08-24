@@ -1,12 +1,9 @@
 #pragma once
 #include"gameNode.h"
-#include"Astar.h"
+
 class mainGame : public gameNode
 {
 private:
-	
-	Astar* _astar;
-
 
 public:
 	mainGame();
@@ -16,9 +13,4 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render(/*HDC hdc*/);
-
-
-	
-	
 };
-

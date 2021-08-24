@@ -66,7 +66,6 @@ void gameNode::release()
 		IMAGE->releaseSingleton();
 		TIME->releaseSingleton();
 		RND->releaseSingleton();
-		TXT->releaseSingleton();
 		SCENE->releaseSingleton();
 		SOUND->releaseSingleton();
 		ANIMATION->releaseSingleton();
@@ -95,6 +94,7 @@ void gameNode::update()
 }
 void gameNode::render(/*HDC hdc*/)
 {
+	TIME->render(getMemDC());
 }
 
 LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
