@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "gameNode.h"
+#include "ResourceLoadFacade.h"
 gameNode::gameNode()
 {
 }
@@ -39,9 +40,11 @@ HRESULT gameNode::init(bool managerInit)
 		IMAGE->init();
 		TIME->init();
 		SOUND->init();
+
+		CResourceLoadFacade* resourceLoadFacade = new CResourceLoadFacade;
+		resourceLoadFacade->resourceLoad();
+		SAFE_DELETE(resourceLoadFacade);
 	}
-
-
 
 	return E_NOTIMPL;
 }
@@ -90,11 +93,11 @@ void gameNode::release()
 void gameNode::update()
 {
 	//더블버퍼 이후 사용하지 않는다 true->false
+	ANIMATION->update();
 	InvalidateRect(m_hWnd, NULL, false);
 }
 void gameNode::render(/*HDC hdc*/)
 {
-	TIME->render(getMemDC());
 }
 
 LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)

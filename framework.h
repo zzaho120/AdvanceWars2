@@ -26,9 +26,9 @@
 //				 내가만든 헤더파일
 //==========================================
 #include"enum.h"
+#include"vector2.h"
 #include"commonMacroFunction.h"
 #include"globalValue.h"
-#include"vector2.h"
 #include"Input.h"
 #include"imageManager.h"
 #include"timeManager.h"

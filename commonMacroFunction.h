@@ -61,3 +61,22 @@ inline void BeginSolidColor(HDC hdc, HBRUSH* brush, COLORREF color)
 	*brush = CreateSolidBrush(color);
 	*brush = (HBRUSH)SelectObject(hdc,*brush);
 }
+
+inline int RectEdge(Vec2 pos, Vec2 size, RECT_EDGE edge)
+{
+	switch (edge)
+	{
+	case RECT_EDGE::LEFT:
+		return pos.x - size.x / 2;
+		break;
+	case RECT_EDGE::RIGHT:
+		return pos.x + size.x / 2;
+		break;
+	case RECT_EDGE::TOP:
+		return pos.y - size.y / 2;
+		break;
+	case RECT_EDGE::BOTTOM:
+		return pos.y + size.y / 2;
+		break;
+	}
+}

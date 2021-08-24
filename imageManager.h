@@ -23,8 +23,8 @@ public:
 
 
 	//키값으로 프레임 이미지 초기화
-	image* addFrameImage(string strKey, const char* fileName, const int width, const int height, const int frameX, const int frameY, bool trans, COLORREF transColor);
-	image* addFrameImage(string strKey, const char* fileName, const float x, const float y, const int width, const int height, const int frameX, const int frameY, bool trans, COLORREF transColor);
+	image* addFrameImage(string strKey, const char* fileName, const int width, const int height, const int frameX, const int frameY, bool trans = true, COLORREF transColor = RGB(255, 0, 255));
+	image* addFrameImage(string strKey, const char* fileName, const float x, const float y, const int width, const int height, const int frameX, const int frameY, bool trans = true, COLORREF transColor = RGB(255, 0, 255));
 
 	//이미지를 찾아라
 	image* findImage(string strKey);

@@ -2,28 +2,30 @@
 #include "gameNode.h"
 #include "Tile.h"
 
-class CEnvironmnet;
+class CEnvironment;
 class CBuilding;
 class CMap : public gameNode
 {
 private:
-	CTile* tileMap[TILE_NUM_X * TILE_NUM_Y];
+	CTile* tile[TILE_NUM_X * TILE_NUM_Y];
+
 	vector<CBuilding*> vecBuilding;
 	vector<CBuilding*>::iterator iterBuilding;
-	
-	/*리스트 배경오브젝
 
-	리스트 빌딩 
+	vector<CEnvironment*> vecEnvironment;
+	vector<CEnvironment*>::iterator iterEnvironment;
 
-		빌딩
-			타일인덱스*/
+	bool isDebug;
 public:
 	CMap();
+	CMap(Vec2 startPos, Vec2 size);
 	~CMap();
 
 	HRESULT init();
 	void release();
 	void update();
 	void render();
+
+	CTile** getTile() { return tile; }
 };
 

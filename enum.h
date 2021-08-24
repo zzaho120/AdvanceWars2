@@ -25,3 +25,21 @@ enum class PLAYER_TYPE
 	PLAYER1,
 	PLAYER2
 };
+
+enum class UNIT_TYPE
+{
+	NONE,
+	INFANTRY,
+	MECH,
+	TANK,
+	ARTILLERY,
+	APC
+};
+
+enum class RECT_EDGE
+{
+	LEFT,
+	RIGHT,
+	TOP,
+	BOTTOM
+};

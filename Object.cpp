@@ -9,6 +9,12 @@ CObject::CObject() :
 {
 }
 
+CObject::CObject(Vec2 _pos, Vec2 _size, image* _img, animation* _ani) :
+	pos(_pos), size(_size), 
+	img(_img), ani(_ani)
+{
+}
+
 CObject::~CObject()
 {
 	SAFE_DELETE(img);

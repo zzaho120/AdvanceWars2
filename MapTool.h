@@ -4,7 +4,9 @@
 class CMapTool : public gameNode
 {
 private:
-	CMap map;
+	CMap* map;
+
+	Vec2 cursor;
 public:
 	CMapTool();
 	~CMapTool();
@@ -13,4 +15,6 @@ public:
 	void release();
 	void update();
 	void render();
+
+	void cursorMove();
 };

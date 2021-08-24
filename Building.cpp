@@ -1,9 +1,15 @@
 #include "framework.h"
 #include "Building.h"
 
-CBuilding::CBuilding()
-{
-}
+CBuilding::CBuilding() :
+	CObject(),
+	isHeadQuater(false),
+	isFactory(false),
+	tileIdx(0),
+	income(0),
+	def(0),
+	playerType(PLAYER_TYPE::NONE)
+{ }
 
 CBuilding::~CBuilding()
 {

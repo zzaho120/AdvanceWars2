@@ -61,11 +61,11 @@
     <Filter Include="Class\Object\Buliding">
       <UniqueIdentifier>{cfbea72d-5b87-4bb1-955c-0c91c556ce6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Class\Facade">
-      <UniqueIdentifier>{fca9051c-ba62-4248-a31b-94d72e604844}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Class\Object\Environmnet">
       <UniqueIdentifier>{6b8b772c-fb00-4a95-85d2-e07f1470ccba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\ResourceLoad">
+      <UniqueIdentifier>{fca9051c-ba62-4248-a31b-94d72e604844}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -159,11 +159,17 @@
     <ClInclude Include="globalValue.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Facade.h">
-      <Filter>Class\Facade</Filter>
-    </ClInclude>
     <ClInclude Include="Environment.h">
       <Filter>Class\Object\Environmnet</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceLoadFacade.h">
+      <Filter>Class\ResourceLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageLoad.h">
+      <Filter>Class\ResourceLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationLoad.h">
+      <Filter>Class\ResourceLoad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -230,11 +236,17 @@
     <ClCompile Include="Building.cpp">
       <Filter>Class\Object\Buliding</Filter>
     </ClCompile>
-    <ClCompile Include="Facade.cpp">
-      <Filter>Class\Facade</Filter>
-    </ClCompile>
     <ClCompile Include="Environment.cpp">
       <Filter>Class\Object\Environmnet</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceLoadFacade.cpp">
+      <Filter>Class\ResourceLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageLoad.cpp">
+      <Filter>Class\ResourceLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationLoad.cpp">
+      <Filter>Class\ResourceLoad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

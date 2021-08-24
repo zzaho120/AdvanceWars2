@@ -1,7 +1,8 @@
 #include "framework.h"
 #include "Environment.h"
 
-CEnvironment::CEnvironment()
+CEnvironment::CEnvironment() :
+	tileIdx(0)
 {
 }
 
