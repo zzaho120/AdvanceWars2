@@ -18,7 +18,8 @@ public:
 	virtual HRESULT init(bool managerInit);
 	virtual void release();
 	virtual void update();
-	virtual void render(/*HDC hdc*/);
+	virtual void render();
+	virtual void render(HDC hdc);
 
 	image* getBackBuffer() const { return _backBuffer; }
 	image* getMapBuffer() const { return _mapBuffer; }

@@ -15,6 +15,7 @@ enum class ENVIRONMENT_TYPE
 enum class BUILDING_TYPE
 {
 	NONE,
+	CITY,
 	HEADQUATERS,
 	FACTORY
 };
@@ -42,4 +43,16 @@ enum class RECT_EDGE
 	RIGHT,
 	TOP,
 	BOTTOM
+};
+
+enum class CTRL
+{
+	CTRL_DRAW,
+	CTRL_INIT,
+	CTRL_SAVE,
+	CTRL_LOAD,
+	CTRL_EXIT,
+	CTRL_EDIT,
+	CTRL_LIST,
+	CTRL_REMOVE
 };

@@ -12,8 +12,8 @@ void CImageLoad::resourceLoad()
 	//=========================== BUILDING ===========================
 	//=========================== BUILDING ===========================
 
-	IMAGE->addFrameImage("city", "images/building/city.bmp", 32, 192, 2, 6);
-	IMAGE->addFrameImage("factory", "images/building/factory.bmp", 32, 96, 2, 6);
+	IMAGE->addFrameImage("city", "images/building/city.bmp", TILE_SIZE_X * 2, (TILE_SIZE_Y + 32) * 6, 2, 6);
+	IMAGE->addFrameImage("factory", "images/building/factory.bmp", TILE_SIZE_X * 2, TILE_SIZE_Y * 6, 2, 6);
 	IMAGE->addFrameImage("HQ", "images/building/HQ.bmp", 32, 192, 2, 6);
 
 	//============================== TILE ============================
@@ -60,6 +60,8 @@ void CImageLoad::resourceLoad()
 	IMAGE->addFrameImage("move_arrow", "images/UI/move_arrow.bmp", 112, 32, 6, 2);
 	IMAGE->addFrameImage("supply_message", "images/UI/supply_message.bmp", 128, 32, 2, 1);
 
+	IMAGE->addImage("black", "images/UI/bgblack.bmp", WINSIZEX, WINSIZEY);
+	IMAGE->addImage("tileTool", "images/tile/maptool_tile.bmp", TILE_SIZE_X * 8, TILE_SIZE_Y * 3);
 	//============================ EFFECT ============================
 	//============================ EFFECT ============================
 

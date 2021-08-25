@@ -30,5 +30,8 @@ public:
 
 	CTile** getTile() { return tile; }
 	void setCameraLink(CCamera* _cam) { cam = _cam; }
+
+	void addBuilding(PLAYER_TYPE type, Vec2 pos, bool factory, bool HQ, int idx);
+	void eraseBuilding(int idx);
 };
 

@@ -6,9 +6,11 @@ CBuilding::CBuilding() :
 	isHeadQuater(false),
 	isFactory(false),
 	tileIdx(0),
-	income(0),
-	def(0),
 	playerType(PLAYER_TYPE::NONE)
+{ }
+
+CBuilding::CBuilding(PLAYER_TYPE type, Vec2 pos, bool factory, bool HQ, int idx) : 
+	CObject(pos, { TILE_SIZE_X, TILE_NUM_Y }), playerType(type), isFactory(factory), isHeadQuater(HQ), tileIdx(idx)
 { }
 
 CBuilding::~CBuilding()

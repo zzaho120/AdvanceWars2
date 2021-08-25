@@ -18,7 +18,7 @@ public:
 
 	//키값으로 빈 비트맵 초기화
 	image* addImage(string strKey, const int width, const int height);
-	image* addImage(string strKey, const char* fileName, const int width, const int height, bool trans, COLORREF transColor);
+	image* addImage(string strKey, const char* fileName, const int width, const int height, bool trans = true, COLORREF transColor = RGB(255, 0, 255));
 	image* addImage(string strKey, const char* fileName, const float x, const float y, const int const width, const int height, bool trans, COLORREF transColor);
 
 
@@ -38,6 +38,7 @@ public:
 	void render(string strKey, HDC hdc);
 	void render(string strKey, HDC hdc, const int destX, const int destY);
 	void render(string strKey, HDC hdc, const int destX, const int destY, const int sourX, const int sourY, const int sourWidth, const int sourHeight);
+	void alphaRender(string strKey, HDC hdc, const int destX, const int destY, BYTE alpha);
 
 	//프레임
 	void frameRender(string strKey, HDC hdc, const int destX, const int destY);

@@ -40,6 +40,7 @@ HRESULT gameNode::init(bool managerInit)
 		IMAGE->init();
 		TIME->init();
 		SOUND->init();
+		SUBWIN->init();
 
 		CResourceLoadFacade* resourceLoadFacade = new CResourceLoadFacade;
 		resourceLoadFacade->resourceLoad();
@@ -73,6 +74,7 @@ void gameNode::release()
 		SOUND->releaseSingleton();
 		ANIMATION->releaseSingleton();
 		EFFECT->releaseSingleton();
+		SUBWIN->releaseSingleton();
 
 		SCENE->release();
 		IMAGE->release();
@@ -99,6 +101,10 @@ void gameNode::render(/*HDC hdc*/)
 {
 }
 
+void gameNode::render(HDC hdc)
+{
+}
+
 LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
@@ -115,6 +121,7 @@ LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	//	EndPaint(hWnd, &ps);
 	//	break;
 	case WM_MOUSEMOVE:
+		SUBWIN->SetIsActive(false);
 		m_ptMouse.x = LOWORD(lParam);
 		m_ptMouse.y = HIWORD(lParam);
 		break;

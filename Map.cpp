@@ -30,6 +30,10 @@ CMap::CMap(Vec2 startPos, Vec2 size) :
 
 CMap::~CMap()
 {
+	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
+		SAFE_DELETE(tile[idx]);
+
+	SAFE_DELETE(cam);
 }
 
 HRESULT CMap::init()
@@ -74,4 +78,18 @@ void CMap::render()
 
 	for (iterEnvironment = vecEnvironment.begin(); iterEnvironment != vecEnvironment.end(); iterEnvironment++)
 		(*iterEnvironment)->render();*/
+}
+
+void CMap::addBuilding(PLAYER_TYPE type, Vec2 pos,bool factory, bool HQ, int idx)
+{
+	vecBuilding.push_back(new CBuilding(type, pos, factory, HQ, idx));
+}
+
+void CMap::eraseBuilding(int idx)
+{
+	for (int i = 0; i < vecBuilding.size(); i++)
+	{
+		if(vecBuilding[i]->getTileIdx() == idx)
+			vecBuilding.erase(vecBuilding.begin() + i);
+	}
 }

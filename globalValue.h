@@ -1,5 +1,8 @@
 #pragma once
 
+const int SUBWINSIZEX = 450;
+const int SUBWINSIZEY = 520;
+
 const int TILE_NUM_X = 30; 
 const int TILE_NUM_Y = 20;
 
@@ -14,3 +17,12 @@ const int MAP_SIZE_Y = TILE_NUM_Y * TILE_SIZE_Y;
 
 const int CAMERA_SIZE_X = WINSIZEX;
 const int CAMERA_SIZE_Y = WINSIZEY;
+
+const int SAMPLE_TILE_X = 8;
+const int SAMPLE_TILE_Y = 3;
+
+struct tagSampleTile
+{
+	RECT rcTile;
+	Vec2 frame;
+};

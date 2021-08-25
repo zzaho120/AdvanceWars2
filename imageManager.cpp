@@ -193,6 +193,12 @@ void imageManager::render(string strKey, HDC hdc, const int destX, const int des
 	if (img) img->render(hdc, destX, destY, sourX, sourY, sourWidth, sourHeight);
 }
 
+void imageManager::alphaRender(string strKey, HDC hdc, const int destX, const int destY, BYTE alpha)
+{
+	image* img = findImage(strKey);
+	if (img) img->alphaRender(hdc, destX, destY, alpha);
+}
+
 void imageManager::frameRender(string strKey, HDC hdc, const int destX, const int destY)
 {
 	image* img = findImage(strKey);

@@ -9,7 +9,7 @@ private:
 	CCamera* cam;
 	Vec2 cursor;
 
-	//vector<CObject*>
+	bool isToolMode;
 public:
 	CMapTool();
 	~CMapTool();
@@ -20,7 +20,12 @@ public:
 	void render();
 
 	void cursorMove();
+	void setMap();
 
+	bool save(const char* fileName);
+	bool load(const char* fileName);
+
+	// 옵저버 패턴 구현 전
 	//void subscribe(CObject* obj);
 	//void unsubscribe(CObject* obj);
 };

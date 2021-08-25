@@ -47,6 +47,7 @@
 #include"effectManager.h"
 #include"randomFunction.h"
 #include"utils.h"
+#include"SubWindow.h"
 //======================================
 //##			매니저들			  ##
 //======================================
@@ -58,7 +59,7 @@
 #define SOUND			soundManager::getSingleton()
 #define ANIMATION		animationManager::getSingleton()
 #define EFFECT			effectManager::getSingleton()
-
+#define SUBWIN			CSubWindow::getSingleton()
 //==========================================
 //			메인게임 릴리즈에서 사용
 //==========================================

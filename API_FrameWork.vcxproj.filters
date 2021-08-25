@@ -70,6 +70,9 @@
     <Filter Include="Class\Camera">
       <UniqueIdentifier>{74b4145e-c631-4821-aaff-e916208f0260}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Class\SubWindow">
+      <UniqueIdentifier>{cbb2f53f-d5ac-438f-94ec-d59203a7c69a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -177,6 +180,12 @@
     <ClInclude Include="Camera.h">
       <Filter>Class\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="SubWindow.h">
+      <Filter>Class\SubWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="MapToolSub.h">
+      <Filter>Class\MapTool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -256,6 +265,12 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Class\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="SubWindow.cpp">
+      <Filter>Class\SubWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="MapToolSub.cpp">
+      <Filter>Class\MapTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
