@@ -3,6 +3,7 @@
 
 CMapTool::CMapTool() :
 	map(new CMap({ 35, 35 }, { TILE_SIZE_X, TILE_SIZE_Y })),
+	cam(new CCamera),
 	cursor({ map->getTile()[31]->getPos().x, map->getTile()[31]->getPos().y })
 { }
 
@@ -13,6 +14,7 @@ CMapTool::~CMapTool()
 HRESULT CMapTool::init()
 {
 	ANIMATION->start("cursor_ani");
+	map->setCameraLink(cam);
 	return S_OK;
 }
 
@@ -24,13 +26,16 @@ void CMapTool::release()
 void CMapTool::update()
 {
 	map->update();
+	cam->setTargetVec2(cursor);
+	cam->update();
 	cursorMove();
 }
 
 void CMapTool::render()
 {
 	map->render();
-	IMAGE->findImage("cursor")->aniRender(getMemDC(), cursor.x - 32, cursor.y - 32, ANIMATION->findAnimation("cursor_ani"));
+	IMAGE->findImage("cursor")->aniRender(getMapDC(), cursor.x - 32, cursor.y - 32, ANIMATION->findAnimation("cursor_ani"));
+	this->getMapBuffer()->render(getMemDC(), 0, 0, cam->getCam1().x, cam->getCam1().y, cam->getCamSize().x, cam->getCamSize().y);
 }
 
 void CMapTool::cursorMove()

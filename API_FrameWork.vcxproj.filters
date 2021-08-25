@@ -67,6 +67,9 @@
     <Filter Include="Class\ResourceLoad">
       <UniqueIdentifier>{fca9051c-ba62-4248-a31b-94d72e604844}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Class\Camera">
+      <UniqueIdentifier>{74b4145e-c631-4821-aaff-e916208f0260}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -171,6 +174,9 @@
     <ClInclude Include="AnimationLoad.h">
       <Filter>Class\ResourceLoad</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Class\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -247,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="AnimationLoad.cpp">
       <Filter>Class\ResourceLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Class\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,8 @@
 #include "Building.h"
 #include "Map.h"
 
-CMap::CMap() : isDebug(false)
+CMap::CMap() : 
+	isDebug(false), cam(nullptr)
 {
 	for (int horizontal = 0; horizontal < TILE_NUM_Y; horizontal++)
 	{
@@ -12,7 +13,8 @@ CMap::CMap() : isDebug(false)
 	}
 }
 
-CMap::CMap(Vec2 startPos, Vec2 size) : isDebug(false)
+CMap::CMap(Vec2 startPos, Vec2 size) : 
+	isDebug(false), cam(nullptr)
 {
 	Vec2 tempPos = startPos;
 	for (int horizontal = 0; horizontal < TILE_NUM_Y; horizontal++)
@@ -46,13 +48,15 @@ void CMap::update()
 
 void CMap::render()
 {
+	this->getTileBuffer()->render(getMapDC(), 0, 0);
+
 	TCHAR str[128];
 	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
 	{
 		tile[idx]->render();
 		if (isDebug)
 		{
-			Rectangle(getMemDC(),
+			Rectangle(getMapDC(),
 				RectEdge(tile[idx]->getPos(), tile[idx]->getSize(), RECT_EDGE::LEFT),
 				RectEdge(tile[idx]->getPos(), tile[idx]->getSize(), RECT_EDGE::TOP),
 				RectEdge(tile[idx]->getPos(), tile[idx]->getSize(), RECT_EDGE::RIGHT),
@@ -60,13 +64,14 @@ void CMap::render()
 
 
 			wsprintf(str, "%d", idx);
-			TextOut(getMemDC(), tile[idx]->getPos().x, tile[idx]->getPos().y, str, strlen(str));
+			TextOut(getMapDC(), tile[idx]->getPos().x, tile[idx]->getPos().y, str, strlen(str));
 		}
 	}
-		
-	for (iterBuilding = vecBuilding.begin(); iterBuilding != vecBuilding.end(); iterBuilding++)
+	
+
+	/*for (iterBuilding = vecBuilding.begin(); iterBuilding != vecBuilding.end(); iterBuilding++)
 		(*iterBuilding)->render();
 
 	for (iterEnvironment = vecEnvironment.begin(); iterEnvironment != vecEnvironment.end(); iterEnvironment++)
-		(*iterEnvironment)->render();
+		(*iterEnvironment)->render();*/
 }

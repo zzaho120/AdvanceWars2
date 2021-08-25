@@ -20,6 +20,10 @@ public:
 	virtual void render();
 
 	Vec2 getPos() { return pos; }
+	void setPos(Vec2 _pos) { pos = _pos; }
+
 	Vec2 getSize() { return size; }
+	Vec2 setSize(Vec2 _size) { size = _size; }
+
 	image* getImg() { return img; }
 };

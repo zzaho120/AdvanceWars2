@@ -74,7 +74,6 @@ void gameNode::release()
 		ANIMATION->releaseSingleton();
 		EFFECT->releaseSingleton();
 
-
 		SCENE->release();
 		IMAGE->release();
 		TIME->release();
@@ -127,7 +126,10 @@ LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 			PostQuitMessage(0);
 			break;
 		}
-		break;
+		break; 
+	case WM_SIZE:
+			GetClientRect(hWnd, &_rc);
+			break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;

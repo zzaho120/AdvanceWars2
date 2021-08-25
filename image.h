@@ -65,7 +65,8 @@ private:
 	BLENDFUNCTION	_blendFunc;			//알파블렌드를 위한 정보
 	LPIMAGE_INFO	_blendImage;		//알파블렌드를 사용하기 위한 이미지 정보
 
-
+	// 스트레치용
+	LPIMAGE_INFO	_stretchImage;
 
 public:
 
@@ -106,9 +107,10 @@ public:
 	void alphaRender(HDC hdc,const int destX, const int destY,const int sourX, const int sourY, const int sourWidth, const int sourHeight, BYTE alpha);
 	void alphaFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha);
 
-	void reverseRender(HDC hdc, const int destX, const int destY);
-
 	void aniRender(HDC hdc, const int destX, const int destY, animation* ani);
+
+	HRESULT initForStretch();
+	void stretchRender(HDC hdc, int centerX, int centerY, int newWidth, int newHeight);
 
 	//DC를 가져와라
 	inline HDC getMemDC()const { return _imageInfo->hMemDC; }

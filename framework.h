@@ -14,6 +14,15 @@
 #include <memory.h>
 #include <tchar.h>
 
+//==========================================
+//				 매크로 설정
+//==========================================
+#define WINNAME			(LPTSTR)(TEXT("20210823~20210910_개인프로젝트_어드밴스워즈2"))
+#define WINSTARTX		100
+#define WINSTARTY		100
+#define WINSIZEX		1024
+#define WINSIZEY		768
+#define	WINSTYLE		WS_CAPTION | WS_SYSMENU
 
 //==========================================
 //					STL
@@ -49,16 +58,6 @@
 #define SOUND			soundManager::getSingleton()
 #define ANIMATION		animationManager::getSingleton()
 #define EFFECT			effectManager::getSingleton()
-//==========================================
-//				 매크로 설정
-//==========================================
-#define WINNAME			(LPTSTR)(TEXT("20210823~20210910_개인프로젝트_어드밴스워즈2"))
-#define WINSTARTX		100
-#define WINSTARTY		100
-#define WINSIZEX		1024
-#define WINSIZEY		768
-#define	WINSTYLE		WS_CAPTION | WS_SYSMENU
-
 
 //==========================================
 //			메인게임 릴리즈에서 사용

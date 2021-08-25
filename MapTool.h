@@ -1,12 +1,15 @@
 #pragma once
 #include "gameNode.h"
 #include "Map.h"
+#include "Camera.h"
 class CMapTool : public gameNode
 {
 private:
 	CMap* map;
-
+	CCamera* cam;
 	Vec2 cursor;
+
+	//vector<CObject*>
 public:
 	CMapTool();
 	~CMapTool();
@@ -17,4 +20,7 @@ public:
 	void render();
 
 	void cursorMove();
+
+	//void subscribe(CObject* obj);
+	//void unsubscribe(CObject* obj);
 };

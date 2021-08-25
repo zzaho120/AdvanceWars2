@@ -148,6 +148,7 @@
     <ClInclude Include="API_FrameWork.h" />
     <ClInclude Include="Astar.h" />
     <ClInclude Include="Building.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
@@ -186,6 +187,7 @@
     </ClCompile>
     <ClCompile Include="Astar.cpp" />
     <ClCompile Include="Building.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="Environment.cpp" />

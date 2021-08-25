@@ -2,12 +2,14 @@
 #include "gameNode.h"
 #include "Tile.h"
 
+class CCamera;
 class CEnvironment;
 class CBuilding;
 class CMap : public gameNode
 {
 private:
 	CTile* tile[TILE_NUM_X * TILE_NUM_Y];
+	CCamera* cam;
 
 	vector<CBuilding*> vecBuilding;
 	vector<CBuilding*>::iterator iterBuilding;
@@ -27,5 +29,6 @@ public:
 	void render();
 
 	CTile** getTile() { return tile; }
+	void setCameraLink(CCamera* _cam) { cam = _cam; }
 };
 

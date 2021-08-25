@@ -80,3 +80,25 @@ inline int RectEdge(Vec2 pos, Vec2 size, RECT_EDGE edge)
 		break;
 	}
 }
+
+//RECT 중점
+inline int RectCenterX(RECT& rc)
+{
+	return (rc.left + rc.right) / 2;
+}
+
+inline int RectCenterY(RECT& rc)
+{
+	return (rc.top + rc.bottom) / 2;
+}
+
+//RECT 높이/너비
+inline int RectWidth(RECT& rc)
+{
+	return rc.right - rc.left;
+}
+
+inline int RectHeight(RECT& rc)
+{
+	return rc.bottom - rc.top;
+}
