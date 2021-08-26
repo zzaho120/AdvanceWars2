@@ -5,7 +5,9 @@ CMapTool::CMapTool() :
 	map(new CMap({ 35, 35 }, { TILE_SIZE_X, TILE_SIZE_Y })),
 	cam(new CCamera),
 	cursor({ map->getTile()[158]->getPos().x, map->getTile()[158]->getPos().y })
-{ }
+{
+	tileDirectionSet();
+}
 
 CMapTool::~CMapTool()
 {
@@ -25,14 +27,15 @@ void CMapTool::release()
 
 void CMapTool::update()
 {
+	if (!SUBWIN->GetIsActive() && InputManager->isOnceKeyDown(VK_SPACE))
+		setMap();
+
 	map->update();
 	cam->update();
 	cam->setTargetVec2(cursor);
 
 	cursorMove();
-
-	if (!SUBWIN->GetIsActive() && InputManager->isOnceKeyDown(VK_SPACE))
-		setMap();
+	tileDirectionSet();
 }
 
 void CMapTool::render()
@@ -80,12 +83,20 @@ void CMapTool::setMap()
 					break;
 				case 4:
 					tile->setTileType(ENVIRONMENT_TYPE::RIVER);
+					tile->setDirectionType(DIRECTION_SPRITE::YES);
 					break;
 				case 5:
 					tile->setTileType(ENVIRONMENT_TYPE::ROAD);
+					tile->setDirectionType(DIRECTION_SPRITE::YES);
 					break;
 				case 6:
-					tile->setTileType(ENVIRONMENT_TYPE::BRIDGE);
+					if (tile->getTileType() == ENVIRONMENT_TYPE::RIVER_LINE)
+					{
+						if (tile->getRotateType() == ROTATE_TYPE::DEG0)
+							setEnvirType(idx, ENVIRONMENT_TYPE::BRIDGE, ROTATE_TYPE::DEG0);
+						else if (tile->getRotateType() == ROTATE_TYPE::DEG90)
+							setEnvirType(idx, ENVIRONMENT_TYPE::BRIDGE, ROTATE_TYPE::DEG90);
+					}
 					break;
 				}
 			}
@@ -138,6 +149,211 @@ void CMapTool::setMap()
 			}
 		}
 	}
+}
+
+void CMapTool::tileDirectionSet()
+{
+	CTile** tile = map->getTile();
+	for (int tileNum = 0; tileNum < TILE_NUM_X * TILE_NUM_Y; tileNum++)
+	{
+		bool isRiver = (map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_LINE) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_CURVE) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_3WAYS) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_4WAYS);
+
+		bool isRoad = (map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_LINE) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_CURVE) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_3WAYS) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_4WAYS);
+		
+		if (isRiver)
+			riverSetting(tileNum);
+		if (isRoad)
+			roadSetting(tileNum);
+	}
+}
+
+// 2진수의 4비트만을 가지고 강의 방향성을 체크
+// 0 0 0 0 8자리
+// B T R L 
+void CMapTool::riverSetting(int tileNum)
+{
+	int riverType = 0b0000;
+	int tileline = tileNum % 30;
+	if (tileline > 0) riverType += checkRiver(tileNum - 1, DIRECTION::LEFT);
+	if (tileline < 29) riverType += checkRiver(tileNum + 1, DIRECTION::RIGHT);
+	if (tileNum > 29) riverType += checkRiver(tileNum - 30, DIRECTION::TOP);
+	if (tileNum < 570) riverType += checkRiver(tileNum + 30, DIRECTION::BOTTOM);
+	int a = 0;
+	switch (riverType)
+	{
+	case 0b0000: // NO 4ways
+	case 0b0001: // left
+	case 0b0010: // right
+	case 0b0011: // right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::RIVER_LINE, ROTATE_TYPE::DEG90);
+		break;
+	case 0b0100: // top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::RIVER_LINE, ROTATE_TYPE::DEG0);
+		break;
+	case 0b0101: // top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::RIVER_CURVE, ROTATE_TYPE::DEG180);
+		break;
+	case 0b0110: // top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::RIVER_CURVE, ROTATE_TYPE::DEG270);
+		break;
+	case 0b0111: // top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::RIVER_3WAYS, ROTATE_TYPE::DEG270);
+		break;
+	case 0b1000: // bottom
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::RIVER_LINE, ROTATE_TYPE::DEG0);
+		break;
+	case 0b1001: // bottom, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::RIVER_CURVE, ROTATE_TYPE::DEG90);
+		break;
+	case 0b1010: // bottom, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::RIVER_CURVE, ROTATE_TYPE::DEG0);
+		break;
+	case 0b1011: // bottom, left, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::RIVER_3WAYS, ROTATE_TYPE::DEG90);
+		break;
+	case 0b1100: // bottom, top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::RIVER_LINE, ROTATE_TYPE::DEG0);
+		break;
+	case 0b1101: // bottom, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::RIVER_3WAYS, ROTATE_TYPE::DEG180);
+		break;
+	case 0b1110: // bottom, top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::RIVER_3WAYS, ROTATE_TYPE::DEG0);
+		break;
+	case 0b1111: // 4ways
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::RIVER_4WAYS, ROTATE_TYPE::DEG0);
+		break;
+	}
+}
+
+int CMapTool::checkRiver(int tileNum, DIRECTION direction)
+{
+	CTile** tile = map->getTile();
+	bool isRiver = (map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_LINE) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_CURVE) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_3WAYS) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_4WAYS) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::BRIDGE);
+	if (isRiver)
+	{
+		switch (direction)
+		{
+		case DIRECTION::LEFT:
+			return 0b0001;
+			break;
+		case DIRECTION::RIGHT:
+			return 0b0010;
+			break;
+		case DIRECTION::TOP:
+			return 0b0100;
+			break;
+		case DIRECTION::BOTTOM:
+			return 0b1000;
+			break;
+		}
+	}
+}
+
+void CMapTool::roadSetting(int tileNum)
+{
+	int RoadType = 0b0000;
+	int tileline = tileNum % 30;
+	if (tileline > 0) RoadType += checkRoad(tileNum - 1, DIRECTION::LEFT);
+	if (tileline < 29) RoadType += checkRoad(tileNum + 1, DIRECTION::RIGHT);
+	if (tileNum > 29) RoadType += checkRoad(tileNum - 30, DIRECTION::TOP);
+	if (tileNum < 570) RoadType += checkRoad(tileNum + 30, DIRECTION::BOTTOM);
+	int a = 0;
+	switch (RoadType)
+	{
+	case 0b0000: // NO 4ways
+	case 0b0001: // left
+	case 0b0010: // right
+	case 0b0011: // right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_LINE, ROTATE_TYPE::DEG90);
+		break;
+	case 0b0100: // top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_LINE, ROTATE_TYPE::DEG0);
+		break;
+	case 0b0101: // top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_CURVE, ROTATE_TYPE::DEG180);
+		break;
+	case 0b0110: // top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_CURVE, ROTATE_TYPE::DEG270);
+		break;
+	case 0b0111: // top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_3WAYS, ROTATE_TYPE::DEG270);
+		break;
+	case 0b1000: // bottom
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_LINE, ROTATE_TYPE::DEG180);
+		break;
+	case 0b1001: // bottom, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_CURVE, ROTATE_TYPE::DEG90);
+		break;
+	case 0b1010: // bottom, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_CURVE, ROTATE_TYPE::DEG0);
+		break;
+	case 0b1011: // bottom, left, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_3WAYS, ROTATE_TYPE::DEG90);
+		break;
+	case 0b1100: // bottom, top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_LINE, ROTATE_TYPE::DEG180);
+		break;
+	case 0b1101: // bottom, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_3WAYS, ROTATE_TYPE::DEG180);
+		break;
+	case 0b1110: // bottom, top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_3WAYS, ROTATE_TYPE::DEG0);
+		break;
+	case 0b1111: // 4ways
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_4WAYS, ROTATE_TYPE::DEG0);
+		break;
+	}
+}
+
+int CMapTool::checkRoad(int tileNum, DIRECTION direction)
+{
+	CTile** tile = map->getTile();
+	bool isRoad = (map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_LINE) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_CURVE) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_3WAYS) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_4WAYS) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::BRIDGE);
+
+	if (isRoad)
+	{
+		switch (direction)
+		{
+		case DIRECTION::LEFT:
+			return 0b0001;
+			break;
+		case DIRECTION::RIGHT:
+			return 0b0010;
+			break;
+		case DIRECTION::TOP:
+			return 0b0100;
+			break;
+		case DIRECTION::BOTTOM:
+			return 0b1000;
+			break;
+		}
+	}
+}
+
+void CMapTool::setEnvirType(int tileNum, ENVIRONMENT_TYPE environment, ROTATE_TYPE rotate)
+{
+	CTile** tile = map->getTile();
+	tile[tileNum]->setTileType(environment);
+	tile[tileNum]->setRotateType(rotate);
 }
 
 bool CMapTool::save(const char* fileName)

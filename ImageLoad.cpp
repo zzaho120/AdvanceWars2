@@ -22,7 +22,7 @@ void CImageLoad::resourceLoad()
 	IMAGE->addFrameImage("maptool_tile", "images/tile/maptool_tile.bmp", 128, 16, 7, 1);
 	IMAGE->addFrameImage("pipe", "images/tile/pipe.bmp", 80, 32, 6, 2);
 	IMAGE->addFrameImage("road", "images/tile/road.bmp", TILE_SIZE_X * 5, TILE_SIZE_Y * 3, 5, 3);
-	IMAGE->addFrameImage("river", "images/tile/river.bmp", 128 * 4, 96 * 4, 8, 6);
+	IMAGE->addFrameImage("flow_river", "images/tile/flow_river.bmp", TILE_SIZE_X * 8, TILE_SIZE_Y * 11, 8, 11);
 	IMAGE->addFrameImage("sea", "images/tile/sea.bmp", TILE_SIZE_X * 8, TILE_SIZE_Y * 3, 8, 3);
 	IMAGE->addFrameImage("single_environment", "images/tile/single_environment.bmp", 64 * 5, 64, 5, 1);
 	IMAGE->addFrameImage("wood", "images/tile/wood.bmp", TILE_SIZE_X * 4, TILE_SIZE_Y * 3, 4, 3);

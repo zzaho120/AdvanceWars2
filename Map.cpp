@@ -1,5 +1,4 @@
 #include "framework.h"
-#include "Environment.h"
 #include "Building.h"
 #include "Map.h"
 
@@ -26,6 +25,12 @@ CMap::CMap(Vec2 startPos, Vec2 size) :
 		}
 		startPos = { tempPos.x, startPos.y + size.y };
 	}
+}
+
+CMap::CMap(CMap* copy)
+{
+	// 포인터의 저장한 주소값을 어떻게 값 복사로 갖고올것이냐?
+
 }
 
 CMap::~CMap()
@@ -67,17 +72,13 @@ void CMap::render()
 				RectEdge(tile[idx]->getPos(), tile[idx]->getSize(), RECT_EDGE::BOTTOM));
 
 
-			wsprintf(str, "%d", idx);
-			TextOut(getMapDC(), tile[idx]->getPos().x, tile[idx]->getPos().y, str, strlen(str));
+			wsprintf(str, "%d %d %d", idx, tile[idx]->getTileType(), tile[idx]->getRotateType());
+			TextOut(getMapDC(), tile[idx]->getPos().x - 20, tile[idx]->getPos().y, str, strlen(str));
 		}
 	}
-	
 
 	/*for (iterBuilding = vecBuilding.begin(); iterBuilding != vecBuilding.end(); iterBuilding++)
-		(*iterBuilding)->render();
-
-	for (iterEnvironment = vecEnvironment.begin(); iterEnvironment != vecEnvironment.end(); iterEnvironment++)
-		(*iterEnvironment)->render();*/
+		(*iterBuilding)->render(); */
 }
 
 void CMap::addBuilding(PLAYER_TYPE type, Vec2 pos,bool factory, bool HQ, int idx)

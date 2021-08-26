@@ -3,7 +3,6 @@
 #include "Tile.h"
 
 class CCamera;
-class CEnvironment;
 class CBuilding;
 class CMap : public gameNode
 {
@@ -14,13 +13,11 @@ private:
 	vector<CBuilding*> vecBuilding;
 	vector<CBuilding*>::iterator iterBuilding;
 
-	vector<CEnvironment*> vecEnvironment;
-	vector<CEnvironment*>::iterator iterEnvironment;
-
 	bool isDebug;
 public:
 	CMap();
 	CMap(Vec2 startPos, Vec2 size);
+	CMap(CMap* copy);
 	~CMap();
 
 	HRESULT init();
