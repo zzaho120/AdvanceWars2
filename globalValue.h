@@ -1,7 +1,7 @@
 #pragma once
 
 const int SUBWINSIZEX = 450;
-const int SUBWINSIZEY = 520;
+const int SUBWINSIZEY = 550;
 
 const int TILE_NUM_X = 30; 
 const int TILE_NUM_Y = 20;
@@ -19,7 +19,7 @@ const int CAMERA_SIZE_X = WINSIZEX;
 const int CAMERA_SIZE_Y = WINSIZEY;
 
 const int SAMPLE_TILE_X = 8;
-const int SAMPLE_TILE_Y = 3;
+const int SAMPLE_TILE_Y = 4;
 
 struct tagSampleTile
 {

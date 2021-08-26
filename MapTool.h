@@ -30,6 +30,9 @@ public:
 	void roadSetting(int tileNum);
 	int checkRoad(int tileNum, DIRECTION direction);
 
+	void seaSetting(int tileNum);
+	int checkSea(int tileNum, DIRECTION direction);
+
 	void setEnvirType(int tileNum, ENVIRONMENT_TYPE environment, ROTATE_TYPE rotate);
 
 	bool save(const char* fileName);

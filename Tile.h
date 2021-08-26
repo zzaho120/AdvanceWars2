@@ -20,7 +20,7 @@ public:
 	void update();
 	void render();
 
-	void tileRenderSet();
+	void tileRender();
 
 	ENVIRONMENT_TYPE getTileType() { return tileType; }
 	BUILDING_TYPE getBuildtype() { return buildingType; }

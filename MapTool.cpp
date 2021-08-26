@@ -147,6 +147,26 @@ void CMapTool::setMap()
 					break;
 				}
 			}
+
+			else if (SUBWIN->GetTileFrame().y == 3)
+			{
+				tile->setTileType(ENVIRONMENT_TYPE::NONE);
+				if (tile->getBuildtype() != BUILDING_TYPE::NONE)
+					map->eraseBuilding(idx);
+				switch (SUBWIN->GetTileFrame().x)
+				{
+				case 0:
+					tile->setPlayerType(PLAYER_TYPE::PLAYER1);
+					tile->setBuildingType(BUILDING_TYPE::HEADQUATERS);
+					map->addBuilding(PLAYER_TYPE::PLAYER1, tile->getPos(), true, false, idx);
+					break;
+				case 1:
+					tile->setPlayerType(PLAYER_TYPE::PLAYER2);
+					tile->setBuildingType(BUILDING_TYPE::HEADQUATERS);
+					map->addBuilding(PLAYER_TYPE::PLAYER2, tile->getPos(), true, false, idx);
+					break;
+				}
+			}
 		}
 	}
 }
@@ -162,16 +182,41 @@ void CMapTool::tileDirectionSet()
 			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_3WAYS) ||
 			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_4WAYS);
 
+		if (isRiver)
+		{
+			riverSetting(tileNum);
+			continue;
+		}
+
 		bool isRoad = (map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD) ||
 			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_LINE) ||
 			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_CURVE) ||
 			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_3WAYS) ||
 			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_4WAYS);
 		
-		if (isRiver)
-			riverSetting(tileNum);
 		if (isRoad)
+		{
 			roadSetting(tileNum);
+			continue;
+		}
+
+		bool isSea = (map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_CURVE) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_3WAYS) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_4WAYS) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL00) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL01) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL02) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL00) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL01) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL02) ||
+			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_NOWAYS);
+
+		if (isSea)
+		{
+			seaSetting(tileNum);
+			continue;
+		}
 	}
 }
 
@@ -186,7 +231,7 @@ void CMapTool::riverSetting(int tileNum)
 	if (tileline < 29) riverType += checkRiver(tileNum + 1, DIRECTION::RIGHT);
 	if (tileNum > 29) riverType += checkRiver(tileNum - 30, DIRECTION::TOP);
 	if (tileNum < 570) riverType += checkRiver(tileNum + 30, DIRECTION::BOTTOM);
-	int a = 0;
+
 	switch (riverType)
 	{
 	case 0b0000: // NO 4ways
@@ -265,14 +310,14 @@ int CMapTool::checkRiver(int tileNum, DIRECTION direction)
 
 void CMapTool::roadSetting(int tileNum)
 {
-	int RoadType = 0b0000;
+	int roadType = 0b0000;
 	int tileline = tileNum % 30;
-	if (tileline > 0) RoadType += checkRoad(tileNum - 1, DIRECTION::LEFT);
-	if (tileline < 29) RoadType += checkRoad(tileNum + 1, DIRECTION::RIGHT);
-	if (tileNum > 29) RoadType += checkRoad(tileNum - 30, DIRECTION::TOP);
-	if (tileNum < 570) RoadType += checkRoad(tileNum + 30, DIRECTION::BOTTOM);
-	int a = 0;
-	switch (RoadType)
+	if (tileline > 0) roadType += checkRoad(tileNum - 1, DIRECTION::LEFT);
+	if (tileline < 29) roadType += checkRoad(tileNum + 1, DIRECTION::RIGHT);
+	if (tileNum > 29) roadType += checkRoad(tileNum - 30, DIRECTION::TOP);
+	if (tileNum < 570) roadType += checkRoad(tileNum + 30, DIRECTION::BOTTOM);
+
+	switch (roadType)
 	{
 	case 0b0000: // NO 4ways
 	case 0b0001: // left
@@ -330,6 +375,103 @@ int CMapTool::checkRoad(int tileNum, DIRECTION direction)
 		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::BRIDGE);
 
 	if (isRoad)
+	{
+		switch (direction)
+		{
+		case DIRECTION::LEFT:
+			return 0b0001;
+			break;
+		case DIRECTION::RIGHT:
+			return 0b0010;
+			break;
+		case DIRECTION::TOP:
+			return 0b0100;
+			break;
+		case DIRECTION::BOTTOM:
+			return 0b1000;
+			break;
+		}
+	}
+}
+
+void CMapTool::seaSetting(int tileNum)
+{
+	int seaType = 0b0000;
+	int tileline = tileNum % 30;
+	if (tileline > 0) seaType += checkSea(tileNum - 1, DIRECTION::LEFT);
+	if (tileline < 29) seaType += checkSea(tileNum + 1, DIRECTION::RIGHT);
+	if (tileNum > 29) seaType += checkSea(tileNum - 30, DIRECTION::TOP);
+	if (tileNum < 570) seaType += checkSea(tileNum + 30, DIRECTION::BOTTOM);
+
+	switch (seaType)
+	{
+	case 0b0000: // NO 4ways
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_NOWAYS, ROTATE_TYPE::DEG0);
+		break;
+	case 0b0001: // left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL02, ROTATE_TYPE::DEG0);
+		break;
+	case 0b0010: // right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL00, ROTATE_TYPE::DEG0);
+		break;
+	case 0b0011: // right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL01, ROTATE_TYPE::DEG0);
+		break;
+	case 0b0100: // top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL02, ROTATE_TYPE::DEG0);
+		break;
+	case 0b0101: // top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_CURVE, ROTATE_TYPE::DEG270);
+		break;
+	case 0b0110: // top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_CURVE, ROTATE_TYPE::DEG180);
+		break;
+	case 0b0111: // top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG180);
+		break;
+	case 0b1000: // bottom
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL00, ROTATE_TYPE::DEG0);
+		break;
+	case 0b1001: // bottom, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_CURVE, ROTATE_TYPE::DEG90);
+		break;
+	case 0b1010: // bottom, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_CURVE, ROTATE_TYPE::DEG0);
+		break;
+	case 0b1011: // bottom, left, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG0);
+		break;
+	case 0b1100: // bottom, top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL01, ROTATE_TYPE::DEG0);
+		break;
+	case 0b1101: // bottom, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG90);
+		break;
+	case 0b1110: // bottom, top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG270);
+		break;
+	case 0b1111: // 4ways
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG0);
+		break;
+	}
+}
+
+int CMapTool::checkSea(int tileNum, DIRECTION direction)
+{
+	CTile** tile = map->getTile();
+	bool isSea = (map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_CURVE) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_3WAYS) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_4WAYS) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL00) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL01) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL02) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL00) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL01) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL02) ||
+		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_NOWAYS);
+
+	if (isSea)
 	{
 		switch (direction)
 		{
