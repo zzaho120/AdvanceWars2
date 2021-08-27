@@ -24,6 +24,7 @@ public:
 
 	ENVIRONMENT_TYPE getTileType() { return tileType; }
 	BUILDING_TYPE getBuildtype() { return buildingType; }
+	PLAYER_TYPE getPlayerType() { return playerType; }
 	DIRECTION_SPRITE getDirection() { return directionType; }
 	ROTATE_TYPE getRotateType() { return rotateType; }
 

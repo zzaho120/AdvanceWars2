@@ -17,7 +17,6 @@ private:
 public:
 	CMap();
 	CMap(Vec2 startPos, Vec2 size);
-	CMap(CMap* copy);
 	~CMap();
 
 	HRESULT init();
@@ -26,6 +25,7 @@ public:
 	void render();
 
 	CTile** getTile() { return tile; }
+	vector<CBuilding*> getVecBuilding() { return vecBuilding; }
 	void setCameraLink(CCamera* _cam) { cam = _cam; }
 
 	void addBuilding(PLAYER_TYPE type, Vec2 pos, bool factory, bool HQ, int idx);

@@ -27,12 +27,6 @@ CMap::CMap(Vec2 startPos, Vec2 size) :
 	}
 }
 
-CMap::CMap(CMap* copy)
-{
-	// 포인터의 저장한 주소값을 어떻게 값 복사로 갖고올것이냐?
-
-}
-
 CMap::~CMap()
 {
 	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
@@ -72,7 +66,7 @@ void CMap::render()
 				RectEdge(tile[idx]->getPos(), tile[idx]->getSize(), RECT_EDGE::BOTTOM));
 
 
-			wsprintf(str, "%d %d %d", idx, tile[idx]->getTileType(), tile[idx]->getRotateType());
+			wsprintf(str, "%d %d %d", idx, tile[idx]->getTileType(), tile[idx]->getBuildtype());
 			TextOut(getMapDC(), tile[idx]->getPos().x - 20, tile[idx]->getPos().y, str, strlen(str));
 		}
 	}

@@ -35,6 +35,9 @@ public:
 
 	void setEnvirType(int tileNum, ENVIRONMENT_TYPE environment, ROTATE_TYPE rotate);
 
+	void setBuilding(int tileNum, BUILDING_TYPE building, PLAYER_TYPE player);
+	void setHQ(int tileNum, PLAYER_TYPE player);
+
 	bool save(const char* fileName);
 	bool load(const char* fileName);
 

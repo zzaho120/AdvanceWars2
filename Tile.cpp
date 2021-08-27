@@ -13,7 +13,7 @@ CTile::CTile() :
 
 CTile::CTile(Vec2 _pos, Vec2 _size, image* _img, animation* _ani) :
 	CObject(_pos, _size, _img, _ani),
-	tileType(static_cast<ENVIRONMENT_TYPE>(RND->getFromIntTo(1,6))),
+	tileType(static_cast<ENVIRONMENT_TYPE>(RND->getFromIntTo(1,4))),
 	buildingType(BUILDING_TYPE::NONE),
 	unitType(UNIT_TYPE::NONE),
 	playerType(PLAYER_TYPE::NONE),
@@ -32,22 +32,60 @@ CTile::CTile(Vec2 _pos, Vec2 _size, image* _img, animation* _ani) :
 	ANIMATION->start("river_3ways03");
 	ANIMATION->start("river_4ways");
 
-	ANIMATION->start("sea_curve00");
-	ANIMATION->start("sea_curve01");
-	ANIMATION->start("sea_curve02");
-	ANIMATION->start("sea_curve03");
-	ANIMATION->start("sea_left");
-	ANIMATION->start("sea_top");
-	ANIMATION->start("sea_right");
-	ANIMATION->start("sea_bottom");
-	ANIMATION->start("sea_4ways");
-	ANIMATION->start("sea_vertical00");
-	ANIMATION->start("sea_vertical01");
-	ANIMATION->start("sea_vertical02");
+	ANIMATION->start("sea_3ways_curve00");
+	ANIMATION->start("sea_5ways_top");
+	ANIMATION->start("sea_3ways_curve01");
+	ANIMATION->start("sea_5ways_left");
+	ANIMATION->start("sea_8ways");
+	ANIMATION->start("sea_5ways_right");
+	ANIMATION->start("sea_3ways_curve02");
+	ANIMATION->start("sea_5ways_bottom");
+	ANIMATION->start("sea_3ways_curve03");
+
+	ANIMATION->start("sea_2ways_curve00");
+	ANIMATION->start("sea_2ways_curve01");
+	ANIMATION->start("sea_2ways_curve02");
+	ANIMATION->start("sea_2ways_curve03");
+
+	ANIMATION->start("sea_3ways_top");
+	ANIMATION->start("sea_4ways_top00");
+	ANIMATION->start("sea_4ways_top01");
+	ANIMATION->start("sea_3ways_left");
+	ANIMATION->start("sea_4ways_left00");
+	ANIMATION->start("sea_4ways_left01");
+	ANIMATION->start("sea_3ways_right");
+	ANIMATION->start("sea_4ways_right00");
+	ANIMATION->start("sea_4ways_right01");
+	ANIMATION->start("sea_3ways_bottom");
+	ANIMATION->start("sea_4ways_bottom00");
+	ANIMATION->start("sea_4ways_bottom01");
+
+	ANIMATION->start("sea_6ways00");
+	ANIMATION->start("sea_6ways01");
+	ANIMATION->start("sea_6ways02");
+	ANIMATION->start("sea_6ways03");
+	ANIMATION->start("sea_6ways04");
+	ANIMATION->start("sea_6ways05");
+
+	ANIMATION->start("sea_5ways00");
+	ANIMATION->start("sea_5ways01");
+	ANIMATION->start("sea_5ways02");
+	ANIMATION->start("sea_5ways03");
+	ANIMATION->start("sea_4ways00");
+
 	ANIMATION->start("sea_horizontal00");
 	ANIMATION->start("sea_horizontal01");
 	ANIMATION->start("sea_horizontal02");
+
+	ANIMATION->start("sea_vertical00");
+	ANIMATION->start("sea_vertical01");
+	ANIMATION->start("sea_vertical02");
 	ANIMATION->start("sea_noway");
+
+	ANIMATION->start("sea_7ways00");
+	ANIMATION->start("sea_7ways01");
+	ANIMATION->start("sea_7ways02");
+	ANIMATION->start("sea_7ways03");
 }
 
 CTile::~CTile()
@@ -104,7 +142,7 @@ void CTile::tileRender()
 			break;
 		case ROTATE_TYPE::DEG90:
 		case ROTATE_TYPE::DEG270:
-			imgFrame = { 3, 0 }; 
+			imgFrame = { 3, 0 };
 			break;
 		}
 		img->frameRender(getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), imgFrame.x, imgFrame.y);
@@ -121,7 +159,7 @@ void CTile::tileRender()
 			ani = ANIMATION->findAnimation("river_line01");
 			break;
 		}
-		IMAGE->findImage("flow_river")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);	
+		IMAGE->findImage("flow_river")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
 		break;
 	case ENVIRONMENT_TYPE::RIVER_CURVE:
 		switch (rotateType)
@@ -216,46 +254,7 @@ void CTile::tileRender()
 	case ENVIRONMENT_TYPE::ROAD_4WAYS:
 		IMAGE->frameRender("road", getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), 3, 1);
 		break;
-	case ENVIRONMENT_TYPE::SEA_CURVE:
-		switch (rotateType)
-		{
-		case ROTATE_TYPE::DEG0:
-			ani = ANIMATION->findAnimation("sea_curve00");
-			break;
-		case ROTATE_TYPE::DEG90:
-			ani = ANIMATION->findAnimation("sea_curve01");
-			break;
-		case ROTATE_TYPE::DEG180:
-			ani = ANIMATION->findAnimation("sea_curve02");
-			break;
-		case ROTATE_TYPE::DEG270:
-			ani = ANIMATION->findAnimation("sea_curve03");
-			break;
-		}
-		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
-		break;
-	case ENVIRONMENT_TYPE::SEA_3WAYS:
-		switch (rotateType)
-		{
-		case ROTATE_TYPE::DEG0:
-			ani = ANIMATION->findAnimation("sea_top");
-			break;
-		case ROTATE_TYPE::DEG90:
-			ani = ANIMATION->findAnimation("sea_right");
-			break;
-		case ROTATE_TYPE::DEG180:
-			ani = ANIMATION->findAnimation("sea_bottom");
-			break;
-		case ROTATE_TYPE::DEG270:
-			ani = ANIMATION->findAnimation("sea_left");
-			break;
-		}
-		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
-		break;
-	case ENVIRONMENT_TYPE::SEA_4WAYS:
-		ani = ANIMATION->findAnimation("sea_4ways");
-		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
-		break;
+
 	case ENVIRONMENT_TYPE::SEA_VERTICAL00:
 		ani = ANIMATION->findAnimation("sea_vertical00");
 		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
@@ -268,6 +267,7 @@ void CTile::tileRender()
 		ani = ANIMATION->findAnimation("sea_vertical02");
 		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
 		break;
+
 	case ENVIRONMENT_TYPE::SEA_HORIZONTAL00:
 		ani = ANIMATION->findAnimation("sea_horizontal00");
 		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
@@ -280,11 +280,118 @@ void CTile::tileRender()
 		ani = ANIMATION->findAnimation("sea_horizontal02");
 		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
 		break;
+
+
 	case ENVIRONMENT_TYPE::SEA_NOWAYS:
 		ani = ANIMATION->findAnimation("sea_noway");
 		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
 		break;
+
+	case ENVIRONMENT_TYPE::SEA_2WAYS:
+		switch (rotateType)
+		{
+		case ROTATE_TYPE::DEG0:
+			ani = ANIMATION->findAnimation("sea_2ways_curve01");
+			break;
+		case ROTATE_TYPE::DEG90:
+			ani = ANIMATION->findAnimation("sea_2ways_curve00");
+			break;
+		case ROTATE_TYPE::DEG180:
+			ani = ANIMATION->findAnimation("sea_2ways_curve03");
+			break;
+		case ROTATE_TYPE::DEG270:
+			ani = ANIMATION->findAnimation("sea_2ways_curve02");
+			break;
+		}
+		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
+		break;
+
+	case ENVIRONMENT_TYPE::SEA_3WAYS:
+		switch (rotateType)
+		{
+		case ROTATE_TYPE::DEG0:
+			ani = ANIMATION->findAnimation("sea_3ways_curve00");
+			break;
+		case ROTATE_TYPE::DEG45:
+			ani = ANIMATION->findAnimation("sea_3ways_top");
+			break;
+		case ROTATE_TYPE::DEG90:
+			ani = ANIMATION->findAnimation("sea_3ways_curve01");
+			break;
+		case ROTATE_TYPE::DEG135:
+			ani = ANIMATION->findAnimation("sea_3ways_right");
+			break;
+		case ROTATE_TYPE::DEG180:
+			ani = ANIMATION->findAnimation("sea_3ways_curve03");
+			break;
+		case ROTATE_TYPE::DEG225:
+			ani = ANIMATION->findAnimation("sea_3ways_bottom");
+			break;
+		case ROTATE_TYPE::DEG270:
+			ani = ANIMATION->findAnimation("sea_3ways_curve02");
+			break;
+		case ROTATE_TYPE::DEG315:
+			ani = ANIMATION->findAnimation("sea_3ways_left");
+			break;
+		case ROTATE_TYPE::DEG360:
+			ani = ANIMATION->findAnimation("sea_3ways_left");
+			break;
+		}
+		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
+		break;
+
+	case ENVIRONMENT_TYPE::SEA_4WAYS:
+		switch (rotateType)
+		{
+		case ROTATE_TYPE::DEG0:
+			ani = ANIMATION->findAnimation("sea_4ways_top00");
+			break;
+		case ROTATE_TYPE::DEG45:
+			ani = ANIMATION->findAnimation("sea_4ways_top01");
+			break;
+		case ROTATE_TYPE::DEG90:
+			ani = ANIMATION->findAnimation("sea_4ways_left00");
+			break;
+		case ROTATE_TYPE::DEG135:
+			ani = ANIMATION->findAnimation("sea_4ways_left01");
+			break;
+		case ROTATE_TYPE::DEG180:
+			ani = ANIMATION->findAnimation("sea_4ways_right00");
+			break;
+		case ROTATE_TYPE::DEG225:
+			ani = ANIMATION->findAnimation("sea_4ways_right01");
+			break;
+		case ROTATE_TYPE::DEG270:
+			ani = ANIMATION->findAnimation("sea_4ways_bottom00");
+			break;
+		case ROTATE_TYPE::DEG315:
+			ani = ANIMATION->findAnimation("sea_4ways_bottom01");
+			break;
+		}
+		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
+		break;
+
+	case ENVIRONMENT_TYPE::SEA_7WAYS:
+		switch (rotateType)
+		{
+		case ROTATE_TYPE::DEG0:
+			ani = ANIMATION->findAnimation("sea_7ways00");
+			break;
+		case ROTATE_TYPE::DEG90:
+			ani = ANIMATION->findAnimation("sea_7ways01");
+			break;
+		case ROTATE_TYPE::DEG180:
+			ani = ANIMATION->findAnimation("sea_7ways02");
+			break;
+		case ROTATE_TYPE::DEG270:
+			ani = ANIMATION->findAnimation("sea_7ways03");
+			break;
+		}
+		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
+		break;
+
 	}
+
 
 	int playerColor = 0;
 	switch (playerType)

@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "MapTool.h"
+#include "Building.h"
 
 CMapTool::CMapTool() :
 	map(new CMap({ 35, 35 }, { TILE_SIZE_X, TILE_SIZE_Y })),
@@ -65,6 +66,7 @@ void CMapTool::setMap()
 				if (tile->getBuildtype() != BUILDING_TYPE::NONE)
 				{
 					tile->setBuildingType(BUILDING_TYPE::NONE);
+					tile->setPlayerType(PLAYER_TYPE::NONE);
 					map->eraseBuilding(idx);
 				}
 				switch (SUBWIN->GetTileFrame().x)
@@ -106,19 +108,13 @@ void CMapTool::setMap()
 				switch (SUBWIN->GetTileFrame().x)
 				{
 				case 0:
-					tile->setPlayerType(PLAYER_TYPE::PLAYER1);
-					tile->setBuildingType(BUILDING_TYPE::CITY);
-					map->addBuilding(PLAYER_TYPE::PLAYER1, tile->getPos(), false, false, idx);
+					setBuilding(idx, BUILDING_TYPE::CITY, PLAYER_TYPE::PLAYER1);
 					break;
 				case 1:
-					tile->setPlayerType(PLAYER_TYPE::PLAYER2);
-					tile->setBuildingType(BUILDING_TYPE::CITY);
-					map->addBuilding(PLAYER_TYPE::PLAYER2, tile->getPos(), false, false, idx);
+					setBuilding(idx, BUILDING_TYPE::CITY, PLAYER_TYPE::PLAYER2);
 					break;
 				case 5:
-					tile->setPlayerType(PLAYER_TYPE::NONE);
-					tile->setBuildingType(BUILDING_TYPE::CITY);
-					map->addBuilding(PLAYER_TYPE::NONE, tile->getPos(), false, false, idx);
+					setBuilding(idx, BUILDING_TYPE::CITY, PLAYER_TYPE::NONE);
 					break;
 				}
 			}
@@ -131,19 +127,13 @@ void CMapTool::setMap()
 				switch (SUBWIN->GetTileFrame().x)
 				{
 				case 0:
-					tile->setPlayerType(PLAYER_TYPE::PLAYER1);
-					tile->setBuildingType(BUILDING_TYPE::FACTORY);
-					map->addBuilding(PLAYER_TYPE::PLAYER1, tile->getPos(), true, false, idx);
+					setBuilding(idx, BUILDING_TYPE::FACTORY, PLAYER_TYPE::PLAYER1);
 					break;
 				case 1:
-					tile->setPlayerType(PLAYER_TYPE::PLAYER2);
-					tile->setBuildingType(BUILDING_TYPE::FACTORY);
-					map->addBuilding(PLAYER_TYPE::PLAYER2, tile->getPos(), true, false, idx);
+					setBuilding(idx, BUILDING_TYPE::FACTORY, PLAYER_TYPE::PLAYER2);
 					break;
 				case 5:
-					tile->setPlayerType(PLAYER_TYPE::NONE);
-					tile->setBuildingType(BUILDING_TYPE::FACTORY);
-					map->addBuilding(PLAYER_TYPE::NONE, tile->getPos(), true, false, idx);
+					setBuilding(idx, BUILDING_TYPE::FACTORY, PLAYER_TYPE::NONE);
 					break;
 				}
 			}
@@ -156,14 +146,10 @@ void CMapTool::setMap()
 				switch (SUBWIN->GetTileFrame().x)
 				{
 				case 0:
-					tile->setPlayerType(PLAYER_TYPE::PLAYER1);
-					tile->setBuildingType(BUILDING_TYPE::HEADQUATERS);
-					map->addBuilding(PLAYER_TYPE::PLAYER1, tile->getPos(), true, false, idx);
+					setHQ(idx, PLAYER_TYPE::PLAYER1);
 					break;
 				case 1:
-					tile->setPlayerType(PLAYER_TYPE::PLAYER2);
-					tile->setBuildingType(BUILDING_TYPE::HEADQUATERS);
-					map->addBuilding(PLAYER_TYPE::PLAYER2, tile->getPos(), true, false, idx);
+					setHQ(idx, PLAYER_TYPE::PLAYER2);
 					break;
 				}
 			}
@@ -176,11 +162,11 @@ void CMapTool::tileDirectionSet()
 	CTile** tile = map->getTile();
 	for (int tileNum = 0; tileNum < TILE_NUM_X * TILE_NUM_Y; tileNum++)
 	{
-		bool isRiver = (map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_LINE) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_CURVE) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_3WAYS) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_4WAYS);
+		bool isRiver = (tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_LINE) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_CURVE) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_3WAYS) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::RIVER_4WAYS);
 
 		if (isRiver)
 		{
@@ -188,11 +174,11 @@ void CMapTool::tileDirectionSet()
 			continue;
 		}
 
-		bool isRoad = (map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_LINE) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_CURVE) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_3WAYS) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_4WAYS);
+		bool isRoad = (tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_LINE) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_CURVE) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_3WAYS) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::ROAD_4WAYS);
 		
 		if (isRoad)
 		{
@@ -200,17 +186,22 @@ void CMapTool::tileDirectionSet()
 			continue;
 		}
 
-		bool isSea = (map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_CURVE) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_3WAYS) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_4WAYS) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL00) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL01) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL02) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL00) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL01) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL02) ||
-			(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_NOWAYS);
+		bool isSea = (tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_CURVE) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_2WAYS) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_3WAYS) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_4WAYS) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_5WAYS) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_6WAYS) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_7WAYS) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_8WAYS) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL00) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL01) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL02) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL00) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL01) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL02) ||
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_NOWAYS);
 
 		if (isSea)
 		{
@@ -332,6 +323,7 @@ void CMapTool::roadSetting(int tileNum)
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_CURVE, ROTATE_TYPE::DEG180);
 		break;
 	case 0b0110: // top, right
+	case 0b01110110: // topright, bottomleft, topleft, top, right
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::ROAD_CURVE, ROTATE_TYPE::DEG270);
 		break;
 	case 0b0111: // top, right, left
@@ -394,64 +386,348 @@ int CMapTool::checkRoad(int tileNum, DIRECTION direction)
 	}
 }
 
+// 2진수의 4비트만을 가지고 강의 방향성을 체크
+// 0  0  0  0  0 0 0 0 8자리
+// BR BL TR TL B T R L 
 void CMapTool::seaSetting(int tileNum)
 {
-	int seaType = 0b0000;
+	int seaType = 0b00000000;
 	int tileline = tileNum % 30;
-	if (tileline > 0) seaType += checkSea(tileNum - 1, DIRECTION::LEFT);
-	if (tileline < 29) seaType += checkSea(tileNum + 1, DIRECTION::RIGHT);
+	if (tileline > 0)
+	{
+		if (tileNum > 29)
+			seaType += checkSea(tileNum - 31, DIRECTION::TOP_LEFT);
+		else if (tileNum < 570)
+			seaType += checkSea(tileNum + 29, DIRECTION::BOTTOM_LEFT);
+		else
+			seaType += checkSea(tileNum - 1, DIRECTION::LEFT);
+	}
+	if (tileline < 29)
+	{
+		if (tileNum > 29)
+			seaType += checkSea(tileNum - 29, DIRECTION::TOP_RIGHT);
+		else if (tileNum < 570)
+			seaType += checkSea(tileNum + 31, DIRECTION::BOTTOM_RIGHT);
+		seaType += checkSea(tileNum + 1, DIRECTION::RIGHT);
+	}
 	if (tileNum > 29) seaType += checkSea(tileNum - 30, DIRECTION::TOP);
 	if (tileNum < 570) seaType += checkSea(tileNum + 30, DIRECTION::BOTTOM);
 
 	switch (seaType)
 	{
-	case 0b0000: // NO 4ways
+	case 0b00000000: // noway
+	case 0b00010000: // topleft
+	case 0b00100000: // bottomleft
+	case 0b00110000: // bottomleft, topleft
+	case 0b01000000: // topright
+	case 0b01010000: // topright, topleft
+	case 0b01100000: // topright, bottomleft
+	case 0b01110000: // topright, bottomleft, topleft
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_NOWAYS, ROTATE_TYPE::DEG0);
 		break;
-	case 0b0001: // left
+	case 0b00000001: // left
+	case 0b01100001: // topright, bottomleft, left
+	case 0b01110001: // topright, bottomleft, topleft, left
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL02, ROTATE_TYPE::DEG0);
 		break;
-	case 0b0010: // right
+	case 0b00000010: // right
+	case 0b01100010: // topright, bottomleft, right
+	case 0b01110010: // topright, bottomleft, topleft, right
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL00, ROTATE_TYPE::DEG0);
 		break;
-	case 0b0011: // right, left
+	case 0b00000011: // right, left
+	case 0b01100011: // topright, bottomleft, right, left
+	case 0b01110011: // topright, bottomleft, topleft, right, left
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL01, ROTATE_TYPE::DEG0);
 		break;
-	case 0b0100: // top
+	case 0b00000100: // top
+	case 0b01100100: // topright, bottomleft, top
+	case 0b01110100: // topright, bottomleft, topleft, top
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL02, ROTATE_TYPE::DEG0);
 		break;
-	case 0b0101: // top, left
-		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_CURVE, ROTATE_TYPE::DEG270);
+	case 0b00000101: // top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG180);
 		break;
-	case 0b0110: // top, right
-		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_CURVE, ROTATE_TYPE::DEG180);
+	case 0b00000110: // top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG270);
 		break;
-	case 0b0111: // top, right, left
-		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG180);
+	case 0b00000111: // top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG225);
 		break;
-	case 0b1000: // bottom
+	case 0b00001000: // bottom
+	case 0b01101000: // topright, bottomleft, bottom
+	case 0b01111000: // topright, bottomleft, topleft, bottom
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL00, ROTATE_TYPE::DEG0);
 		break;
-	case 0b1001: // bottom, left
-		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_CURVE, ROTATE_TYPE::DEG90);
+	case 0b00001001: // bottom, left
+	case 0b01011001: // topright, topleft, bottom, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG0);
 		break;
-	case 0b1010: // bottom, right
-		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_CURVE, ROTATE_TYPE::DEG0);
+	case 0b00001010: // bottom, right
+	case 0b01011010: // topright, topleft, bottom, right
+	case 0b01101010: // topright, bottomleft, bottom, right
+	case 0b01111010: // topright, bottomleft, topleft, bottom, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG90);
 		break;
-	case 0b1011: // bottom, left, right
-		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG0);
+	case 0b00001011: // bottom, right, left
+	case 0b01011011: // topright, topleft, bottom, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG45);
 		break;
-	case 0b1100: // bottom, top
+	case 0b00001100: // bottom, top
+	case 0b01011100: // topright, topleft, bottom, top
+	case 0b01101100: // topright, bottomleft, bottom, top
+	case 0b01111100: // topright, bottomleft, topleft, bottom, top
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL01, ROTATE_TYPE::DEG0);
 		break;
-	case 0b1101: // bottom, top, left
-		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG90);
+	case 0b00001101: // bottom, top, left
+	case 0b01100101: // topright, bottomleft, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG135);
 		break;
-	case 0b1110: // bottom, top, right
+	case 0b00001110: // bottom, top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG315);
+		break;
+	case 0b00001111: // bottom, top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG360);
+		break;
+	
+	case 0b00010001: // topleft, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL02, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00010010: // topleft, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL00, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00010011: // topleft, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL01, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00010100: // topleft, top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL02, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00010101: // topleft, top, left
+	case 0b01110101: // topright, bottomleft, topleft, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG180);
+		break;
+	case 0b00010110: // topleft, top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG270);
+		break;
+	case 0b00010111: // topleft, top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG270);
+		break;
+	case 0b00011000: // topleft, bottom
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL00, ROTATE_TYPE::DEG270);
+		break;
+	case 0b00011001: // topleft, bottom, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00011010: // topleft, bottom, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG90);
+		break;
+	case 0b00011011: // topleft, bottom, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG45);
+		break;
+	case 0b00011100: // topleft, bottom, top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL01, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00011101: // topleft, bottom, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG90);
+		break;
+	case 0b00011110: // topleft, bottom, top, right
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG270);
 		break;
-	case 0b1111: // 4ways
+	case 0b00011111: // topleft, bottom, top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00100001: // bottomleft, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL02, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00100010: // bottomleft, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL00, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00100011: // bottomleft, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL01, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00100100: // bottomleft, top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL02, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00100101: // bottomleft, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG270);
+		break;
+	case 0b00101000: // bottomleft, bottom
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL00, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00101001: // bottomleft, bottom, left
+	case 0b01101001: // topright, bottomleft, bottom, left
+	case 0b01111001: // topright, bottomleft, topleft, bottom, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG90);
+		break;
+	case 0b00101010: // bottomleft, bottom, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG180);
+		break;
+	case 0b00101011: // bottomleft, bottom, right, left
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00101100: // bottomleft, bottom, top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL01, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00101101: // bottomleft, bottom, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG225);
+		break;
+	case 0b00101110: // bottomleft, bottom, top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG315);
+		break;
+	case 0b00101111: // bottomleft, bottom, top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG180);
+		break;
+	case 0b00110001: // bottomleft, topleft, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL02, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00110010: // bottomleft, topleft, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL00, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00110011: // bottomleft, topleft, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL01, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00110100: // bottomleft, topleft, top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL02, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00110101: // bottomleft, topleft, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG180);
+		break;
+	case 0b00110110: // bottomleft, topleft, top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG270);
+		break;
+	case 0b00110111: // bottomleft, topleft, top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG315);
+		break;
+	case 0b00111000: // bottomleft, topleft, bottom
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL00, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00111001: // bottomleft, topleft, bottom, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG135);
+		break;
+	case 0b00111010: // bottomleft, topleft, bottom, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG90);
+		break;
+	case 0b00111011: // bottomleft, topleft, bottom, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00111100: // bottomleft, topleft, bottom, top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL00, ROTATE_TYPE::DEG0);
+		break;
+	case 0b00111101: // bottomleft, topleft, bottom, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG90);
+		break;
+	case 0b00111110: // bottomleft, topleft, bottom, top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG315);
+		break;
+	case 0b00111111: // bottomleft, topleft, bottom, top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_6WAYS, ROTATE_TYPE::DEG45);
+		break;
+	case 0b01000001: // topright, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL02, ROTATE_TYPE::DEG0);
+		break;
+	case 0b01000010: // topright, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL00, ROTATE_TYPE::DEG0);
+		break;
+	case 0b01000011: // topright, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL01, ROTATE_TYPE::DEG0);
+		break;
+	case 0b01000100: // topright, top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL02, ROTATE_TYPE::DEG0);
+		break;
+	case 0b01000101: // topright, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG180);
+		break;
+	case 0b01000110: // topright, top, right
+	case 0b01100110: // topright, bottomleft, top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG270);
+		break;
+	case 0b01000111: // topright, top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG315);
+		break;
+	case 0b01001000: // topright, bottom
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL00, ROTATE_TYPE::DEG0);
+		break;
+	case 0b01001001: // topright, bottom, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG0);
+		break;
+	case 0b01001010: // topright, bottom, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG90);
+		break;
+	case 0b01001011: // topright, bottom, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG45);
+		break;
+	case 0b01001100: // topright, bottom, top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL01, ROTATE_TYPE::DEG0);
+		break;
+	case 0b01001101: // topright, bottom, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG135);
+		break;
+	case 0b01001110: // topright, bottom, top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG90);
+		break;
+	case 0b01001111: // topright, bottom, top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG0);
+		break;
+	case 0b01010001: // topright, topleft, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL02, ROTATE_TYPE::DEG0);
+		break;
+	case 0b01010010: // topright, topleft, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL00, ROTATE_TYPE::DEG0);
+		break;
+	case 0b01010011: // topright, topleft, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL01, ROTATE_TYPE::DEG0);
+		break;
+	case 0b01010100: // topright, topleft, top
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL02, ROTATE_TYPE::DEG0);
+		break;
+	case 0b01010101: // topright, topleft, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG180);
+		break;
+	case 0b01010110: // topright, topleft, top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG270);
+		break;
+	case 0b01010111: // topright, topleft, top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG180);
+		break;
+	case 0b01011000: // topright, topleft, bottom
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_NOWAYS, ROTATE_TYPE::DEG0);
+		break;
+	case 0b01011101: // topright, topleft, bottom, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG180);
+		break;
+	case 0b01011110: // topright, topleft, bottom, top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG90);
+		break;
+	case 0b01011111: // topright, topleft, bottom, top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_6WAYS, ROTATE_TYPE::DEG135);
+		break;
+	case 0b01100111: // topright, bottomleft, top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG315);
+		break;
+	case 0b01101011: // topright, bottomleft, bottom, right, left
+	case 0b01111011: // topright, bottomleft, topleft, bottom, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG0);
+		break;
+	case 0b01101101: // topright, bottomleft, bottom, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG225);
+		break;
+	case 0b01101110: // topright, bottomleft, bottom, top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG135);
+		break;
+	case 0b01101111: // topright, bottomleft, bottom, top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_6WAYS, ROTATE_TYPE::DEG225);
+		break;
+	case 0b01110111: // topright, bottomleft, topleft, top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG270);
+		break;
+	case 0b01111101: // topright, bottomleft, topleft, bottom, top, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG180);
+		break;
+	case 0b01111110: // topright, bottomleft, topleft, bottom, top, right
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG90);
+		break;
+	case 0b01111111: // topright, bottomleft, topleft, bottom, top, right, left
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_7WAYS, ROTATE_TYPE::DEG0);
 		break;
 	}
 }
@@ -459,33 +735,50 @@ void CMapTool::seaSetting(int tileNum)
 int CMapTool::checkSea(int tileNum, DIRECTION direction)
 {
 	CTile** tile = map->getTile();
-	bool isSea = (map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA) ||
-		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_CURVE) ||
-		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_3WAYS) ||
-		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_4WAYS) ||
-		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL00) ||
-		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL01) ||
-		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL02) ||
-		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL00) ||
-		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL01) ||
-		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL02) ||
-		(map->getTile()[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_NOWAYS);
-
+	bool isSea = (tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_CURVE) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_2WAYS) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_3WAYS) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_4WAYS) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_5WAYS) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_6WAYS) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_7WAYS) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_8WAYS) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL00) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL01) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL02) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL00) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL01) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL02) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_NOWAYS);
+	
 	if (isSea)
 	{
 		switch (direction)
 		{
 		case DIRECTION::LEFT:
-			return 0b0001;
+			return 0b00000001;
 			break;
 		case DIRECTION::RIGHT:
-			return 0b0010;
+			return 0b00000010;
 			break;
 		case DIRECTION::TOP:
-			return 0b0100;
+			return 0b00000100;
 			break;
 		case DIRECTION::BOTTOM:
-			return 0b1000;
+			return 0b00001000;
+			break;
+		case DIRECTION::TOP_LEFT:
+			return 0b00010000;
+			break;
+		case DIRECTION::TOP_RIGHT:
+			return 0b00100000;
+			break;
+		case DIRECTION::BOTTOM_LEFT:
+			return 0b01000000;
+			break;
+		case DIRECTION::BOTTOM_RIGHT:
+			return 0b10000000;
 			break;
 		}
 	}
@@ -496,6 +789,35 @@ void CMapTool::setEnvirType(int tileNum, ENVIRONMENT_TYPE environment, ROTATE_TY
 	CTile** tile = map->getTile();
 	tile[tileNum]->setTileType(environment);
 	tile[tileNum]->setRotateType(rotate);
+}
+
+void CMapTool::setBuilding(int tileNum, BUILDING_TYPE building, PLAYER_TYPE player)
+{
+	map->getTile()[tileNum]->setPlayerType(player);
+	map->getTile()[tileNum]->setBuildingType(building);
+	if(building == BUILDING_TYPE::FACTORY)
+		map->addBuilding(player, map->getTile()[tileNum]->getPos(), true, false, tileNum);
+	else if(building == BUILDING_TYPE::CITY)
+		map->addBuilding(player, map->getTile()[tileNum]->getPos(), false, false, tileNum);
+}
+
+void CMapTool::setHQ(int tileNum, PLAYER_TYPE player)
+{
+	for (int vecIdx = 0; vecIdx < map->getVecBuilding().size(); vecIdx++)
+	{
+		if (map->getVecBuilding()[vecIdx]->getIsHQ() &&
+			map->getVecBuilding()[vecIdx]->getPlayerType() == player)
+		{
+			int tileIdx = map->getVecBuilding()[vecIdx]->getTileIdx();
+			map->getTile()[tileIdx]->setTileType(ENVIRONMENT_TYPE::PLAIN);
+			map->getTile()[tileIdx]->setBuildingType(BUILDING_TYPE::NONE);
+			map->getTile()[tileIdx]->setPlayerType(PLAYER_TYPE::NONE);
+			map->eraseBuilding(tileIdx);
+		}
+	}
+	map->getTile()[tileNum]->setPlayerType(player);
+	map->getTile()[tileNum]->setBuildingType(BUILDING_TYPE::HEADQUATERS);
+	map->addBuilding(player, map->getTile()[tileNum]->getPos(), false, true, tileNum);
 }
 
 bool CMapTool::save(const char* fileName)
