@@ -21,7 +21,6 @@ enum class ENVIRONMENT_TYPE
 	ROAD_3WAYS,
 	ROAD_4WAYS,
 
-	SEA_CURVE,
 	SEA_2WAYS,
 	SEA_3WAYS,
 	SEA_4WAYS,
@@ -39,7 +38,6 @@ enum class ENVIRONMENT_TYPE
 	SEA_HORIZONTAL02,
 	SEA_NOWAYS
 };
-
 enum class BUILDING_TYPE
 {
 	NONE,
@@ -64,7 +62,6 @@ enum class UNIT_TYPE
 	ARTILLERY,
 	APC
 };
-
 enum class RECT_EDGE
 {
 	LEFT,
