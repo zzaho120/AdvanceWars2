@@ -13,7 +13,7 @@ CTile::CTile() :
 
 CTile::CTile(Vec2 _pos, Vec2 _size, image* _img, animation* _ani) :
 	CObject(_pos, _size, _img, _ani),
-	tileType(static_cast<ENVIRONMENT_TYPE>(RND->getFromIntTo(1,4))),
+	tileType(static_cast<ENVIRONMENT_TYPE>(1)),
 	buildingType(BUILDING_TYPE::NONE),
 	unitType(UNIT_TYPE::NONE),
 	playerType(PLAYER_TYPE::NONE),
