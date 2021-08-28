@@ -411,333 +411,7 @@ void CMapTool::seaSetting(int tileNum)
 	if (tileNum > 29) seaType += checkSea(tileNum - 30, DIRECTION::TOP);
 	if (tileNum < 570) seaType += checkSea(tileNum + 30, DIRECTION::BOTTOM);
 
-	switch (seaType)
-	{
-	case 0b00000000: 
-	case 0b00010000: 
-	case 0b00100000: 
-	case 0b00110000: 
-	case 0b01000000: 
-	case 0b01010000: 
-	case 0b01100000: 
-	case 0b01110000: 
-	case 0b10000000: 
-	case 0b10010000: 
-	case 0b10100000: 
-	case 0b10110000: 
-	case 0b11000000: 
-	case 0b11010000: 
-	case 0b11110000: 
-		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_NOWAYS, ROTATE_TYPE::DEG0);
-		break;
-	}
-	//switch (seaType)
-	//{
-	//case 0b00000001: // left
-	//case 0b01100001: // topright, bottomleft, left
-	//case 0b01110001: // topright, bottomleft, topleft, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL02, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00000010: // right
-	//case 0b01100010: // topright, bottomleft, right
-	//case 0b01110010: // topright, bottomleft, topleft, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL00, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00000011: // right, left
-	//case 0b01100011: // topright, bottomleft, right, left
-	//case 0b01110011: // topright, bottomleft, topleft, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL01, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00000100: // top
-	//case 0b01100100: // topright, bottomleft, top
-	//case 0b01110100: // topright, bottomleft, topleft, top
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL02, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00000101: // top, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG180);
-	//	break;
-	//case 0b00000110: // top, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG270);
-	//	break;
-	//case 0b00000111: // top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG225);
-	//	break;
-	//case 0b00001000: // bottom
-	//case 0b01101000: // topright, bottomleft, bottom
-	//case 0b01111000: // topright, bottomleft, topleft, bottom
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL00, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00001001: // bottom, left
-	//case 0b01011001: // topright, topleft, bottom, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00001010: // bottom, right
-	//case 0b01011010: // topright, topleft, bottom, right
-	//case 0b01101010: // topright, bottomleft, bottom, right
-	//case 0b01111010: // topright, bottomleft, topleft, bottom, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG90);
-	//	break;
-	//case 0b00001011: // bottom, right, left
-	//case 0b01011011: // topright, topleft, bottom, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG45);
-	//	break;
-	//case 0b00001100: // bottom, top
-	//case 0b01011100: // topright, topleft, bottom, top
-	//case 0b01101100: // topright, bottomleft, bottom, top
-	//case 0b01111100: // topright, bottomleft, topleft, bottom, top
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL01, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00001101: // bottom, top, left
-	//case 0b01100101: // topright, bottomleft, top, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG135);
-	//	break;
-	//case 0b00001110: // bottom, top, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG315);
-	//	break;
-	//case 0b00001111: // bottom, top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG360);
-	//	break;
-	//
-	//case 0b00010001: // topleft, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL02, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00010010: // topleft, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL00, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00010011: // topleft, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL01, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00010100: // topleft, top
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL02, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00010101: // topleft, top, left
-	//case 0b01110101: // topright, bottomleft, topleft, top, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG180);
-	//	break;
-	//case 0b00010110: // topleft, top, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG270);
-	//	break;
-	//case 0b00010111: // topleft, top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG270);
-	//	break;
-	//case 0b00011000: // topleft, bottom
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL00, ROTATE_TYPE::DEG270);
-	//	break;
-	//case 0b00011001: // topleft, bottom, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00011010: // topleft, bottom, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG90);
-	//	break;
-	//case 0b00011011: // topleft, bottom, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG45);
-	//	break;
-	//case 0b00011100: // topleft, bottom, top
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL01, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00011101: // topleft, bottom, top, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG90);
-	//	break;
-	//case 0b00011110: // topleft, bottom, top, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG270);
-	//	break;
-	//case 0b00011111: // topleft, bottom, top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00100001: // bottomleft, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL02, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00100010: // bottomleft, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL00, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00100011: // bottomleft, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL01, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00100100: // bottomleft, top
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL02, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00100101: // bottomleft, top, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG270);
-	//	break;
-	//case 0b00101000: // bottomleft, bottom
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL00, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00101001: // bottomleft, bottom, left
-	//case 0b01101001: // topright, bottomleft, bottom, left
-	//case 0b01111001: // topright, bottomleft, topleft, bottom, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG90);
-	//	break;
-	//case 0b00101010: // bottomleft, bottom, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG180);
-	//	break;
-	//case 0b00101011: // bottomleft, bottom, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00101100: // bottomleft, bottom, top
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL01, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00101101: // bottomleft, bottom, top, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG225);
-	//	break;
-	//case 0b00101110: // bottomleft, bottom, top, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG315);
-	//	break;
-	//case 0b00101111: // bottomleft, bottom, top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG180);
-	//	break;
-	//case 0b00110001: // bottomleft, topleft, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL02, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00110010: // bottomleft, topleft, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL00, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00110011: // bottomleft, topleft, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL01, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00110100: // bottomleft, topleft, top
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL02, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00110101: // bottomleft, topleft, top, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG180);
-	//	break;
-	//case 0b00110110: // bottomleft, topleft, top, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG270);
-	//	break;
-	//case 0b00110111: // bottomleft, topleft, top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG315);
-	//	break;
-	//case 0b00111000: // bottomleft, topleft, bottom
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL00, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00111001: // bottomleft, topleft, bottom, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG135);
-	//	break;
-	//case 0b00111010: // bottomleft, topleft, bottom, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG90);
-	//	break;
-	//case 0b00111011: // bottomleft, topleft, bottom, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00111100: // bottomleft, topleft, bottom, top
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL00, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b00111101: // bottomleft, topleft, bottom, top, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG90);
-	//	break;
-	//case 0b00111110: // bottomleft, topleft, bottom, top, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG315);
-	//	break;
-	//case 0b00111111: // bottomleft, topleft, bottom, top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_6WAYS, ROTATE_TYPE::DEG45);
-	//	break;
-	//case 0b01000001: // topright, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL02, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b01000010: // topright, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL00, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b01000011: // topright, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL01, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b01000100: // topright, top
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL02, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b01000101: // topright, top, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG180);
-	//	break;
-	//case 0b01000110: // topright, top, right
-	//case 0b01100110: // topright, bottomleft, top, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG270);
-	//	break;
-	//case 0b01000111: // topright, top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG315);
-	//	break;
-	//case 0b01001000: // topright, bottom
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL00, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b01001001: // topright, bottom, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b01001010: // topright, bottom, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG90);
-	//	break;
-	//case 0b01001011: // topright, bottom, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG45);
-	//	break;
-	//case 0b01001100: // topright, bottom, top
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL01, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b01001101: // topright, bottom, top, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG135);
-	//	break;
-	//case 0b01001110: // topright, bottom, top, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG90);
-	//	break;
-	//case 0b01001111: // topright, bottom, top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b01010001: // topright, topleft, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL02, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b01010010: // topright, topleft, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL00, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b01010011: // topright, topleft, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL01, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b01010100: // topright, topleft, top
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL02, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b01010101: // topright, topleft, top, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG180);
-	//	break;
-	//case 0b01010110: // topright, topleft, top, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG270);
-	//	break;
-	//case 0b01010111: // topright, topleft, top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG180);
-	//	break;
-	//case 0b01011000: // topright, topleft, bottom
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_NOWAYS, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b01011101: // topright, topleft, bottom, top, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG180);
-	//	break;
-	//case 0b01011110: // topright, topleft, bottom, top, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG90);
-	//	break;
-	//case 0b01011111: // topright, topleft, bottom, top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_6WAYS, ROTATE_TYPE::DEG135);
-	//	break;
-	//case 0b01100111: // topright, bottomleft, top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG315);
-	//	break;
-	//case 0b01101011: // topright, bottomleft, bottom, right, left
-	//case 0b01111011: // topright, bottomleft, topleft, bottom, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG0);
-	//	break;
-	//case 0b01101101: // topright, bottomleft, bottom, top, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG225);
-	//	break;
-	//case 0b01101110: // topright, bottomleft, bottom, top, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG135);
-	//	break;
-	//case 0b01101111: // topright, bottomleft, bottom, top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_6WAYS, ROTATE_TYPE::DEG225);
-	//	break;
-	//case 0b01110111: // topright, bottomleft, topleft, top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG270);
-	//	break;
-	//case 0b01111101: // topright, bottomleft, topleft, bottom, top, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG180);
-	//	break;
-	//case 0b01111110: // topright, bottomleft, topleft, bottom, top, right
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG90);
-	//	break;
-	//case 0b01111111: // topright, bottomleft, topleft, bottom, top, right, left
-	//	setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_7WAYS, ROTATE_TYPE::DEG0);
-	//	break;
-	//}
+	seaTileSet(tileNum, seaType);
 }
 
 int CMapTool::checkSea(int tileNum, DIRECTION direction)
@@ -788,6 +462,404 @@ int CMapTool::checkSea(int tileNum, DIRECTION direction)
 			return 0b10000000;
 			break;
 		}
+	}
+}
+
+void CMapTool::seaTileSet(int tileNum, int seaType)
+{
+	switch (seaType)
+	{
+	case 0b00000000: // noway
+	case 0b00010000: // TL
+	case 0b00100000: // TR
+	case 0b00110000: // TR, TL
+	case 0b01000000: // BL
+	case 0b01010000: // BL, TL
+	case 0b01100000: // BL, TR
+	case 0b01110000: // BL, TR, TL
+
+	case 0b10000000: // BR
+	case 0b10010000: // BR, TL
+	case 0b10100000: // BR, TR
+	case 0b10110000: // BR, TR, TL
+	case 0b11000000: // BR, BL
+	case 0b11010000: // BR, BL, TL
+	case 0b11100000: // BR, BL, TR
+	case 0b11110000: // BR, BL, TR, TL
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_NOWAYS, ROTATE_TYPE::DEG0);
+		break;
+
+	case 0b00000001: // L
+	case 0b00010001: // TL, L
+	case 0b00100001: // TR, L
+	case 0b00110001: // TR, TL, L
+	case 0b01000001: // BL, L
+	case 0b01010001: // BL, TL, L
+	case 0b01100001: // BL, TR, L
+	case 0b01110001: // BL, TR, TL, L
+
+	case 0b10000001: // BR, L
+	case 0b10010001: // BR, TL, L
+	case 0b10100001: // BR, TR, L
+	case 0b10110001: // BR, TR, TL, L
+	case 0b11000001: // BR, BL, L
+	case 0b11010001: // BR, BL, TL, L
+	case 0b11100001: // BR, BL, TR, L
+	case 0b11110001: // BR, BL, TR, TL, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL02, ROTATE_TYPE::DEG0);
+		break;
+
+	case 0b00000010: // R
+	case 0b00010010: // TL, R
+	case 0b00100010: // TR, R
+	case 0b00110010: // TR, TL, R
+	case 0b01000010: // BL, R
+	case 0b01010010: // BL, TL, R
+	case 0b01100010: // BL, TR, R
+	case 0b01110010: // BL, TR, TL, R
+
+	case 0b10000010: // BR, R
+	case 0b10010010: // BR, TL, R
+	case 0b10100010: // BR, TR, R
+	case 0b10110010: // BR, TR, TL, R
+	case 0b11000010: // BR, BL, R
+	case 0b11010010: // BR, BL, TL, R
+	case 0b11100010: // BR, BL, TR, R
+	case 0b11110010: // BR, BL, TR, TL, R
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL00, ROTATE_TYPE::DEG0);
+		break;
+
+	case 0b00000011: // R, L
+	case 0b00010011: // TL, R, L
+	case 0b00100011: // TR, R, L
+	case 0b00110011: // TR, TL, R, L
+	case 0b01000011: // BL, R, L
+	case 0b01010011: // BL, TL, R, L
+	case 0b01100011: // BL, TR, R, L
+	case 0b01110011: // BL, TR, TL, R, L
+
+	case 0b10000011: // BR, R, L
+	case 0b10010011: // BR, TL, R, L
+	case 0b10100011: // BR, TR, R, L
+	case 0b10110011: // BR, TR, TL, R, L
+	case 0b11000011: // BR, BL, R, L
+	case 0b11010011: // BR, BL, TL, R, L
+	case 0b11100011: // BR, BL, TR, R, L
+	case 0b11110011: // BR, BL, TR, TL, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_HORIZONTAL01, ROTATE_TYPE::DEG0);
+		break;
+
+	case 0b00000100: // T
+	case 0b00010100: // TL, T
+	case 0b00100100: // TR, T
+	case 0b00110100: // TR, TL, T
+	case 0b01000100: // BL, T
+	case 0b01010100: // BL, TL, T
+	case 0b01100100: // BL, TR, T
+	case 0b01110100: // BL, TR, TL, T
+
+	case 0b10000100: // BR, T
+	case 0b10010100: // BR, TL, T
+	case 0b10100100: // BR, TR, T
+	case 0b10110100: // BR, TR, TL, T
+	case 0b11000100: // BR, BL, T
+	case 0b11010100: // BR, BL, TL, T
+	case 0b11100100: // BR, BL, TR, T
+	case 0b11110100: // BR, BL, TR, TL, T
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL02, ROTATE_TYPE::DEG0);
+		break;
+
+	case 0b00001000: // B
+	case 0b00011000: // TL, B
+	case 0b00101000: // TR, B
+	case 0b00111000: // TR, TL, B
+	case 0b01001000: // BL, B
+	case 0b01011000: // BL, TL, B
+	case 0b01101000: // BL, TR, B
+	case 0b01111000: // BL, TR, TL, B
+
+	case 0b10001000: // BR, B
+	case 0b10011000: // BR, TL, B
+	case 0b10101000: // BR, TR, B
+	case 0b10111000: // BR, TR, TL, B
+	case 0b11001000: // BR, BL, B
+	case 0b11011000: // BR, BL, TL, B
+	case 0b11101000: // BR, BL, TR, B
+	case 0b11111000: // BR, BL, TR, TL, B
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL00, ROTATE_TYPE::DEG0);
+		break;
+
+	case 0b00001100: // B, T
+	case 0b00011100: // TL, B, T
+	case 0b00101100: // TR, B, T
+	case 0b00111100: // TR, TL, B, T
+	case 0b01001100: // BL, B, T
+	case 0b01011100: // BL, TL, B, T
+	case 0b01101100: // BL, TR, B, T
+	case 0b01111100: // BL, TR, TL, B, T
+
+	case 0b10001100: // BR, B, T
+	case 0b10011100: // BR, TL, B, T
+	case 0b10101100: // BR, TR, B, T
+	case 0b10111100: // BR, TR, TL, B, T
+	case 0b11001100: // BR, BL, B, T
+	case 0b11011100: // BR, BL, TL, B, T
+	case 0b11101100: // BR, BL, TR, B, T
+	case 0b11111100: // BR, BL, TR, TL, B, T
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_VERTICAL01, ROTATE_TYPE::DEG0);
+		break;
+
+	case 0b00001001: // B, L
+	case 0b00011001: // TL, B, L
+	case 0b00101001: // TR, B, L
+	case 0b00111001: // TR, TL, B, L
+	case 0b10001001: // BR, B, L
+	case 0b10011001: // BR, TL, B, L
+	case 0b10101001: // BR, TR, B, L
+	case 0b10111001: // BR, TR, TL, B, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG0);
+		break;
+
+	case 0b00001010: // B, R
+	case 0b00011010: // TL, B, R
+	case 0b00101010: // TR, B, R
+	case 0b00111010: // TR, TL, B, R
+	case 0b01001010: // BR, B, R
+	case 0b01011010: // BR, TL, B, R
+	case 0b01101010: // BR, TR, B, R
+	case 0b01111010: // BR, TR, TL, B, R
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG90);
+		break;
+
+	case 0b00000101: // T, L
+	case 0b00100101: // TR, T, L
+	case 0b01000101: // BL, T, L
+	case 0b01100101: // BL, TR, T, L
+	case 0b10000101: // BR, T, L
+	case 0b10100101: // BR, TR, T, L
+	case 0b11000101: // BR, BL, T, L
+	case 0b11100101: // BR, BL, TR, T, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG180);
+		break;
+
+	case 0b00000110: // T, R
+	case 0b00010110: // TL, T, R
+	case 0b01000110: // BL, T, R
+	case 0b01010110: // BL, TL, T, R
+	case 0b10000110: // BR, T, R
+	case 0b10010110: // BR, TL, T, R
+	case 0b11000110: // BR, BL, T, R
+	case 0b11010110: // BR, BL, TL, T, R
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_2WAYS, ROTATE_TYPE::DEG270);
+		break;
+
+	case 0b10001010: // BR, B, R
+	case 0b10011010: // BR, TL, B, R
+	case 0b10101010: // BR, TR, B, R
+	case 0b10111010: // BR, TR, TL, B, R
+	case 0b11001010: // BR, BL, B, R
+	case 0b11011010: // BR, BL, TL, B, R
+	case 0b11101010: // BR, BL, TR, B, R
+	case 0b11111010: // BR, BL, TR, TL, B, R
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG0);
+		break;
+
+	case 0b00001011: // B, R, L
+	case 0b00011011: // TL, B, R, L
+	case 0b00101011: // TR, B, R, L
+	case 0b00111011: // TR, TL, B, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG45);
+		break;
+
+	case 0b01001001: // BL, B, L
+	case 0b01011001: // BL, TL, B, L
+	case 0b01101001: // BL, TR, B, L
+	case 0b01111001: // BR, TR, TL, B, L
+	case 0b11001001: // BR, BL, B, L
+	case 0b11011001: // BR, BL, TL, B, L
+	case 0b11101001: // BR, BL, TR, B, L
+	case 0b11111001: // BR, BL, TR, TL, B, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG90);
+		break;
+
+	case 0b00001101: // B, T, L
+	case 0b00101101: // TR, B, T, L
+	case 0b10001101: // BR, B, T, L
+	case 0b10101101: // BR, TR, B, T, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG135);
+		break;
+
+	case 0b00010101: // TL, T, L
+	case 0b00110101: // TR, TL, T, L
+	case 0b01010101: // BL, TL, T, L
+	case 0b01110101: // BL, TR, TL, T, L
+	case 0b10010101: // BR, TL, T, L
+	case 0b10110101: // BR, TR, TL, T, L
+	case 0b11010101: // BR, BL, TL, T, L
+	case 0b11110101: // BR, BL, TR, TL, T, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG180);
+		break;
+
+	case 0b00000111: // T, R, L
+	case 0b01000111: // BL, T, R, L
+	case 0b10000111: // BR, T, R, L
+	case 0b11000111: // BR, BL, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG225);
+		break;
+
+	case 0b00100110: // TR, T, R
+	case 0b00110110: // TR, TL, T, R
+	case 0b01100110: // BL, TR, T, R
+	case 0b01110110: // BL, TR, TL, T, R
+	case 0b10100110: // BR, TR, T, R
+	case 0b10110110: // BR, TR, TL, T, R
+	case 0b11100110: // BR, BL, TR, T, R
+	case 0b11110110: // BR, BL, TR, TL, T, R
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG270);
+		break;
+
+	case 0b00001110: // B, T, L
+	case 0b00011110: // TL, B, T, L
+	case 0b01001110: // BL, B, T, L
+	case 0b01011110: // BL, TL, B, T, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_3WAYS, ROTATE_TYPE::DEG315);
+		break;
+
+	case 0b01001011: // BL, B, R, L
+	case 0b01011011: // BL, TL, B, R, L
+	case 0b01101011: // BL, TR, B, R, L
+	case 0b01111011: // BL, TR, TL, B, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG0);
+		break;
+
+	case 0b10001011: // BR, B, R, L
+	case 0b10011011: // BR, TL, B, R, L
+	case 0b10101011: // BR, TR, B, R, L
+	case 0b10111011: // BR, TR, TL, B, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG45);
+		break;
+
+	case 0b00101110: // TR, B, T, R
+	case 0b00111110: // TR, TL, B, T, R
+	case 0b01101110: // BL, TR, B, T, R
+	case 0b01111110: // BL, TR, TL, B, T, R
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG90);
+		break;
+
+	case 0b10001110: // BR, B, T, R
+	case 0b10011110: // BR, TL, B, T, R
+	case 0b11001110: // BR, BL, B, T, R
+	case 0b11011110: // BR, BL, TL, B, T, R
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG135);
+		break;
+
+	case 0b00011101: // TL, B, T, L
+	case 0b00111101: // TR, TL, B, T, L
+	case 0b10011101: // BR, TL, B, T, L
+	case 0b10111101: // BR, TR, TL, B, T, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG180);
+		break;
+
+	case 0b01001101: // BL, B, T, L
+	case 0b01101101: // BL, TR, B, T, L
+	case 0b11001101: // BR, BL, B, T, L
+	case 0b11101101: // BR, BL, TR, B, T, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG225);
+		break;
+
+	case 0b00010111: // TL, T, R, L
+	case 0b01010111: // BL, TL, T, R, L
+	case 0b10010111: // BR, TL, T, R, L
+	case 0b11010111: // BR, BL, TL, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG270);
+		break;
+
+	case 0b00100111: // TR, T, R, L
+	case 0b01100111: // BL, TR, T, R, L
+	case 0b10100111: // BR, TR, T, R, L
+	case 0b11100111: // BR, BL, TR, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG315);
+		break;
+
+	case 0b00001111: // B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_4WAYS, ROTATE_TYPE::DEG360);
+		break;
+
+	case 0b11001011: // BR, BL, B, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG0);
+		break;
+
+	case 0b00011111: // TL, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG45);
+		break;
+
+	case 0b10101110: // BR, TR, B, T, R
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG90);
+		break;
+
+	case 0b00101111: // TR, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG135);
+		break;
+
+	case 0b01011101: // BL, TL, B, T, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG180);
+		break;
+
+	case 0b01001111: // BL, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG225);
+		break;
+
+	case 0b00110111: // TR, TL, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG270);
+		break;
+
+	case 0b10001111: // BR, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG315);
+		break;
+
+	case 0b11001111: // BR, BL, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_6WAYS, ROTATE_TYPE::DEG0);
+		break;
+
+	case 0b01011111: // BL, TL, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_6WAYS, ROTATE_TYPE::DEG45);
+		break;
+
+	case 0b10101111: // BR, TR, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_6WAYS, ROTATE_TYPE::DEG90);
+		break;
+
+	case 0b00111111: // TR, TL, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_6WAYS, ROTATE_TYPE::DEG135);
+		break;
+
+	case 0b01101111: // BL, TR, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_6WAYS, ROTATE_TYPE::DEG180);
+		break;
+
+	case 0b10011111: // BL, TR, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_6WAYS, ROTATE_TYPE::DEG225);
+		break;
+
+	case 0b01111111: // BL, TR, TL, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_7WAYS, ROTATE_TYPE::DEG0);
+		break;
+
+	case 0b10111111: // BL, TR, TL, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_7WAYS, ROTATE_TYPE::DEG90);
+		break;
+
+	case 0b11011111: // BL, TR, TL, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_7WAYS, ROTATE_TYPE::DEG180);
+		break;
+
+	case 0b11101111: // BL, TR, TL, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_7WAYS, ROTATE_TYPE::DEG270);
+		break;
+
+	case 0b11111111: // BR, BL, TR, TL, B, T, R, L
+		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_8WAYS, ROTATE_TYPE::DEG0);
+		break;
 	}
 }
 

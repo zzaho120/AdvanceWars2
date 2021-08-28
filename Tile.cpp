@@ -338,9 +338,6 @@ void CTile::tileRender()
 		case ROTATE_TYPE::DEG315:
 			ani = ANIMATION->findAnimation("sea_3ways_left");
 			break;
-		case ROTATE_TYPE::DEG360:
-			ani = ANIMATION->findAnimation("sea_3ways_left");
-			break;
 		}
 		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
 		break;
@@ -431,13 +428,10 @@ void CTile::tileRender()
 		case ROTATE_TYPE::DEG225:
 			ani = ANIMATION->findAnimation("sea_6ways05");
 			break;
-		case ROTATE_TYPE::DEG270:
-			break;
-		case ROTATE_TYPE::DEG315:
-			break;
 		}
 		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
 		break;
+
 	case ENVIRONMENT_TYPE::SEA_7WAYS:
 		switch (rotateType)
 		{

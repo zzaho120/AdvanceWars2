@@ -32,6 +32,7 @@ public:
 
 	void seaSetting(int tileNum);
 	int checkSea(int tileNum, DIRECTION direction);
+	void seaTileSet(int tileNum, int seaType);
 
 	void setEnvirType(int tileNum, ENVIRONMENT_TYPE environment, ROTATE_TYPE rotate);
 
