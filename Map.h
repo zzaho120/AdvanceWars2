@@ -17,8 +17,6 @@ private:
 public:
 	CMap();
 	CMap(Vec2 startPos, Vec2 size);
-	CMap(const CMap& copy);
-	CMap(const CMap* copy);
 	~CMap();
 
 	HRESULT init();
@@ -26,8 +24,7 @@ public:
 	void update();
 	void render();
 
-	CMap& operator=(const CMap& ref);
-	CMap* operator=(const CMap* ref);
+	void load(const char* fileName);
 
 	CTile** getTile() { return tile; }
 	vector<CBuilding*> getVecBuilding() { return vecBuilding; }
@@ -35,4 +32,5 @@ public:
 
 	void addBuilding(PLAYER_TYPE type, Vec2 pos, bool factory, bool HQ, int idx);
 	void eraseBuilding(int idx);
+	void clearBuilding();
 };

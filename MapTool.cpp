@@ -31,6 +31,9 @@ void CMapTool::update()
 	if (!SUBWIN->GetIsActive() && InputManager->isOnceKeyDown(VK_SPACE))
 		setMap();
 
+	if (InputManager->isOnceKeyDown('J'))
+		setAllTile(ENVIRONMENT_TYPE::SEA);
+
 	map->update();
 	cam->setTargetVec2(cursor);
 	cam->update();
@@ -98,7 +101,20 @@ void CMapTool::setMap()
 					tile->setDirectionType(DIRECTION_SPRITE::YES);
 					break;
 				case 6:
-					if (tile->getTileType() == ENVIRONMENT_TYPE::RIVER_LINE)
+					bool isSea = 
+						tile->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL01 ||
+						tile->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL01;
+					bool isRiver =
+						tile->getTileType() == ENVIRONMENT_TYPE::RIVER_LINE;
+
+					if (isSea)
+					{
+						if (tile->getTileType() == ENVIRONMENT_TYPE::SEA_VERTICAL01)
+							setEnvirType(idx, ENVIRONMENT_TYPE::BRIDGE, ROTATE_TYPE::DEG0);
+						else if (tile->getTileType() == ENVIRONMENT_TYPE::SEA_HORIZONTAL01)
+							setEnvirType(idx, ENVIRONMENT_TYPE::BRIDGE, ROTATE_TYPE::DEG90);
+					}
+					else if (isSea)
 					{
 						if (tile->getRotateType() == ROTATE_TYPE::DEG0)
 							setEnvirType(idx, ENVIRONMENT_TYPE::BRIDGE, ROTATE_TYPE::DEG0);
@@ -192,7 +208,8 @@ void CMapTool::tileDirectionSet()
 			continue;
 		}
 
-		bool isSea = (tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA) ||
+		bool isSea = 
+			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA) ||
 			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_2WAYS) ||
 			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_3WAYS) ||
 			(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_4WAYS) ||
@@ -423,7 +440,8 @@ void CMapTool::seaSetting(int tileNum)
 int CMapTool::checkSea(int tileNum, DIRECTION direction)
 {
 	CTile** tile = map->getTile();
-	bool isSea = (tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA) ||
+	bool isSea = (tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::BRIDGE) ||
+		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA) ||
 		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_2WAYS) ||
 		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_3WAYS) ||
 		(tile[tileNum]->getTileType() == ENVIRONMENT_TYPE::SEA_4WAYS) ||
@@ -922,9 +940,11 @@ bool CMapTool::save(const char* fileName)
 	HANDLE file;
 	DWORD write;
 	bool result;
-	CMap save[1];
+	CTile save[TILE_NUM_X * TILE_NUM_Y];
 
-	save[0] = map;
+	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
+		save[idx] = map->getTile()[idx];
+
 	file = CreateFile(fileName,
 		GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
@@ -940,15 +960,40 @@ bool CMapTool::load(const char* fileName)
 	HANDLE file;
 	DWORD read;
 	bool result;
-	CMap* load[1];
+	CTile load[TILE_NUM_X * TILE_NUM_Y];
 
 	file = CreateFile(fileName,
 		GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	result = ReadFile(file, load, sizeof(load), &read, NULL);
-	map = new CMap(load[0]);
+
+	map->clearBuilding();
+	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
+	{
+		bool isFactory = false, isHQ = false;
+		map->getTile()[idx] = new CTile(load[idx]);
+
+		if (map->getTile()[idx]->getBuildtype() != BUILDING_TYPE::NONE)
+		{
+			if (map->getTile()[idx]->getBuildtype() == BUILDING_TYPE::FACTORY)
+				isFactory = true;
+			else if (map->getTile()[idx]->getBuildtype() == BUILDING_TYPE::HEADQUATERS)
+				isHQ = true;
+			map->addBuilding(map->getTile()[idx]->getPlayerType(),
+				map->getTile()[idx]->getPos(),
+				isFactory,
+				isHQ,
+				idx);
+		}			
+	}
 
 	CloseHandle(file);
 
 	return result;
+}
+
+void CMapTool::setAllTile(ENVIRONMENT_TYPE type)
+{
+	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
+		map->getTile()[idx]->setTileType(type);
 }

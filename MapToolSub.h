@@ -17,4 +17,3 @@ public:
 	void mapToolSetup();
 	void setMap();
 };
-

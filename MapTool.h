@@ -8,8 +8,6 @@ private:
 	CMap* map;
 	CCamera* cam;
 	Vec2 cursor;
-
-	bool isToolMode;
 public:
 	CMapTool();
 	~CMapTool();
@@ -41,6 +39,8 @@ public:
 
 	bool save(const char* fileName);
 	bool load(const char* fileName);
+
+	void setAllTile(ENVIRONMENT_TYPE type);
 
 	// 옵저버 패턴 구현 전
 	//void subscribe(CObject* obj);

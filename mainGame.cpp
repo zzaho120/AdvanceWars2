@@ -9,10 +9,11 @@ mainGame::~mainGame()
 HRESULT mainGame::init()
 {
 	gameNode::init(true);
-	maptool = new CMapTool;
-	maptool->init();
-	SUBWIN->SetMapLink(maptool);
-	SUBWIN->SetScene(new CMapToolSub);
+	//maptool = new CMapTool;
+	//maptool->init();
+	//SUBWIN->init();
+	//SUBWIN->SetMapLink(maptool);
+	//SUBWIN->SetScene(new CMapToolSub);
 	return S_OK;
 }
 
@@ -24,8 +25,8 @@ void mainGame::release()
 void mainGame::update()
 {
 	gameNode::update();
-	maptool->update();
-	SUBWIN->update();
+	//maptool->update();
+	//SUBWIN->update();
 }
 
 void mainGame::render(/*HDC hdc*/)
@@ -33,8 +34,8 @@ void mainGame::render(/*HDC hdc*/)
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
 	//==============================================
 	gameNode::render();
-	maptool->render();
-	SUBWIN->render();
+	//maptool->render();
+	//SUBWIN->render();
 	TIME->render(getMemDC());
 	//==============================================
 	//백버퍼의 내용을 HDC그린다.(건드리지 말것.)

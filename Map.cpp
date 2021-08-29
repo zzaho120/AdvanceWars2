@@ -28,36 +28,6 @@ CMap::CMap(Vec2 startPos, Vec2 size) :
 	}
 }
 
-CMap::CMap(const CMap& copy)
-{
-	for (int horizontal = 0; horizontal < TILE_NUM_Y; horizontal++)
-	{
-		for (int vertical = 0; vertical < TILE_NUM_X; vertical++)
-			tile[horizontal * TILE_NUM_X + vertical] = copy.tile[horizontal * TILE_NUM_X + vertical];
-	}
-
-	vecBuilding.clear();
-	for (int idx = 0; idx < copy.vecBuilding.size(); idx++)
-		vecBuilding.push_back(copy.vecBuilding[idx]);
-
-	isDebug = copy.isDebug;
-}
-
-CMap::CMap(const CMap* copy)
-{
-	for (int horizontal = 0; horizontal < TILE_NUM_Y; horizontal++)
-	{
-		for (int vertical = 0; vertical < TILE_NUM_X; vertical++)
-			tile[horizontal * TILE_NUM_X + vertical] = copy->tile[horizontal * TILE_NUM_X + vertical];
-	}
-
-	vecBuilding.clear();
-	for (int idx = 0; idx < copy->vecBuilding.size(); idx++)
-		vecBuilding.push_back(copy->vecBuilding[idx]);
-
-	isDebug = copy->isDebug;
-}
-
 CMap::~CMap()
 {
 	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
@@ -106,35 +76,10 @@ void CMap::render()
 	}
 }
 
-CMap& CMap::operator=(const CMap& ref)
+void CMap::load(const char* fileName)
 {
-	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
-		tile[idx] = ref.tile[idx];
-
-	cam = ref.cam;
-
-	vecBuilding.clear();
-	for (int idx = 0; idx < ref.vecBuilding.size(); idx++)
-		vecBuilding.push_back(ref.vecBuilding[idx]);
-
-	isDebug = ref.isDebug;
-	return *this;
 }
 
-CMap* CMap::operator=(const CMap* ref)
-{
-	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
-		tile[idx] = ref->tile[idx];
-
-	cam = ref->cam;
-
-	vecBuilding.clear();
-	for (int idx = 0; idx < ref->vecBuilding.size(); idx++)
-		vecBuilding.push_back(ref->vecBuilding[idx]);
-
-	isDebug = ref->isDebug;
-	return this;
-}
 
 void CMap::addBuilding(PLAYER_TYPE type, Vec2 pos,bool factory, bool HQ, int idx)
 {
@@ -148,4 +93,9 @@ void CMap::eraseBuilding(int idx)
 		if(vecBuilding[i]->getTileIdx() == idx)
 			vecBuilding.erase(vecBuilding.begin() + i);
 	}
+}
+
+void CMap::clearBuilding()
+{
+	vecBuilding.clear();
 }

@@ -40,7 +40,6 @@ HRESULT gameNode::init(bool managerInit)
 		IMAGE->init();
 		TIME->init();
 		SOUND->init();
-		SUBWIN->init();
 
 		CResourceLoadFacade* resourceLoadFacade = new CResourceLoadFacade;
 		resourceLoadFacade->resourceLoad();
