@@ -14,6 +14,9 @@ HRESULT mainGame::init()
 	//SUBWIN->init();
 	//SUBWIN->SetMapLink(maptool);
 	//SUBWIN->SetScene(new CMapToolSub);
+
+	test = new CTestGame;
+	test->init();
 	return S_OK;
 }
 
@@ -27,6 +30,7 @@ void mainGame::update()
 	gameNode::update();
 	//maptool->update();
 	//SUBWIN->update();
+	test->update();
 }
 
 void mainGame::render(/*HDC hdc*/)
@@ -36,6 +40,7 @@ void mainGame::render(/*HDC hdc*/)
 	gameNode::render();
 	//maptool->render();
 	//SUBWIN->render();
+	test->render();
 	TIME->render(getMemDC());
 	//==============================================
 	//백버퍼의 내용을 HDC그린다.(건드리지 말것.)

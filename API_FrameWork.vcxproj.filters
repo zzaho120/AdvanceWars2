@@ -180,6 +180,9 @@
     <ClInclude Include="MapToolSub.h">
       <Filter>Class\MapTool</Filter>
     </ClInclude>
+    <ClInclude Include="TestGame.h">
+      <Filter>Class</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -262,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="MapToolSub.cpp">
       <Filter>Class\MapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="TestGame.cpp">
+      <Filter>Class</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

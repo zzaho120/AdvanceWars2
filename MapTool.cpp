@@ -47,12 +47,6 @@ void CMapTool::render()
 	map->render();
 	IMAGE->findImage("cursor")->aniRender(getMapDC(), cursor.x - 32, cursor.y - 32, ANIMATION->findAnimation("cursor_ani"));
 	this->getMapBuffer()->render(getMemDC(), 0, 0, cam->getCam1().x, cam->getCam1().y, cam->getCamSize().x, cam->getCamSize().y);
-
-	CMap* save[1];
-	save[0] = map;
-	TCHAR str[128];
-	wsprintf(str, "%d", save[0]->getVecBuilding().size());
-	TextOut(getMemDC(), 100, 100, str, strlen(str));
 }
 
 void CMapTool::cursorMove()

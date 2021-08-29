@@ -17,6 +17,7 @@ private:
 public:
 	CMap();
 	CMap(Vec2 startPos, Vec2 size);
+	CMap(const char* fileName);
 	~CMap();
 
 	HRESULT init();

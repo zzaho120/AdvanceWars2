@@ -173,6 +173,7 @@
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="SubWindow.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestGame.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="SubWindow.cpp" />
+    <ClCompile Include="TestGame.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />

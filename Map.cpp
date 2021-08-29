@@ -28,6 +28,11 @@ CMap::CMap(Vec2 startPos, Vec2 size) :
 	}
 }
 
+CMap::CMap(const char* fileName)
+{
+	load(fileName);
+}
+
 CMap::~CMap()
 {
 	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
@@ -78,6 +83,37 @@ void CMap::render()
 
 void CMap::load(const char* fileName)
 {
+	HANDLE file;
+	DWORD read;
+	bool result;
+	CTile load[TILE_NUM_X * TILE_NUM_Y];
+
+	file = CreateFile(fileName,
+		GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	result = ReadFile(file, load, sizeof(load), &read, NULL);
+
+	clearBuilding();
+	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
+	{
+		bool isFactory = false, isHQ = false;
+		tile[idx] = new CTile(load[idx]);
+
+		if (tile[idx]->getBuildtype() != BUILDING_TYPE::NONE)
+		{
+			if (tile[idx]->getBuildtype() == BUILDING_TYPE::FACTORY)
+				isFactory = true;
+			else if (tile[idx]->getBuildtype() == BUILDING_TYPE::HEADQUATERS)
+				isHQ = true;
+			addBuilding(tile[idx]->getPlayerType(),
+				tile[idx]->getPos(),
+				isFactory,
+				isHQ,
+				idx);
+		}
+	}
+
+	CloseHandle(file);
 }
 
 
