@@ -17,6 +17,28 @@ CBuilding::~CBuilding()
 {
 }
 
+CBuilding& CBuilding::operator=(const CBuilding& ref)
+{
+	CObject::operator=(ref);
+	isFactory = ref.isFactory;
+	isHQ = ref.isHQ;
+
+	tileIdx = ref.tileIdx;
+	playerType = ref.playerType;
+	return *this;
+}
+
+CBuilding* CBuilding::operator=(const CBuilding* ref)
+{
+	CObject::operator=(ref);
+	isFactory = ref->isFactory;
+	isHQ = ref->isHQ;
+
+	tileIdx = ref->tileIdx;
+	playerType = ref->playerType;
+	return this;
+}
+
 HRESULT CBuilding::init()
 {
 	return S_OK;

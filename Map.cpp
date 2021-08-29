@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "Camera.h"
 #include "Building.h"
 #include "Map.h"
 
@@ -20,19 +21,52 @@ CMap::CMap(Vec2 startPos, Vec2 size) :
 	{
 		for (int vertical = 0; vertical < TILE_NUM_X; vertical++)
 		{
-			tile[horizontal * TILE_NUM_X + vertical] = new CTile(startPos , size, IMAGE->findImage("single_environment"));
+			tile[horizontal * TILE_NUM_X + vertical] = new CTile(startPos , size);
 			startPos += Vec2{ size.x, 0 };
 		}
 		startPos = { tempPos.x, startPos.y + size.y };
 	}
 }
 
+CMap::CMap(const CMap& copy)
+{
+	for (int horizontal = 0; horizontal < TILE_NUM_Y; horizontal++)
+	{
+		for (int vertical = 0; vertical < TILE_NUM_X; vertical++)
+			tile[horizontal * TILE_NUM_X + vertical] = copy.tile[horizontal * TILE_NUM_X + vertical];
+	}
+
+	vecBuilding.clear();
+	for (int idx = 0; idx < copy.vecBuilding.size(); idx++)
+		vecBuilding.push_back(copy.vecBuilding[idx]);
+
+	isDebug = copy.isDebug;
+}
+
+CMap::CMap(const CMap* copy)
+{
+	for (int horizontal = 0; horizontal < TILE_NUM_Y; horizontal++)
+	{
+		for (int vertical = 0; vertical < TILE_NUM_X; vertical++)
+			tile[horizontal * TILE_NUM_X + vertical] = copy->tile[horizontal * TILE_NUM_X + vertical];
+	}
+
+	vecBuilding.clear();
+	for (int idx = 0; idx < copy->vecBuilding.size(); idx++)
+		vecBuilding.push_back(copy->vecBuilding[idx]);
+
+	isDebug = copy->isDebug;
+}
+
 CMap::~CMap()
 {
 	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
-		SAFE_DELETE(tile[idx]);
-
-	SAFE_DELETE(cam);
+	{
+		if(tile[idx] != nullptr)
+			SAFE_DELETE(tile[idx]);
+	}
+	if(cam != nullptr)
+		SAFE_DELETE(cam);
 }
 
 HRESULT CMap::init()
@@ -70,9 +104,36 @@ void CMap::render()
 			TextOut(getMapDC(), tile[idx]->getPos().x - 20, tile[idx]->getPos().y, str, strlen(str));
 		}
 	}
+}
 
-	/*for (iterBuilding = vecBuilding.begin(); iterBuilding != vecBuilding.end(); iterBuilding++)
-		(*iterBuilding)->render(); */
+CMap& CMap::operator=(const CMap& ref)
+{
+	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
+		tile[idx] = ref.tile[idx];
+
+	cam = ref.cam;
+
+	vecBuilding.clear();
+	for (int idx = 0; idx < ref.vecBuilding.size(); idx++)
+		vecBuilding.push_back(ref.vecBuilding[idx]);
+
+	isDebug = ref.isDebug;
+	return *this;
+}
+
+CMap* CMap::operator=(const CMap* ref)
+{
+	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
+		tile[idx] = ref->tile[idx];
+
+	cam = ref->cam;
+
+	vecBuilding.clear();
+	for (int idx = 0; idx < ref->vecBuilding.size(); idx++)
+		vecBuilding.push_back(ref->vecBuilding[idx]);
+
+	isDebug = ref->isDebug;
+	return this;
 }
 
 void CMap::addBuilding(PLAYER_TYPE type, Vec2 pos,bool factory, bool HQ, int idx)

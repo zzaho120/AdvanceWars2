@@ -32,8 +32,8 @@ void CMapTool::update()
 		setMap();
 
 	map->update();
-	cam->update();
 	cam->setTargetVec2(cursor);
+	cam->update();
 
 	cursorMove();
 	tileDirectionSet();
@@ -44,6 +44,12 @@ void CMapTool::render()
 	map->render();
 	IMAGE->findImage("cursor")->aniRender(getMapDC(), cursor.x - 32, cursor.y - 32, ANIMATION->findAnimation("cursor_ani"));
 	this->getMapBuffer()->render(getMemDC(), 0, 0, cam->getCam1().x, cam->getCam1().y, cam->getCamSize().x, cam->getCamSize().y);
+
+	CMap* save[1];
+	save[0] = map;
+	TCHAR str[128];
+	wsprintf(str, "%d", save[0]->getVecBuilding().size());
+	TextOut(getMemDC(), 100, 100, str, strlen(str));
 }
 
 void CMapTool::cursorMove()
@@ -786,6 +792,9 @@ void CMapTool::seaTileSet(int tileNum, int seaType)
 		break;
 
 	case 0b11001011: // BR, BL, B, R, L
+	case 0b11011011: // BR, BL, TL, B, R, L
+	case 0b11101011: // BR, BL, TR, B, R, L
+	case 0b11111011: // BR, BL, TR, TL, B, R, L
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG0);
 		break;
 
@@ -794,6 +803,9 @@ void CMapTool::seaTileSet(int tileNum, int seaType)
 		break;
 
 	case 0b10101110: // BR, TR, B, T, R
+	case 0b10111110: // BR, TR, TL, B, T, R
+	case 0b11101110: // BR, BL, TR, B, T, R
+	case 0b11111110: // BR, BL, TR, TL, B, T, R
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG90);
 		break;
 
@@ -802,6 +814,9 @@ void CMapTool::seaTileSet(int tileNum, int seaType)
 		break;
 
 	case 0b01011101: // BL, TL, B, T, L
+	case 0b01111101: // BL, TR, TL, B, T, L
+	case 0b11011101: // BR, BL, TL, B, T, L
+	case 0b11111101: // BR, BL, TR, TL, B, T, L
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG180);
 		break;
 
@@ -810,6 +825,9 @@ void CMapTool::seaTileSet(int tileNum, int seaType)
 		break;
 
 	case 0b00110111: // TR, TL, T, R, L
+	case 0b01110111: // BL, TR, TL, T, R, L
+	case 0b10110111: // BR, TR, TL, T, R, L
+	case 0b11110111: // BR, BL, TR, TL, T, R, L
 		setEnvirType(tileNum, ENVIRONMENT_TYPE::SEA_5WAYS, ROTATE_TYPE::DEG270);
 		break;
 
@@ -904,13 +922,13 @@ bool CMapTool::save(const char* fileName)
 	HANDLE file;
 	DWORD write;
 	bool result;
-	CMap* save[1];
+	CMap save[1];
 
+	save[0] = map;
 	file = CreateFile(fileName,
 		GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
-	save[0] = map;
-	result = WriteFile(file, save, sizeof(map), &write, NULL);
+	result = WriteFile(file, save, sizeof(save), &write, NULL);
 
 	CloseHandle(file);
 
@@ -927,8 +945,8 @@ bool CMapTool::load(const char* fileName)
 	file = CreateFile(fileName,
 		GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
-	result = ReadFile(file, load, sizeof(map), &read, NULL);
-	map = load[0];
+	result = ReadFile(file, load, sizeof(load), &read, NULL);
+	map = new CMap(load[0]);
 
 	CloseHandle(file);
 

@@ -15,6 +15,9 @@ public:
 	CBuilding(PLAYER_TYPE type, Vec2 pos, bool factory, bool HQ, int idx);
 	~CBuilding();
 
+	CBuilding& operator=(const CBuilding& ref);
+	CBuilding* operator=(const CBuilding* ref);
+
 	HRESULT init();
 	void release();
 	void update();

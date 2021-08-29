@@ -13,7 +13,7 @@ CTile::CTile() :
 
 CTile::CTile(Vec2 _pos, Vec2 _size, image* _img, animation* _ani) :
 	CObject(_pos, _size, _img, _ani),
-	tileType(/*static_cast<ENVIRONMENT_TYPE>()*/ENVIRONMENT_TYPE::PLAIN),
+	tileType(static_cast<ENVIRONMENT_TYPE>(RND->getFromIntTo(1, 6))),
 	buildingType(BUILDING_TYPE::NONE),
 	unitType(UNIT_TYPE::NONE),
 	playerType(PLAYER_TYPE::NONE),
@@ -31,7 +31,6 @@ CTile::CTile(Vec2 _pos, Vec2 _size, image* _img, animation* _ani) :
 	ANIMATION->start("river_3ways02");
 	ANIMATION->start("river_3ways03");
 	ANIMATION->start("river_4ways");
-
 
 	ANIMATION->start("sea_2ways_curve00");
 	ANIMATION->start("sea_2ways_curve01");
@@ -90,7 +89,6 @@ CTile::CTile(Vec2 _pos, Vec2 _size, image* _img, animation* _ani) :
 	ANIMATION->start("sea_vertical01");
 	ANIMATION->start("sea_vertical02");
 	ANIMATION->start("sea_noway");
-
 }
 
 CTile::~CTile()
@@ -121,16 +119,16 @@ void CTile::tileRender()
 	switch (tileType)
 	{
 	case ENVIRONMENT_TYPE::NONE:
-		img->frameRender(getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), 0, 0);
+		IMAGE->frameRender("single_environment", getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), 0, 0);
 		break;
 	case ENVIRONMENT_TYPE::PLAIN:
-		img->frameRender(getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), 0, 0);
+		IMAGE->frameRender("single_environment", getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), 0, 0);
 		break;
 	case ENVIRONMENT_TYPE::WOOD:
 		IMAGE->frameRender("wood", getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), 0, 0);
 		break;
 	case ENVIRONMENT_TYPE::MOUNTAIN:
-		img->frameRender(getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), 1, 0);
+		IMAGE->frameRender("single_environment", getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), 1, 0);
 		break;
 	case ENVIRONMENT_TYPE::SEA:
 		IMAGE->frameRender("sea", getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), 0, 0);
@@ -150,7 +148,7 @@ void CTile::tileRender()
 			imgFrame = { 3, 0 };
 			break;
 		}
-		img->frameRender(getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), imgFrame.x, imgFrame.y);
+		IMAGE->frameRender("single_environment", getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), imgFrame.x, imgFrame.y);
 		break;
 	case ENVIRONMENT_TYPE::RIVER_LINE:
 		switch (rotateType)
@@ -488,5 +486,33 @@ void CTile::tileRender()
 		IMAGE->frameRender("factory", getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), 0, playerColor);
 		break;
 	}
+}
+
+CTile& CTile::operator=(const CTile& ref)
+{
+	CObject::operator=(ref);
+
+	tileType = ref.tileType;
+	buildingType = ref.buildingType;
+	unitType = ref.unitType;
+	playerType = ref.playerType;
+	directionType = ref.directionType;
+	rotateType = ref.rotateType;
+
+	return *this;
+}
+
+CTile* CTile::operator=(const CTile* ref)
+{
+	CObject::operator=(ref);
+
+	tileType = ref->tileType;
+	buildingType = ref->buildingType;
+	unitType = ref->unitType;
+	playerType = ref->playerType;
+	directionType = ref->directionType;
+	rotateType = ref->rotateType;
+
+	return this;
 }
 

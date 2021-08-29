@@ -11,6 +11,8 @@ protected:
 	animation* ani;
 public:
 	CObject();
+	CObject(const CObject& copy);
+	CObject(const CObject* copy);
 	CObject(Vec2 _pos, Vec2 _size, image* _img = nullptr, animation* _ani = nullptr);
 	~CObject();
 
@@ -18,6 +20,9 @@ public:
 	virtual void release();
 	virtual void update();
 	virtual void render();
+
+	CObject& operator=(const CObject& ref);
+	CObject* operator=(const CObject* ref);
 
 	Vec2 getPos() { return pos; }
 	void setPos(Vec2 _pos) { pos = _pos; }

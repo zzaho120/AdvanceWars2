@@ -2,7 +2,6 @@
 class animation
 {
 private:
-
 	typedef vector<POINT> _vFrameList;
 	typedef vector<int> _vPlayList;
 
@@ -16,21 +15,16 @@ private:
 	bool _loop;
 	bool _play;
 
-
 	float _frameUpdateSec;
 	float _elapseSec;
 	DWORD _nowPlayIndex;
 
-
-
-
-
-
-
-
 public:
 	animation();
 	~animation();
+
+	animation& operator=(const animation& ref);
+	animation* operator=(const animation* ref);
 
 	HRESULT init(int totalW, int totalH, int frameW, int frameH);
 	//처음부터 끝까지 애니메이션  셋팅
@@ -47,7 +41,6 @@ public:
 	//프레임 업데이트 타임
 	void frameUpdate(float elapsedTime);
 
-
 	void start();
 	void stop();
 	void pause();
@@ -57,12 +50,5 @@ public:
 	inline POINT getFramePos()const { return _frameList[_playList[_nowPlayIndex]]; }
 	inline int getFrameWidth()const { return _frameWidth; }
 	inline int getFrameHeight()const { return _frameHeight; }
-
-
-
-
-
-
-
 };
 

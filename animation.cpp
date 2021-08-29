@@ -10,6 +10,54 @@ animation::~animation()
 {
 }
 
+animation& animation::operator=(const animation& ref)
+{
+	_frameList.clear();
+	for (int idx = 0; idx < ref._frameList.size(); idx++)
+		_frameList.push_back(ref._frameList[idx]);
+
+	_playList.clear();
+	for (int idx = 0; idx < ref._playList.size(); idx++)
+		_playList.push_back(ref._playList[idx]);
+
+	_frameNum = ref._frameNum;
+	_frameWidth = ref._frameWidth;
+	_frameHeight = ref._frameHeight;
+
+	_loop = ref._loop;
+	_play = ref._play;
+
+	_frameUpdateSec = ref._frameUpdateSec;
+	_elapseSec = ref._elapseSec;
+	_nowPlayIndex = ref._nowPlayIndex;
+
+	return *this;
+}
+
+animation* animation::operator=(const animation* ref)
+{
+	_frameList.clear();
+	for (int idx = 0; idx < ref->_frameList.size(); idx++)
+		_frameList.push_back(ref->_frameList[idx]);
+
+	_playList.clear();
+	for (int idx = 0; idx < ref->_playList.size(); idx++)
+		_playList.push_back(ref->_playList[idx]);
+
+	_frameNum = ref->_frameNum;
+	_frameWidth = ref->_frameWidth;
+	_frameHeight = ref->_frameHeight;
+
+	_loop = ref->_loop;
+	_play = ref->_play;
+
+	_frameUpdateSec = ref->_frameUpdateSec;
+	_elapseSec = ref->_elapseSec;
+	_nowPlayIndex = ref->_nowPlayIndex;
+
+	return this;
+}
+
 HRESULT animation::init(int totalW, int totalH, int frameW, int frameH)
 {
 	//가로 프레임 갯수

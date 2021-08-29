@@ -10,6 +10,34 @@ image::image() : _imageInfo(NULL),
 }				
 image::~image(){}
 
+image& image::operator=(const image& ref)
+{
+	_imageInfo = ref._imageInfo;
+	_fileName = (char*)malloc(strlen(ref._fileName) + 1);
+	strcpy(_fileName, ref._fileName);
+	_isTrans = ref._isTrans;
+	_transColor = ref._transColor;
+	_blendFunc = ref._blendFunc;
+	_blendImage = ref._blendImage;
+	_rotateImage = ref._rotateImage;
+	_stretchImage = ref._stretchImage;
+	return *this;
+}
+
+image* image::operator=(const image* ref)
+{
+	_imageInfo = ref->_imageInfo;
+	_fileName = (char*)malloc(strlen(ref->_fileName) + 1);
+	strcpy(_fileName, ref->_fileName);
+	_isTrans = ref->_isTrans;
+	_transColor = ref->_transColor;
+	_blendFunc = ref->_blendFunc;
+	_blendImage = ref->_blendImage;
+	_rotateImage = ref->_rotateImage;
+	_stretchImage = ref->_stretchImage;
+	return this;
+}
+
 HRESULT image::init(const int width, const int height)
 {
 

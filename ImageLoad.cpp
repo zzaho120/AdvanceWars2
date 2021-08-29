@@ -27,7 +27,6 @@ void CImageLoad::resourceLoad()
 	IMAGE->addFrameImage("single_environment", "images/tile/single_environment.bmp", 64 * 5, 64, 5, 1);
 	IMAGE->addFrameImage("wood", "images/tile/wood.bmp", TILE_SIZE_X * 4, TILE_SIZE_Y * 3, 4, 3);
 
-
 	//============================= UNIT =============================
 	//============================= UNIT =============================
 

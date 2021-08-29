@@ -48,6 +48,48 @@ public:
 			frameHeight  =0;
 			loadType = static_cast<BYTE>(IMAGE_LOAD_KIND::LOAD_RESOURCE);
 		}
+
+		tagImage& operator=(const tagImage& ref)
+		{
+			resID = ref.resID;
+			hMemDC = ref.hMemDC;
+			hBit = ref.hBit;
+			hOBit = ref.hOBit;
+			width = ref.width;
+			height = ref.height;
+			loadType = ref.loadType;
+			x = ref.x;
+			y = ref.y;
+			currentFrameX = ref.currentFrameX;
+			currentFrameY = ref.currentFrameY;
+			maxFrameX = ref.maxFrameX;
+			maxFrameY = ref.maxFrameY;
+			frameWidth = ref.frameWidth;
+			frameHeight = ref.frameHeight;
+
+			return *this;
+		}
+
+		tagImage* operator=(const tagImage* ref)
+		{
+			resID = ref->resID;
+			hMemDC = ref->hMemDC;
+			hBit = ref->hBit;
+			hOBit = ref->hOBit;
+			width = ref->width;
+			height = ref->height;
+			loadType = ref->loadType;
+			x = ref->x;
+			y = ref->y;
+			currentFrameX = ref->currentFrameX;
+			currentFrameY = ref->currentFrameY;
+			maxFrameX = ref->maxFrameX;
+			maxFrameY = ref->maxFrameY;
+			frameWidth = ref->frameWidth;
+			frameHeight = ref->frameHeight;
+
+			return this;
+		}
 	} IMAGE_INFO, *LPIMAGE_INFO;
 
 	image();
@@ -58,8 +100,6 @@ private:
 	char*			_fileName;			//이미지 이름
 	bool			_isTrans;			//배경색 날릴꺼냐?
 	COLORREF		_transColor;		//배경색 날릴 RGB
-
-
 
 	//알파용
 	BLENDFUNCTION	_blendFunc;			//알파블렌드를 위한 정보
@@ -72,6 +112,8 @@ private:
 	LPIMAGE_INFO	_stretchImage;
 
 public:
+	image& operator=(const image& ref);
+	image* operator=(const image* ref);
 
 	//비트맵 초기화
 	HRESULT init(const int width, const int height);

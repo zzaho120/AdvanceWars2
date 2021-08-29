@@ -9,12 +9,17 @@ private:
 	Vec2 target;
 public:
 	CCamera();
+	CCamera(const CCamera& copy);
+	CCamera(const CCamera* copy);
 	~CCamera();
 
 	HRESULT init();
 	void release();
 	void update();
 	void render();
+
+	CCamera& operator=(const CCamera& ref);
+	CCamera* operator=(const CCamera* ref);
 
 	Vec2 getCam1() { return cam1; }
 	Vec2 getCam2() { return cam2; }

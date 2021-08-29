@@ -7,7 +7,6 @@ private:
 	BUILDING_TYPE buildingType;
 	UNIT_TYPE unitType;
 	PLAYER_TYPE playerType;
-
 	DIRECTION_SPRITE directionType;
 	ROTATE_TYPE rotateType;
 public:
@@ -21,6 +20,9 @@ public:
 	void render();
 
 	void tileRender();
+
+	CTile& operator=(const CTile& ref);
+	CTile* operator=(const CTile* ref);
 
 	ENVIRONMENT_TYPE getTileType() { return tileType; }
 	BUILDING_TYPE getBuildtype() { return buildingType; }

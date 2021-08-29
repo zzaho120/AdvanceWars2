@@ -6,6 +6,26 @@ CCamera::CCamera()
     cam_size = { CAMERA_SIZE_X, CAMERA_SIZE_Y };
 }
 
+CCamera::CCamera(const CCamera& copy)
+{
+    CObject(ref);
+    cam1 = copy.cam1;
+    cam2 = copy.cam2;
+
+    cam_size = copy.cam_size;
+    target = copy.target;
+}
+
+CCamera::CCamera(const CCamera* copy)
+{
+    CObject(ref);
+    cam1 = copy->cam1;
+    cam2 = copy->cam2;
+
+    cam_size = copy->cam_size;
+    target = copy->target;
+}
+
 CCamera::~CCamera()
 {
 }
@@ -49,4 +69,26 @@ void CCamera::update()
 
 void CCamera::render()
 {
+}
+
+CCamera& CCamera::operator=(const CCamera& ref)
+{
+    CObject::operator=(ref);
+    cam1 = ref.cam1;
+    cam2 = ref.cam2;
+
+    cam_size = ref.cam_size;
+    target = ref.target;
+    return *this;
+}
+
+CCamera* CCamera::operator=(const CCamera* ref)
+{
+    CObject::operator=(ref);
+    cam1 = ref->cam1;
+    cam2 = ref->cam2;
+
+    cam_size = ref->cam_size;
+    target = ref->target;
+    return this;
 }
