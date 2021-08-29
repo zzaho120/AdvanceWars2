@@ -15,7 +15,18 @@ void CAnimationLoad::resourceLoad()
 	//============================ CURSOR =============================
 	
 	ANIMATION->addAnimation("cursor_ani", "cursor", 0, 4, 10, false, true);
-
+	//============================ INFANTRY ===========================
+	//============================ INFANTRY ===========================
+	ANIMATION->addAnimation("infry_idle_red_on", "infantry_idle", 0, 2, 3, false, true);
+	ANIMATION->addAnimation("infry_idle_red_off", "infantry_idle", 3, 5, 3, false, true);
+	ANIMATION->addAnimation("mech_idle_red_on", "mech_idle", 0, 2, 3, false, true);
+	ANIMATION->addAnimation("mech_idle_red_off", "mech_idle", 3, 5, 3, false, true);
+	ANIMATION->addAnimation("tank_idle_red_on", "tank_idle", 0, 2, 3, false, true);
+	ANIMATION->addAnimation("tank_idle_red_off", "tank_idle", 3, 5, 3, false, true);
+	ANIMATION->addAnimation("artil_idle_red_on", "artillery_idle", 0, 2, 3, false, true);
+	ANIMATION->addAnimation("artil_idle_red_off", "artillery_idle", 3, 5, 3, false, true);
+	ANIMATION->addAnimation("APC_idle_red_on", "APC_idle", 0, 2, 3, false, true);
+	ANIMATION->addAnimation("APC_idle_red_off", "APC_idle", 3, 5, 3, false, true);
 	//============================== SEA ==============================
 	//============================== SEA ==============================
 

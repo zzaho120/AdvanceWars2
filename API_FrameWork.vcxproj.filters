@@ -70,6 +70,36 @@
     <Filter Include="Class\SubWindow">
       <UniqueIdentifier>{cbb2f53f-d5ac-438f-94ec-d59203a7c69a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Class\TestGame">
+      <UniqueIdentifier>{91010b10-2b43-495c-88ff-7a50fef2cbf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Unit">
+      <UniqueIdentifier>{74ae5c6b-2b66-4616-95fb-816109eade81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\animationMgr">
+      <UniqueIdentifier>{d9bcce12-d232-4958-bf25-61290afd20f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\effectMgr">
+      <UniqueIdentifier>{7f0f7442-8ed1-47cb-b3ff-ec0c4ac1c0dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\imageMgr">
+      <UniqueIdentifier>{03e6775a-3bcc-4b42-b36e-8842e48c489b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\inputMgr">
+      <UniqueIdentifier>{6d6869dd-3ae2-4cc4-b74f-e8f0154c5d7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\sceneMgr">
+      <UniqueIdentifier>{8ed5ace4-cc5f-464a-bddb-c4129cda9d60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\soundMgr">
+      <UniqueIdentifier>{991c2d90-651d-4611-8686-f2f405ad08b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\timeMgr">
+      <UniqueIdentifier>{bcdc498b-bfe9-49b8-bc01-aeabf3adcf9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\unitMgr">
+      <UniqueIdentifier>{4f146de9-b125-4a04-98d3-11b6220a7adf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -96,9 +126,6 @@
     <ClInclude Include="mainGame.h">
       <Filter>mainGame</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
     <ClInclude Include="randomFunction.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -108,32 +135,14 @@
     <ClInclude Include="image.h">
       <Filter>image</Filter>
     </ClInclude>
-    <ClInclude Include="imageManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
     <ClInclude Include="timer.h">
       <Filter>타이머</Filter>
-    </ClInclude>
-    <ClInclude Include="timeManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="sceneManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="soundManager.h">
-      <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="animation.h">
       <Filter>애니메이션</Filter>
     </ClInclude>
-    <ClInclude Include="animationManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
     <ClInclude Include="effect.h">
       <Filter>이펙트</Filter>
-    </ClInclude>
-    <ClInclude Include="effectManager.h">
-      <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="Astar.h">
       <Filter>에이슷하</Filter>
@@ -181,7 +190,34 @@
       <Filter>Class\MapTool</Filter>
     </ClInclude>
     <ClInclude Include="TestGame.h">
-      <Filter>Class</Filter>
+      <Filter>Class\TestGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>Class\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="animationManager.h">
+      <Filter>Manager\animationMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="effectManager.h">
+      <Filter>Manager\effectMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="imageManager.h">
+      <Filter>Manager\imageMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Manager\inputMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneManager.h">
+      <Filter>Manager\sceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="soundManager.h">
+      <Filter>Manager\soundMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="timeManager.h">
+      <Filter>Manager\timeMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitManager.h">
+      <Filter>Manager\unitMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -194,41 +230,20 @@
     <ClCompile Include="mainGame.cpp">
       <Filter>mainGame</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
     <ClCompile Include="utils.cpp">
       <Filter>UTIL</Filter>
     </ClCompile>
     <ClCompile Include="image.cpp">
       <Filter>image</Filter>
     </ClCompile>
-    <ClCompile Include="imageManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
     <ClCompile Include="timer.cpp">
       <Filter>타이머</Filter>
-    </ClCompile>
-    <ClCompile Include="timeManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="sceneManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="soundManager.cpp">
-      <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="animation.cpp">
       <Filter>애니메이션</Filter>
     </ClCompile>
-    <ClCompile Include="animationManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
     <ClCompile Include="effect.cpp">
       <Filter>이펙트</Filter>
-    </ClCompile>
-    <ClCompile Include="effectManager.cpp">
-      <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="Astar.cpp">
       <Filter>에이슷하</Filter>
@@ -267,7 +282,34 @@
       <Filter>Class\MapTool</Filter>
     </ClCompile>
     <ClCompile Include="TestGame.cpp">
-      <Filter>Class</Filter>
+      <Filter>Class\TestGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>Class\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="animationManager.cpp">
+      <Filter>Manager\animationMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="effectManager.cpp">
+      <Filter>Manager\effectMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="imageManager.cpp">
+      <Filter>Manager\imageMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Manager\inputMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneManager.cpp">
+      <Filter>Manager\sceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="soundManager.cpp">
+      <Filter>Manager\soundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="timeManager.cpp">
+      <Filter>Manager\timeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitManager.cpp">
+      <Filter>Manager\unitMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

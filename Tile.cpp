@@ -19,6 +19,13 @@ CTile::CTile(Vec2 _pos, Vec2 _size, image* _img, animation* _ani) :
 	playerType(PLAYER_TYPE::NONE),
 	directionType(DIRECTION_SPRITE::NO),
 	rotateType(ROTATE_TYPE::DEG0)
+{}
+
+CTile::~CTile()
+{
+}
+
+HRESULT CTile::init()
 {
 	ANIMATION->start("river_line00");
 	ANIMATION->start("river_line01");
@@ -89,14 +96,6 @@ CTile::CTile(Vec2 _pos, Vec2 _size, image* _img, animation* _ani) :
 	ANIMATION->start("sea_vertical01");
 	ANIMATION->start("sea_vertical02");
 	ANIMATION->start("sea_noway");
-}
-
-CTile::~CTile()
-{
-}
-
-HRESULT CTile::init()
-{
 	return S_OK;
 }
 

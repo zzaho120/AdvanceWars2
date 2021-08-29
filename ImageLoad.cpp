@@ -30,20 +30,20 @@ void CImageLoad::resourceLoad()
 	//============================= UNIT =============================
 	//============================= UNIT =============================
 
-	IMAGE->addFrameImage("infantry_idle", "images/unit/infantry_idle.bmp", 96, 80, 6, 5);
-	IMAGE->addFrameImage("infantry_move", "images/unit/infantry_move.bmp", 72, 360, 3, 15);
+	IMAGE->addFrameImage("infantry_idle", "images/unit/infantry_idle.bmp", TILE_SIZE_X * 6, TILE_SIZE_Y * 5, 6, 5);
+	IMAGE->addFrameImage("infantry_move", "images/unit/infantry_move.bmp", TILE_SIZE_X * 3, TILE_SIZE_Y * 15, 3, 15);
 
-	IMAGE->addFrameImage("mech_idle", "images/unit/mech_idle.bmp", 96, 80, 6, 5);
-	IMAGE->addFrameImage("mech_move", "images/unit/mech_move.bmp", 72, 360, 3, 15);
+	IMAGE->addFrameImage("mech_idle", "images/unit/mech_idle.bmp", TILE_SIZE_X * 6, TILE_SIZE_Y * 5, 6, 5);
+	IMAGE->addFrameImage("mech_move", "images/unit/mech_move.bmp", TILE_SIZE_X * 3, TILE_SIZE_Y * 15, 3, 15);
 
-	IMAGE->addFrameImage("tank_idle", "images/unit/tank_idle.bmp", 96, 80, 6, 5);
-	IMAGE->addFrameImage("tank_move", "images/unit/tank_move.bmp", 72, 360, 3, 15);
+	IMAGE->addFrameImage("tank_idle", "images/unit/tank_idle.bmp", TILE_SIZE_X * 6, TILE_SIZE_Y * 5, 6, 5);
+	IMAGE->addFrameImage("tank_move", "images/unit/tank_move.bmp", TILE_SIZE_X * 3, TILE_SIZE_Y * 15, 3, 15);
 
-	IMAGE->addFrameImage("artillery_idle", "images/unit/artillery_idle.bmp", 96, 80, 6, 5);
-	IMAGE->addFrameImage("artillery_move", "images/unit/artillery_move.bmp", 72, 360, 3, 15);
+	IMAGE->addFrameImage("artillery_idle", "images/unit/artillery_idle.bmp", TILE_SIZE_X * 6, TILE_SIZE_Y * 5, 6, 5);
+	IMAGE->addFrameImage("artillery_move", "images/unit/artillery_move.bmp", TILE_SIZE_X * 3, TILE_SIZE_Y * 15, 3, 15);
 
-	IMAGE->addFrameImage("APC_idle", "images/unit/APC_idle.bmp", 96, 80, 6, 5);
-	IMAGE->addFrameImage("APC_move", "images/unit/APC_move.bmp", 72, 360, 3, 15);
+	IMAGE->addFrameImage("APC_idle", "images/unit/APC_idle.bmp", TILE_SIZE_X * 6, TILE_SIZE_Y * 5, 6, 5);
+	IMAGE->addFrameImage("APC_move", "images/unit/APC_move.bmp", TILE_SIZE_X * 3, TILE_SIZE_Y * 15, 3, 15);
 
 	//=============================== UI =============================
 	//=============================== UI =============================

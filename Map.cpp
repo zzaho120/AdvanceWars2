@@ -98,6 +98,7 @@ void CMap::load(const char* fileName)
 	{
 		bool isFactory = false, isHQ = false;
 		tile[idx] = new CTile(load[idx]);
+		tile[idx]->init();
 
 		if (tile[idx]->getBuildtype() != BUILDING_TYPE::NONE)
 		{
