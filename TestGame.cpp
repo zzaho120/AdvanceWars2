@@ -5,10 +5,8 @@ CTestGame::CTestGame() :
 	map(new CMap("save/spannisland.map")),
 	cam(new CCamera),
 	cursor({ map->getTile()[158]->getPos().x, map->getTile()[158]->getPos().y }),
-	unitMgr(new CUnitManager)
-	/*unit(new CUnit(UNIT_TYPE::APC, 99, 3, 0b0000,
-		{ map->getTile()[158]->getPos().x - TILE_SIZE_X / 2, 
-		map->getTile()[158]->getPos().y - TILE_SIZE_Y / 2 }))*/
+	unitMgr(new CUnitManager), isSelected(false), isMove(false),
+	command(nullptr), curUnit(nullptr)
 {
 }
 
@@ -36,6 +34,8 @@ void CTestGame::update()
 	//cam->setTargetVec2(cursor);
 	cursorMove();
 	unitMgr->update();
+	unitSelect();
+	unitMove();
 
 	if (InputManager->isOnceKeyDown('G')) addUnitToMgr(UNIT_TYPE::INFANTRY);
 	if (InputManager->isOnceKeyDown('H')) addUnitToMgr(UNIT_TYPE::MECH);
@@ -90,5 +90,66 @@ void CTestGame::addUnitToMgr(UNIT_TYPE type)
 			}
 			break;
 		}
+	}
+}
+
+void CTestGame::unitSelect()
+{
+	if (curUnit == nullptr && InputManager->isOnceKeyDown('Z') && !isSelected)
+	{
+		for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+		{
+			if (unitMgr->getVecUnit()[idx]->getPos() == Vec2({ cursor.x - TILE_SIZE_X / 2, cursor.y - TILE_SIZE_Y / 2}))
+			{
+				if (unitMgr->getVecUnit()[idx]->getActive())
+				{
+					curUnit = unitMgr->getUnit(idx);
+					curUnit->setSelected(true);
+					isSelected = true;
+					break;
+				}
+			}
+		}
+	}
+
+	if (InputManager->isOnceKeyDown('X') && isSelected && !isMove)
+	{
+		for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+		{
+			if (curUnit->getSelected())
+			{
+				curUnit->setSelected(false);
+				isSelected = false;
+				curUnit = nullptr;
+				break;
+			}
+		}
+	}
+}
+
+void CTestGame::unitMove()
+{
+	if (isMove)
+	{
+		command->excute();
+		if (InputManager->isOnceKeyDown('Z'))
+		{
+			curUnit->setActive(false);
+			curUnit->setSelected(false);
+			isSelected = false;
+			curUnit = nullptr;
+			isMove = false;
+		}
+		if (InputManager->isOnceKeyDown('X'))
+		{
+			command->undo();
+			isMove = false;
+		}
+	}
+	if (InputManager->isOnceKeyDown('Z') && isSelected && !isMove)
+	{
+		curUnit->setMove(true); 
+		isMove = true;
+		command = new CMoveUnitCommand(curUnit, getLeftTopVec2(cursor, TILE_SIZE));
 	}
 }

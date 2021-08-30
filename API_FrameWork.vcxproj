@@ -149,6 +149,7 @@
     <ClInclude Include="Astar.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapTool.h" />
     <ClInclude Include="MapToolSub.h" />
+    <ClInclude Include="MoveUnitCommand.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
@@ -204,6 +206,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapTool.cpp" />
     <ClCompile Include="MapToolSub.cpp" />
+    <ClCompile Include="MoveUnitCommand.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ResourceLoadFacade.cpp" />
     <ClCompile Include="sceneManager.cpp" />

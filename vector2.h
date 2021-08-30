@@ -108,6 +108,9 @@ public:
 	vector2(float _x, float _y)
 		: x(_x), y(_y)
 	{}
+	vector2(float _num)
+		: x(_num), y(_num)
+	{}
 	vector2(const POINT& _pt)
 		: x((float)_pt.x)
 		, y((float)_pt.y)

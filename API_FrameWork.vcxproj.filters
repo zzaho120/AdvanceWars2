@@ -40,9 +40,6 @@
     <Filter Include="이펙트">
       <UniqueIdentifier>{799f9037-ac59-46a7-8c21-272e269886bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="에이슷하">
-      <UniqueIdentifier>{d6da94a8-d55e-4cc4-b47c-98bc84efa10d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Class">
       <UniqueIdentifier>{21985008-db27-4774-b9a8-8ae93d4859b5}</UniqueIdentifier>
     </Filter>
@@ -69,9 +66,6 @@
     </Filter>
     <Filter Include="Class\TestGame">
       <UniqueIdentifier>{91010b10-2b43-495c-88ff-7a50fef2cbf4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Class\Unit">
-      <UniqueIdentifier>{74ae5c6b-2b66-4616-95fb-816109eade81}</UniqueIdentifier>
     </Filter>
     <Filter Include="Manager\animationMgr">
       <UniqueIdentifier>{d9bcce12-d232-4958-bf25-61290afd20f2}</UniqueIdentifier>
@@ -105,6 +99,15 @@
     </Filter>
     <Filter Include="Pattern\Factory">
       <UniqueIdentifier>{eac2d70f-96d2-4841-9fa8-2b21f5f737af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Command">
+      <UniqueIdentifier>{54a1a10c-4e8e-45d6-bb55-426a110fe2e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\Unit">
+      <UniqueIdentifier>{74ae5c6b-2b66-4616-95fb-816109eade81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Astar">
+      <UniqueIdentifier>{88e9bed6-ff89-4770-a4c9-9d80ef98c57b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -150,9 +153,6 @@
     <ClInclude Include="effect.h">
       <Filter>이펙트</Filter>
     </ClInclude>
-    <ClInclude Include="Astar.h">
-      <Filter>에이슷하</Filter>
-    </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Class\Object</Filter>
     </ClInclude>
@@ -173,9 +173,6 @@
     </ClInclude>
     <ClInclude Include="Building.h">
       <Filter>Class\Object\Buliding</Filter>
-    </ClInclude>
-    <ClInclude Include="globalValue.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="ResourceLoadFacade.h">
       <Filter>Class\ResourceLoad</Filter>
@@ -199,7 +196,7 @@
       <Filter>Class\TestGame</Filter>
     </ClInclude>
     <ClInclude Include="Unit.h">
-      <Filter>Class\Unit</Filter>
+      <Filter>Class\Object\Unit</Filter>
     </ClInclude>
     <ClInclude Include="animationManager.h">
       <Filter>Manager\animationMgr</Filter>
@@ -228,6 +225,18 @@
     <ClInclude Include="UnitFactory.h">
       <Filter>Pattern\Factory</Filter>
     </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Pattern\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="globalValue.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveUnitCommand.h">
+      <Filter>Pattern\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Astar.h">
+      <Filter>Class\Astar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -253,9 +262,6 @@
     </ClCompile>
     <ClCompile Include="effect.cpp">
       <Filter>이펙트</Filter>
-    </ClCompile>
-    <ClCompile Include="Astar.cpp">
-      <Filter>에이슷하</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Class\Object</Filter>
@@ -294,7 +300,7 @@
       <Filter>Class\TestGame</Filter>
     </ClCompile>
     <ClCompile Include="Unit.cpp">
-      <Filter>Class\Unit</Filter>
+      <Filter>Class\Object\Unit</Filter>
     </ClCompile>
     <ClCompile Include="animationManager.cpp">
       <Filter>Manager\animationMgr</Filter>
@@ -322,6 +328,12 @@
     </ClCompile>
     <ClCompile Include="UnitFactory.cpp">
       <Filter>Pattern\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveUnitCommand.cpp">
+      <Filter>Pattern\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Astar.cpp">
+      <Filter>Class\Astar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

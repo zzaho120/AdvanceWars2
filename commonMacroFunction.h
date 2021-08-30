@@ -102,3 +102,8 @@ inline int RectHeight(RECT& rc)
 {
 	return rc.bottom - rc.top;
 }
+
+inline Vec2 getLeftTopVec2(Vec2 pos, Vec2 size)
+{
+	return Vec2{ pos.x - size.x / 2, pos.y - size.y / 2 };
+}

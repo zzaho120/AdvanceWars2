@@ -21,6 +21,13 @@ const int CAMERA_SIZE_Y = WINSIZEY;
 const int SAMPLE_TILE_X = 8;
 const int SAMPLE_TILE_Y = 4;
 
+const int UNIT_MOVE_SPEED = 4;
+
+const int ASTAR_MAX_NUM = 5000;
+
+const Vec2 TILE_SIZE = { TILE_SIZE_X, TILE_SIZE_Y };
+const Vec2 TILE_SIZE_HALF = { TILE_SIZE_X / 2, TILE_SIZE_Y / 2};
+
 struct tagSampleTile
 {
 	RECT rcTile;

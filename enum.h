@@ -124,3 +124,19 @@ enum class ROTATE_TYPE
 	DEG315,
 	DEG360
 };
+
+enum class ASTAR_TYPE
+{
+	EMPTY,	//빈타일 (지나갈수 있는곳)
+	START,	//시작지점
+	END,		//끝지점
+	WALL		//벽
+};
+
+enum class ASTAR_STATE
+{
+	SEARCHING,//검색중
+	FOUND,	//발견!
+	NOWAY,	//길없음
+	END
+};

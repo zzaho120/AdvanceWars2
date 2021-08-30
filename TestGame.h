@@ -3,13 +3,20 @@
 #include "Camera.h"
 #include "Map.h"
 #include "UnitManager.h"
+#include "MoveUnitCommand.h"
 class CTestGame : public gameNode
 {
 private:
 	CMap* map;
 	CCamera* cam;
 	Vec2 cursor;
+	
 	CUnitManager* unitMgr;
+	CUnit* curUnit;
+	CCommand* command;
+
+	bool isSelected;
+	bool isMove;
 public:
 	CTestGame();
 	~CTestGame();
@@ -22,4 +29,6 @@ public:
 	void cursorMove();
 
 	void addUnitToMgr(UNIT_TYPE type);
+	void unitSelect();
+	void unitMove();
 };
