@@ -48,6 +48,7 @@
 #include"randomFunction.h"
 #include"utils.h"
 #include"SubWindow.h"
+#include"UnitFactory.h"
 //======================================
 //##			매니저들			  ##
 //======================================
@@ -60,6 +61,7 @@
 #define ANIMATION		animationManager::getSingleton()
 #define EFFECT			effectManager::getSingleton()
 #define SUBWIN			CSubWindow::getSingleton()
+#define UNITFACTORY		CUnitFactory::getSingleton()
 //==========================================
 //			메인게임 릴리즈에서 사용
 //==========================================

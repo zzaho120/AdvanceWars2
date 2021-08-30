@@ -20,4 +20,6 @@ public:
 	void render();
 
 	void cursorMove();
+
+	void addUnitToMgr(UNIT_TYPE type);
 };

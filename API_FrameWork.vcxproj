@@ -178,6 +178,7 @@
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="Unit.h" />
+    <ClInclude Include="UnitFactory.h" />
     <ClInclude Include="UnitManager.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="vector2.h" />
@@ -213,6 +214,7 @@
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="UnitFactory.cpp" />
     <ClCompile Include="UnitManager.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>

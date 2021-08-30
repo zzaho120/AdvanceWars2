@@ -4,39 +4,16 @@
 CUnit::CUnit() :
 	CObject(), fuel(0),
 	movement(0), healthPoint(1),
-	matchType(0), isActive(false),
+	matchType(UNIT_MATCH::NONE), isActive(false),
 	unitType(UNIT_TYPE::NONE)
 {
 }
 
-CUnit::CUnit(UNIT_TYPE _type, int _fuel, int _move, int _match, Vec2 _pos) :
-	CObject(_pos, { TILE_SIZE_X, TILE_SIZE_Y }), fuel(_fuel),
-	movement(_move), healthPoint(10),
-	matchType(_match), isActive(true),
-	unitType(_type)
-{ 
-	switch (unitType)
-	{
-	case UNIT_TYPE::NONE:
-		break;
-	case UNIT_TYPE::INFANTRY:
-		img = IMAGE->findImage("infantry_idle");
-		break;
-	case UNIT_TYPE::MECH:
-		img = IMAGE->findImage("mech_idle");
-		break;
-	case UNIT_TYPE::TANK:
-		img = IMAGE->findImage("tank_idle");
-		break;
-	case UNIT_TYPE::ARTILLERY:
-		img = IMAGE->findImage("artillery_idle");
-		break;
-	case UNIT_TYPE::APC:
-		img = IMAGE->findImage("APC_idle");
-		break;
-	default:
-		break;
-	}
+CUnit::CUnit(UNIT_TYPE _type, Vec2 _pos) :
+	CObject(_pos, { TILE_SIZE_X, TILE_SIZE_Y }),
+	unitType(_type), isActive(false), healthPoint(10)
+{
+	settingByType(unitType);
 }
 
 CUnit::~CUnit()
@@ -102,8 +79,45 @@ void CUnit::render()
 		else if (!isActive)
 			img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("APC_idle_red_off"));
 		break;
-	default:
-		break;
 	}
 	
+}
+
+void CUnit::settingByType(UNIT_TYPE type)
+{
+	switch (type)
+	{
+	case UNIT_TYPE::NONE:
+		break;
+	case UNIT_TYPE::INFANTRY:
+		img = IMAGE->findImage("infantry_idle");
+		fuel = 99;
+		movement = 3;
+		matchType = UNIT_MATCH::INFANTRY;
+		break;
+	case UNIT_TYPE::MECH:
+		img = IMAGE->findImage("mech_idle");
+		fuel = 70;
+		movement = 2;
+		matchType = UNIT_MATCH::INFANTRY;
+		break;
+	case UNIT_TYPE::TANK:
+		img = IMAGE->findImage("tank_idle");
+		fuel = 70;
+		movement = 6;
+		matchType = UNIT_MATCH::VEHICLE;
+		break;
+	case UNIT_TYPE::ARTILLERY:
+		img = IMAGE->findImage("artillery_idle");
+		fuel = 50;
+		movement = 5;
+		matchType = UNIT_MATCH::VEHICLE;
+		break;
+	case UNIT_TYPE::APC:
+		img = IMAGE->findImage("APC_idle");
+		fuel = 70;
+		movement = 6;
+		matchType = UNIT_MATCH::VEHICLE;
+		break;
+	}
 }

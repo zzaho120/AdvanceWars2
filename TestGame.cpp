@@ -21,11 +21,6 @@ HRESULT CTestGame::init()
 	ANIMATION->start("cursor_ani");
 	map->setCameraLink(cam);
 	unitMgr->init();
-	unitMgr->addUnit(UNIT_TYPE::INFANTRY, { map->getTile()[212]->getPos().x, map->getTile()[212]->getPos().y });
-	unitMgr->addUnit(UNIT_TYPE::MECH, { map->getTile()[216]->getPos().x, map->getTile()[216]->getPos().y });
-	unitMgr->addUnit(UNIT_TYPE::TANK, { map->getTile()[188]->getPos().x, map->getTile()[188]->getPos().y });
-	unitMgr->addUnit(UNIT_TYPE::ARTILLERY, { map->getTile()[66]->getPos().x, map->getTile()[66]->getPos().y });
-	unitMgr->addUnit(UNIT_TYPE::APC, { map->getTile()[93]->getPos().x, map->getTile()[93]->getPos().y });
 
 	return S_OK;
 }
@@ -41,6 +36,12 @@ void CTestGame::update()
 	//cam->setTargetVec2(cursor);
 	cursorMove();
 	unitMgr->update();
+
+	if (InputManager->isOnceKeyDown('G')) addUnitToMgr(UNIT_TYPE::INFANTRY);
+	if (InputManager->isOnceKeyDown('H')) addUnitToMgr(UNIT_TYPE::MECH);
+	if (InputManager->isOnceKeyDown('J')) addUnitToMgr(UNIT_TYPE::TANK);
+	if (InputManager->isOnceKeyDown('K')) addUnitToMgr(UNIT_TYPE::ARTILLERY);
+	if (InputManager->isOnceKeyDown('L')) addUnitToMgr(UNIT_TYPE::APC);
 }
 
 void CTestGame::render()
@@ -57,4 +58,37 @@ void CTestGame::cursorMove()
 	else if (InputManager->isOnceKeyDown(VK_RIGHT)) cursor.x += TILE_SIZE_X;
 	else if (InputManager->isOnceKeyDown(VK_UP)) cursor.y -= TILE_SIZE_Y;
 	else if (InputManager->isOnceKeyDown(VK_DOWN)) cursor.y += TILE_SIZE_Y;
+}
+
+void CTestGame::addUnitToMgr(UNIT_TYPE type)
+{
+	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
+	{
+		if (map->getTile()[idx]->getPos() == cursor && map->getTile()[idx]->getUnitType() == UNIT_TYPE::NONE)
+		{
+			map->getTile()[idx]->setUnitType(type);
+			switch (type)
+			{
+			case UNIT_TYPE::NONE:
+				break;
+			case UNIT_TYPE::INFANTRY:
+				unitMgr->addUnit(UNIT_TYPE::INFANTRY, cursor);
+				break;
+			case UNIT_TYPE::MECH:
+				unitMgr->addUnit(UNIT_TYPE::MECH, cursor);
+				break;
+			case UNIT_TYPE::TANK:
+				unitMgr->addUnit(UNIT_TYPE::TANK, cursor);
+				break;
+			case UNIT_TYPE::ARTILLERY:
+				unitMgr->addUnit(UNIT_TYPE::ARTILLERY, cursor);
+				break;
+			case UNIT_TYPE::APC:
+				unitMgr->addUnit(UNIT_TYPE::APC, cursor);
+			default:
+				break;
+			}
+			break;
+		}
+	}
 }

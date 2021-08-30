@@ -26,13 +26,14 @@ public:
 
 	ENVIRONMENT_TYPE getTileType() { return tileType; }
 	BUILDING_TYPE getBuildtype() { return buildingType; }
+	UNIT_TYPE getUnitType() { return unitType; }
 	PLAYER_TYPE getPlayerType() { return playerType; }
 	DIRECTION_SPRITE getDirection() { return directionType; }
 	ROTATE_TYPE getRotateType() { return rotateType; }
 
-
 	void setTileType(ENVIRONMENT_TYPE type) { tileType = type; }
 	void setBuildingType(BUILDING_TYPE type) { buildingType = type; }
+	void setUnitType(UNIT_TYPE type) { unitType = type; }
 	void setPlayerType(PLAYER_TYPE type) { playerType = type; }
 	void setDirectionType(DIRECTION_SPRITE type) { directionType = type; }
 	void setRotateType(ROTATE_TYPE type) { rotateType = type; }

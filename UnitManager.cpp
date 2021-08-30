@@ -33,7 +33,7 @@ void CUnitManager::render()
 
 void CUnitManager::addUnit(UNIT_TYPE type, Vec2 pos)
 {
-    CUnit* tempUnit = new CUnit(type, 99, 3, 0, { pos.x - TILE_SIZE_X / 2, pos.y - TILE_SIZE_Y / 2 });
+    CUnit* tempUnit = UNITFACTORY->createUnit(type, { pos.x - TILE_SIZE_X / 2, pos.y - TILE_SIZE_Y / 2 });
     tempUnit->init();
     vecUnit.push_back(tempUnit);
 }

@@ -6,8 +6,7 @@ CObject::CObject() :
 	size({ 10, 10 }),
 	img(nullptr),
 	ani(nullptr)
-{
-}
+{ }
 
 CObject::CObject(const CObject& copy)
 {

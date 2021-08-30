@@ -62,6 +62,13 @@ enum class UNIT_TYPE
 	ARTILLERY,
 	APC
 };
+
+enum class UNIT_MATCH
+{
+	NONE,
+	INFANTRY,
+	VEHICLE
+};
 enum class RECT_EDGE
 {
 	LEFT,

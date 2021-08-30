@@ -49,9 +49,6 @@
     <Filter Include="Class\Object">
       <UniqueIdentifier>{cd66a7a1-0144-444a-be2d-224b94db9547}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Class\Object\TileMap">
-      <UniqueIdentifier>{ee643981-644b-44fa-ad4f-5770380a956f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Class\Map">
       <UniqueIdentifier>{08c21ad6-974b-4de2-8e42-0ac773efb975}</UniqueIdentifier>
     </Filter>
@@ -99,6 +96,15 @@
     </Filter>
     <Filter Include="Manager\unitMgr">
       <UniqueIdentifier>{4f146de9-b125-4a04-98d3-11b6220a7adf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\Tile">
+      <UniqueIdentifier>{ee643981-644b-44fa-ad4f-5770380a956f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern">
+      <UniqueIdentifier>{8efb82d4-0476-411a-97df-a003f5b7978f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Factory">
+      <UniqueIdentifier>{eac2d70f-96d2-4841-9fa8-2b21f5f737af}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -157,7 +163,7 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
-      <Filter>Class\Object\TileMap</Filter>
+      <Filter>Class\Object\Tile</Filter>
     </ClInclude>
     <ClInclude Include="MapTool.h">
       <Filter>Class\MapTool</Filter>
@@ -219,6 +225,9 @@
     <ClInclude Include="UnitManager.h">
       <Filter>Manager\unitMgr</Filter>
     </ClInclude>
+    <ClInclude Include="UnitFactory.h">
+      <Filter>Pattern\Factory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -252,7 +261,7 @@
       <Filter>Class\Object</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
-      <Filter>Class\Object\TileMap</Filter>
+      <Filter>Class\Object\Tile</Filter>
     </ClCompile>
     <ClCompile Include="MapTool.cpp">
       <Filter>Class\MapTool</Filter>
@@ -310,6 +319,9 @@
     </ClCompile>
     <ClCompile Include="UnitManager.cpp">
       <Filter>Manager\unitMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitFactory.cpp">
+      <Filter>Pattern\Factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
