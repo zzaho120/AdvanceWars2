@@ -51,6 +51,12 @@ void CTestGame::render()
 	map->render();
 	unitMgr->render();
 	IMAGE->findImage("cursor")->aniRender(getMapDC(), cursor.x - 32, cursor.y - 32, ANIMATION->findAnimation("cursor_ani"));
+	TCHAR str[128];
+	for (int i = 0; i < TILE_NUM_X * TILE_NUM_Y; i++)
+	{
+		wsprintf(str, "%d %d", STAGE->getCurMap()->getTile()[i]->getTileType(), ASTAR->getAstarTile()[i].walkable);
+		TextOut(getMapDC(), STAGE->getCurMap()->getTile()[i]->getPos().x, STAGE->getCurMap()->getTile()[i]->getPos().y, str, strlen(str));
+	}
 	this->getMapBuffer()->render(getMemDC(), 0, 0, cam->getCam1().x, cam->getCam1().y, cam->getCamSize().x, cam->getCamSize().y);
 }
 

@@ -135,8 +135,11 @@ void CUnit::render()
 		}
 	}
 
-	wsprintf(str, "%d %d", ASTAR->getRoadList().size(), tileIdx);
-	TextOut(getMapDC(), 100, 100, str, strlen(str));
+	if (!ASTAR->getRoadList().empty())
+	{
+		wsprintf(str, "%d %d %d", ASTAR->getRoadList().size(), tileIdx, ASTAR->getRoadList().top());
+		TextOut(getMapDC(), 100, 100, str, strlen(str));
+	}
 }
 
 void CUnit::select()
@@ -145,24 +148,19 @@ void CUnit::select()
 
 void CUnit::move(Vec2 _pos, int idx)
 {
-	/*pos = _pos;
-	tileIdx = idx;*/
-
-	ASTAR->setStartEnd(tileIdx, idx);
-	ASTAR->update();
-
-	if (!setting && !ASTAR->getRoadList().empty())
+	if (!setting)
 	{
-		ASTAR->setStartEnd(tileIdx, idx);
+		ASTAR->setStartEnd(tileIdx, idx, unitType);
 		ASTAR->update();
 		popIdx = ASTAR->getRoadList().top();
+		ASTAR->eraseRoadList();
 		setting = true;
 	}
-	
 	if (pos == getLeftTopVec2(STAGE->getCurMap()->getTile()[popIdx]->getPos(), TILE_SIZE))
 	{
-		setting = false;
 		ASTAR->eraseRoadList();
+		if(!ASTAR->getRoadList().empty())
+			popIdx = ASTAR->getRoadList().top();
 	}
 	if (pos.x < getLeftTopVec2(STAGE->getCurMap()->getTile()[popIdx]->getPos(), TILE_SIZE).x)
 	{
@@ -172,20 +170,16 @@ void CUnit::move(Vec2 _pos, int idx)
 	else if (pos.x > getLeftTopVec2(STAGE->getCurMap()->getTile()[popIdx]->getPos(), TILE_SIZE).x)
 	{
 		pos.x -= UNIT_MOVE_SPEED;
-
 		tileIdx = popIdx;
 	}
-
-	if (pos.y < getLeftTopVec2(STAGE->getCurMap()->getTile()[popIdx]->getPos(), TILE_SIZE).y)
+	else if (pos.y < getLeftTopVec2(STAGE->getCurMap()->getTile()[popIdx]->getPos(), TILE_SIZE).y)
 	{
 		pos.y += UNIT_MOVE_SPEED;
-
 		tileIdx = popIdx;
 	}
 	else if (pos.y > getLeftTopVec2(STAGE->getCurMap()->getTile()[popIdx]->getPos(), TILE_SIZE).y)
 	{
 		pos.y -= UNIT_MOVE_SPEED;
-
 		tileIdx = popIdx;
 	}
 }

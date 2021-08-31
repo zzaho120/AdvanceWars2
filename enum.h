@@ -131,7 +131,6 @@ enum class TILE_TYPE
 	TILE_TYPE_EMPTY,	//빈타일 (지나갈수 있는곳)
 	TILE_TYPE_START,	//시작지점
 	TILE_TYPE_END,		//끝지점
-	TILE_TYPE_WALL		//벽
 };
 enum class ASTAR_STATE
 {
