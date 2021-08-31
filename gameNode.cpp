@@ -74,6 +74,8 @@ void gameNode::release()
 		ANIMATION->releaseSingleton();
 		EFFECT->releaseSingleton();
 		SUBWIN->releaseSingleton();
+		UNITFACTORY->releaseSingleton();
+		ASTAR->releaseSingleton();
 
 		SCENE->release();
 		IMAGE->release();

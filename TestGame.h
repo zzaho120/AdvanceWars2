@@ -10,7 +10,8 @@ private:
 	CMap* map;
 	CCamera* cam;
 	Vec2 cursor;
-	
+	int cursorIdx;
+
 	CUnitManager* unitMgr;
 	CUnit* curUnit;
 	CCommand* command;

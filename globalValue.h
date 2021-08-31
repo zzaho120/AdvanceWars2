@@ -21,7 +21,7 @@ const int CAMERA_SIZE_Y = WINSIZEY;
 const int SAMPLE_TILE_X = 8;
 const int SAMPLE_TILE_Y = 4;
 
-const int UNIT_MOVE_SPEED = 4;
+const int UNIT_MOVE_SPEED = 8;
 
 const int ASTAR_MAX_NUM = 5000;
 

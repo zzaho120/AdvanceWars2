@@ -5,6 +5,7 @@ CTestGame::CTestGame() :
 	map(new CMap("save/spannisland.map")),
 	cam(new CCamera),
 	cursor({ map->getTile()[158]->getPos().x, map->getTile()[158]->getPos().y }),
+	cursorIdx(158),
 	unitMgr(new CUnitManager), isSelected(false), isMove(false),
 	command(nullptr), curUnit(nullptr)
 {
@@ -19,7 +20,8 @@ HRESULT CTestGame::init()
 	ANIMATION->start("cursor_ani");
 	map->setCameraLink(cam);
 	unitMgr->init();
-
+	STAGE->setCurMap(map);
+	ASTAR->init();
 	return S_OK;
 }
 
@@ -54,10 +56,26 @@ void CTestGame::render()
 
 void CTestGame::cursorMove()
 {
-	if (InputManager->isOnceKeyDown(VK_LEFT)) cursor.x -= TILE_SIZE_X;
-	else if (InputManager->isOnceKeyDown(VK_RIGHT)) cursor.x += TILE_SIZE_X;
-	else if (InputManager->isOnceKeyDown(VK_UP)) cursor.y -= TILE_SIZE_Y;
-	else if (InputManager->isOnceKeyDown(VK_DOWN)) cursor.y += TILE_SIZE_Y;
+	if (InputManager->isOnceKeyDown(VK_LEFT))
+	{
+		cursor.x -= TILE_SIZE_X;
+		cursorIdx -= 1;
+	}
+	else if (InputManager->isOnceKeyDown(VK_RIGHT))
+	{
+		cursor.x += TILE_SIZE_X;
+		cursorIdx += 1;
+	}
+	else if (InputManager->isOnceKeyDown(VK_UP))
+	{
+		cursor.y -= TILE_SIZE_Y;
+		cursorIdx -= 30;
+	}
+	else if (InputManager->isOnceKeyDown(VK_DOWN))
+	{
+		cursor.y += TILE_SIZE_Y;
+		cursorIdx += 30;
+	}
 }
 
 void CTestGame::addUnitToMgr(UNIT_TYPE type)
@@ -72,19 +90,19 @@ void CTestGame::addUnitToMgr(UNIT_TYPE type)
 			case UNIT_TYPE::NONE:
 				break;
 			case UNIT_TYPE::INFANTRY:
-				unitMgr->addUnit(UNIT_TYPE::INFANTRY, cursor);
+				unitMgr->addUnit(UNIT_TYPE::INFANTRY, cursor, cursorIdx);
 				break;
 			case UNIT_TYPE::MECH:
-				unitMgr->addUnit(UNIT_TYPE::MECH, cursor);
+				unitMgr->addUnit(UNIT_TYPE::MECH, cursor, cursorIdx);
 				break;
 			case UNIT_TYPE::TANK:
-				unitMgr->addUnit(UNIT_TYPE::TANK, cursor);
+				unitMgr->addUnit(UNIT_TYPE::TANK, cursor, cursorIdx);
 				break;
 			case UNIT_TYPE::ARTILLERY:
-				unitMgr->addUnit(UNIT_TYPE::ARTILLERY, cursor);
+				unitMgr->addUnit(UNIT_TYPE::ARTILLERY, cursor, cursorIdx);
 				break;
 			case UNIT_TYPE::APC:
-				unitMgr->addUnit(UNIT_TYPE::APC, cursor);
+				unitMgr->addUnit(UNIT_TYPE::APC, cursor, cursorIdx);
 			default:
 				break;
 			}
@@ -136,6 +154,7 @@ void CTestGame::unitMove()
 		{
 			curUnit->setActive(false);
 			curUnit->setSelected(false);
+			curUnit->setMove(false);
 			isSelected = false;
 			curUnit = nullptr;
 			isMove = false;
@@ -148,8 +167,11 @@ void CTestGame::unitMove()
 	}
 	if (InputManager->isOnceKeyDown('Z') && isSelected && !isMove)
 	{
-		curUnit->setMove(true); 
-		isMove = true;
-		command = new CMoveUnitCommand(curUnit, getLeftTopVec2(cursor, TILE_SIZE));
+		if (curUnit->correctMove(cursorIdx))
+		{
+			curUnit->setMove(true);
+			isMove = true;
+			command = new CMoveUnitCommand(curUnit, getLeftTopVec2(cursor, TILE_SIZE), cursorIdx);
+		}
 	}
 }

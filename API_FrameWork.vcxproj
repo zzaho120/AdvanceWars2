@@ -173,6 +173,7 @@
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="singleton.h" />
     <ClInclude Include="soundManager.h" />
+    <ClInclude Include="StageManager.h" />
     <ClInclude Include="SubWindow.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestGame.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="ResourceLoadFacade.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
+    <ClCompile Include="StageManager.cpp" />
     <ClCompile Include="SubWindow.cpp" />
     <ClCompile Include="TestGame.cpp" />
     <ClCompile Include="Tile.cpp" />

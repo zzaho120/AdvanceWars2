@@ -14,7 +14,7 @@ public:
 	void update();
 	void render();
 
-	void addUnit(UNIT_TYPE type, Vec2 pos);
+	void addUnit(UNIT_TYPE type, Vec2 pos, int idx);
 
 	vector<CUnit*> getVecUnit() { return vecUnit; }
 

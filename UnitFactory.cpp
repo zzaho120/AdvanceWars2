@@ -10,7 +10,7 @@ CUnitFactory::~CUnitFactory()
 {
 }
 
-CUnit* CUnitFactory::createUnit(UNIT_TYPE type, Vec2 pos)
+CUnit* CUnitFactory::createUnit(UNIT_TYPE type, Vec2 pos, int idx)
 {
-	return new CUnit(type, pos);
+	return new CUnit(type, pos, idx);
 }

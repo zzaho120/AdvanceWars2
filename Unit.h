@@ -7,6 +7,8 @@ private:
 	int fuel;
 	int movement;
 	int healthPoint;
+	int tileIdx;
+	int popIdx;
 
 	UNIT_MATCH matchType;
 	UNIT_TYPE unitType;
@@ -15,13 +17,12 @@ private:
 	bool isActive;
 	bool isSelected;
 	bool isMove;
-
-	CAstar astar;
-
+	bool setting;
+	bool tileRange[TILE_NUM_X * TILE_NUM_Y];
 	// 무기를 2종 담을 수 있는 벡터와 그 클래스를 만들 것
 public:
 	CUnit();
-	CUnit(UNIT_TYPE _type, Vec2 _pos);
+	CUnit(UNIT_TYPE _type, Vec2 _pos, int idx);
 	~CUnit();
 
 	HRESULT init();
@@ -30,8 +31,11 @@ public:
 	void render();
 
 	void select();
-	void move(Vec2 _pos);
+	void move(Vec2 _pos, int idx);
 	void wait();
+	void floodFill();
+	void checkMoveRange(int idx, int cnt);
+	bool correctMove(int idx);
 
 	bool getSelected() { return isSelected; }
 	bool getActive() { return isActive; }

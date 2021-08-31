@@ -30,7 +30,7 @@
 #include<vector>
 #include<map>
 #include<string>
-
+#include<stack>
 //==========================================
 //				 내가만든 헤더파일
 //==========================================
@@ -49,6 +49,8 @@
 #include"utils.h"
 #include"SubWindow.h"
 #include"UnitFactory.h"
+#include"StageManager.h"
+#include"Astar.h"
 //======================================
 //##			매니저들			  ##
 //======================================
@@ -62,6 +64,8 @@
 #define EFFECT			effectManager::getSingleton()
 #define SUBWIN			CSubWindow::getSingleton()
 #define UNITFACTORY		CUnitFactory::getSingleton()
+#define STAGE			CStageManager::getSingleton()
+#define ASTAR			CAstar::getSingleton()
 //==========================================
 //			메인게임 릴리즈에서 사용
 //==========================================

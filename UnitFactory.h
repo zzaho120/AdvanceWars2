@@ -10,5 +10,5 @@ public:
 	CUnitFactory();
 	~CUnitFactory();
 
-	CUnit* createUnit(UNIT_TYPE type, Vec2 pos);
+	CUnit* createUnit(UNIT_TYPE type, Vec2 pos, int idx);
 };

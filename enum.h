@@ -125,18 +125,18 @@ enum class ROTATE_TYPE
 	DEG360
 };
 
-enum class ASTAR_TYPE
+//타일 속성
+enum class TILE_TYPE
 {
-	EMPTY,	//빈타일 (지나갈수 있는곳)
-	START,	//시작지점
-	END,		//끝지점
-	WALL		//벽
+	TILE_TYPE_EMPTY,	//빈타일 (지나갈수 있는곳)
+	TILE_TYPE_START,	//시작지점
+	TILE_TYPE_END,		//끝지점
+	TILE_TYPE_WALL		//벽
 };
-
 enum class ASTAR_STATE
 {
-	SEARCHING,//검색중
-	FOUND,	//발견!
-	NOWAY,	//길없음
-	END
+	ASTAR_STATE_SEARCHING,//검색중
+	ASTAR_STATE_FOUND,	//발견!
+	ASTAR_STATE_NOWAY,	//길없음
+	ASTAR_STATE_END
 };

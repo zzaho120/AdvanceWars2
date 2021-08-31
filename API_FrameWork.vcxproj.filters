@@ -109,6 +109,9 @@
     <Filter Include="Class\Astar">
       <UniqueIdentifier>{88e9bed6-ff89-4770-a4c9-9d80ef98c57b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager\stageMgr">
+      <UniqueIdentifier>{9bd8241d-3a19-4b2f-bcee-cc647e0ea827}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -237,6 +240,9 @@
     <ClInclude Include="Astar.h">
       <Filter>Class\Astar</Filter>
     </ClInclude>
+    <ClInclude Include="StageManager.h">
+      <Filter>Manager\stageMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -334,6 +340,9 @@
     </ClCompile>
     <ClCompile Include="Astar.cpp">
       <Filter>Class\Astar</Filter>
+    </ClCompile>
+    <ClCompile Include="StageManager.cpp">
+      <Filter>Manager\stageMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
