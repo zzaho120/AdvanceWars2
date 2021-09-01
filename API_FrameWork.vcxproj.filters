@@ -64,9 +64,6 @@
     <Filter Include="Class\SubWindow">
       <UniqueIdentifier>{cbb2f53f-d5ac-438f-94ec-d59203a7c69a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Class\TestGame">
-      <UniqueIdentifier>{91010b10-2b43-495c-88ff-7a50fef2cbf4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Manager\animationMgr">
       <UniqueIdentifier>{d9bcce12-d232-4958-bf25-61290afd20f2}</UniqueIdentifier>
     </Filter>
@@ -109,9 +106,6 @@
     <Filter Include="Class\Astar">
       <UniqueIdentifier>{88e9bed6-ff89-4770-a4c9-9d80ef98c57b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Manager\stageMgr">
-      <UniqueIdentifier>{9bd8241d-3a19-4b2f-bcee-cc647e0ea827}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Manager\buildingMgr">
       <UniqueIdentifier>{3748b163-3902-4c1b-bb31-f1f535a31863}</UniqueIdentifier>
     </Filter>
@@ -120,6 +114,15 @@
     </Filter>
     <Filter Include="Class\Object\Cursor">
       <UniqueIdentifier>{e988c281-da25-4c33-91e0-db24dd61a4af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Player">
+      <UniqueIdentifier>{4d1a8767-f722-462e-a632-d3a650aef556}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\CommandHistory">
+      <UniqueIdentifier>{8c6992ca-9a78-460c-8a81-96ad40cc709a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Weapon">
+      <UniqueIdentifier>{92bdda6d-bb14-4de1-b11c-830b06eee73f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -204,9 +207,6 @@
     <ClInclude Include="MapToolSub.h">
       <Filter>Class\MapTool</Filter>
     </ClInclude>
-    <ClInclude Include="TestGame.h">
-      <Filter>Class\TestGame</Filter>
-    </ClInclude>
     <ClInclude Include="Unit.h">
       <Filter>Class\Object\Unit</Filter>
     </ClInclude>
@@ -249,9 +249,6 @@
     <ClInclude Include="Astar.h">
       <Filter>Class\Astar</Filter>
     </ClInclude>
-    <ClInclude Include="StageManager.h">
-      <Filter>Manager\stageMgr</Filter>
-    </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>Manager\gameMgr</Filter>
     </ClInclude>
@@ -260,6 +257,15 @@
     </ClInclude>
     <ClInclude Include="Cursor.h">
       <Filter>Class\Object\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Class\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandHistory.h">
+      <Filter>Manager\CommandHistory</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Class\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -320,9 +326,6 @@
     <ClCompile Include="MapToolSub.cpp">
       <Filter>Class\MapTool</Filter>
     </ClCompile>
-    <ClCompile Include="TestGame.cpp">
-      <Filter>Class\TestGame</Filter>
-    </ClCompile>
     <ClCompile Include="Unit.cpp">
       <Filter>Class\Object\Unit</Filter>
     </ClCompile>
@@ -359,9 +362,6 @@
     <ClCompile Include="Astar.cpp">
       <Filter>Class\Astar</Filter>
     </ClCompile>
-    <ClCompile Include="StageManager.cpp">
-      <Filter>Manager\stageMgr</Filter>
-    </ClCompile>
     <ClCompile Include="GameManager.cpp">
       <Filter>Manager\gameMgr</Filter>
     </ClCompile>
@@ -370,6 +370,15 @@
     </ClCompile>
     <ClCompile Include="Cursor.cpp">
       <Filter>Class\Object\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Class\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandHistory.cpp">
+      <Filter>Manager\CommandHistory</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Class\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

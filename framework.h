@@ -31,6 +31,7 @@
 #include<map>
 #include<string>
 #include<stack>
+#include<queue>
 //==========================================
 //				 내가만든 헤더파일
 //==========================================
@@ -49,8 +50,8 @@
 #include"utils.h"
 #include"SubWindow.h"
 #include"UnitFactory.h"
-#include"StageManager.h"
 #include"Astar.h"
+#include"CommandHistory.h"
 //======================================
 //##			매니저들			  ##
 //======================================
@@ -64,16 +65,12 @@
 #define EFFECT			effectManager::getSingleton()
 #define SUBWIN			CSubWindow::getSingleton()
 #define UNITFACTORY		CUnitFactory::getSingleton()
-#define STAGE			CStageManager::getSingleton()
 #define ASTAR			CAstar::getSingleton()
+#define HISTORY			CCommandHistory::getSingleton()
 //==========================================
 //			메인게임 릴리즈에서 사용
 //==========================================
-
 #define SAFE_DELETE(p) {if(p) {delete(p);(p) = nullptr;}}
-
-
-
 //========================================================
 //		전역변수 아이들(인스턴스,윈도우 핸들, 마우스 좌표)
 //========================================================

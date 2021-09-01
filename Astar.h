@@ -13,6 +13,7 @@ struct aStarTile
 	Vec2 pos;
 };
 
+class CMap;
 class CAstar : public Singleton<CAstar>
 {
 private:
@@ -31,11 +32,14 @@ private:
 	int closeIdx;
 
 	bool isArrive;
+
+	CMap* map;
 public:
 	CAstar();
 	~CAstar();
 
 	HRESULT init();
+	HRESULT init(CMap* map);
 	void release();
 	void update();
 
@@ -45,6 +49,7 @@ public:
 	void caculateF();		//오픈리스트내 타일 F값 계산
 	void addCloseList();	//가장 작은 F선택후 클로즈 리스트에 추가
 	void checkArrive();	//도착했는지 여부 체크
+
 	void setStartEnd(int startIdx, int endIdx, UNIT_TYPE type);
 	void setPath(aStarTile* tile);
 	void checkGValue(int idx);
@@ -52,5 +57,5 @@ public:
 	stack<int> getRoadList() { return pathList; }
 	aStarTile* getAstarTile() { return tile; }
 
-	void eraseRoadList() { if (!pathList.empty()) pathList.pop(); }
+	void erasePathList() { if (!pathList.empty()) pathList.pop(); }
 };

@@ -40,7 +40,8 @@ HRESULT gameNode::init(bool managerInit)
 		IMAGE->init();
 		TIME->init();
 		SOUND->init();
-
+		HISTORY->init();
+		
 		CResourceLoadFacade* resourceLoadFacade = new CResourceLoadFacade;
 		resourceLoadFacade->resourceLoad();
 		SAFE_DELETE(resourceLoadFacade);
@@ -76,6 +77,7 @@ void gameNode::release()
 		SUBWIN->releaseSingleton();
 		UNITFACTORY->releaseSingleton();
 		ASTAR->releaseSingleton();
+		HISTORY->releaseSingleton();
 
 		SCENE->release();
 		IMAGE->release();

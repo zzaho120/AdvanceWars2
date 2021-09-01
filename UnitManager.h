@@ -1,6 +1,8 @@
 #pragma once
 #include"gameNode.h"
 #include"Unit.h"
+
+class CMap;
 class CUnitManager : public gameNode
 {
 private:
@@ -15,7 +17,8 @@ public:
 	void update();
 	void render();
 
-	void addUnit(UNIT_TYPE type, Vec2 pos, int idx);
+	void addUnit(PLAYER_TYPE player, UNIT_TYPE type, Vec2 pos, int idx, CMap* map);
+	void setAllActive(bool active);
 
 	vector<CUnit*> getVecUnit() { return vecUnit; }
 

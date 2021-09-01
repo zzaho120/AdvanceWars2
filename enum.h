@@ -48,9 +48,9 @@ enum class BUILDING_TYPE
 
 enum class PLAYER_TYPE
 {
-	NONE,
 	PLAYER1,
-	PLAYER2
+	PLAYER2,
+	NONE
 };
 
 enum class UNIT_TYPE
@@ -138,4 +138,19 @@ enum class ASTAR_STATE
 	ASTAR_STATE_FOUND,	//발견!
 	ASTAR_STATE_NOWAY,	//길없음
 	ASTAR_STATE_END
+};
+
+enum class WEAPON_NUMBER
+{
+	WEAPON1,
+	WEAPON2,
+	END
+};
+
+enum class WEAPON_TYPE
+{
+	NONE,
+	M_GUN,
+	BAZOOKA,
+	CANNON
 };

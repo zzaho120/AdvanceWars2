@@ -1,6 +1,9 @@
 #pragma once
 #include"Object.h"
+#include"Weapon.h"
 #include"Astar.h"
+
+class CMap;
 class CUnit : public CObject
 {
 private:
@@ -18,11 +21,15 @@ private:
 	bool isSelected;
 	bool isMove;
 	bool moveSetting;
+
 	bool tileRange[TILE_NUM_X * TILE_NUM_Y];
-	// 무기를 2종 담을 수 있는 벡터와 그 클래스를 만들 것
+
+	CWeapon* weaponArr[static_cast<int>(WEAPON_NUMBER::END)];
+
+	CMap* map;
 public:
 	CUnit();
-	CUnit(UNIT_TYPE _type, Vec2 _pos, int idx);
+	CUnit(PLAYER_TYPE _player, UNIT_TYPE _type, Vec2 _pos, int idx, CMap* _map);
 	~CUnit();
 
 	HRESULT init();
@@ -33,13 +40,19 @@ public:
 	void select();
 	void move(Vec2 _pos, int idx);
 	void wait();
+	
 	void floodFill();
 	void checkMoveRange(int idx, int cnt);
 	bool correctMove(int idx);
+	
+	void weaponSetting(UNIT_TYPE type);
 
 	bool getSelected() { return isSelected; }
 	bool getActive() { return isActive; }
 	bool getMove() { return isMove; }
+	UNIT_TYPE getUnitType() { return unitType; }
+	
+	int getTileIdx() { return tileIdx; }
 
 	void settingByType(UNIT_TYPE type);
 
@@ -47,4 +60,6 @@ public:
 	void setActive(bool active) { isActive = active; }
 	void setSelected(bool select) { isSelected = select; }
 	void setMove(bool move) { isMove = move; }
+	void setTileIdx(int idx) { tileIdx = idx; }
+	void setMoveSetting(bool moveSet) { moveSetting = moveSet; }
 };

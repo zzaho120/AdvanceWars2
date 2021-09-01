@@ -35,9 +35,17 @@ void CUnitManager::render()
         (*iterUnit)->render();
 }
 
-void CUnitManager::addUnit(UNIT_TYPE type, Vec2 pos, int idx)
+void CUnitManager::addUnit(PLAYER_TYPE player, UNIT_TYPE type, Vec2 pos, int idx, CMap* map)
 {
-    CUnit* tempUnit = UNITFACTORY->createUnit(type, getLeftTopVec2(pos, TILE_SIZE), idx);
+    CUnit* tempUnit = UNITFACTORY->createUnit(player, type, getLeftTopVec2(pos, TILE_SIZE), idx, map);
     tempUnit->init();
     vecUnit.push_back(tempUnit);
+}
+
+void CUnitManager::setAllActive(bool active)
+{
+    for (iterUnit = vecUnit.begin(); iterUnit != vecUnit.end(); iterUnit++)
+    {
+        (*iterUnit)->setActive(active);
+    }
 }

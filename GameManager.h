@@ -3,8 +3,7 @@
 #include "Map.h"
 #include "Camera.h"
 #include "Cursor.h"
-#include "UnitManager.h"
-#include "BuildingManager.h"
+#include "Player.h"
 
 class CGameManager : public gameNode
 {
@@ -12,9 +11,9 @@ private:
 	CMap* map;
 	CCamera* cam;
 	CCursor* cursor;
-	CUnitManager* unitMgr;
-	CBuildingManager* buildingMgr;
 
+	CPlayer* playerArr[2];
+	CPlayer* curPlayer;
 public:
 	CGameManager();
 	~CGameManager();
@@ -23,4 +22,6 @@ public:
 	void release();
 	void update();
 	void render();
+
+	void changePlayer(int type);
 };

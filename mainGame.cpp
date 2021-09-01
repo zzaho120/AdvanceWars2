@@ -16,8 +16,6 @@ HRESULT mainGame::init()
 	//SUBWIN->SetScene(new CMapToolSub);
 	gameMgr = new CGameManager;
 	gameMgr->init();
-	//test = new CTestGame;
-	//test->init();
 	return S_OK;
 }
 
@@ -31,7 +29,6 @@ void mainGame::update()
 	gameNode::update();
 	//maptool->update();
 	//SUBWIN->update();
-	//test->update();
 	gameMgr->update();
 }
 
@@ -42,7 +39,6 @@ void mainGame::render(/*HDC hdc*/)
 	gameNode::render();
 	//maptool->render();
 	//SUBWIN->render();
-	//test->render();
 	gameMgr->render();
 	TIME->render(getMemDC());
 	//==============================================

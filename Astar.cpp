@@ -22,9 +22,32 @@ HRESULT CAstar::init()
 		tile[idx].F = ASTAR_MAX_NUM;
 		tile[idx].H = 0;
 		tile[idx].G = 0;
-		tile[idx].pos = STAGE->getCurMap()->getTile()[idx]->getPos();
 		tile[idx].tileIdx = idx;
-		tile[idx].envirType = STAGE->getCurMap()->getTile()[idx]->getTileType();
+	}
+
+	curUnitType = UNIT_TYPE::NONE;
+	isArrive = false;
+	return S_OK;
+}
+
+HRESULT CAstar::init(CMap* map)
+{
+	openList.clear();
+	closeList.clear();
+	while (!pathList.empty())
+		pathList.pop();
+
+	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
+	{
+		tile[idx].type = TILE_TYPE::TILE_TYPE_EMPTY;
+		tile[idx].walkable = false;
+		tile[idx].parent = NULL;
+		tile[idx].F = ASTAR_MAX_NUM;
+		tile[idx].H = 0;
+		tile[idx].G = 0;
+		tile[idx].pos = map->getTile()[idx]->getPos();
+		tile[idx].tileIdx = idx;
+		tile[idx].envirType = map->getTile()[idx]->getTileType();
 	}
 
 	curUnitType = UNIT_TYPE::NONE;
@@ -54,6 +77,7 @@ void CAstar::tileInitializing()
 {
 	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
 	{
+		tile[idx].listOn = false;
 		if (tile[idx].type == TILE_TYPE::TILE_TYPE_START)
 		{
 			tile[idx].walkable = false;

@@ -6,11 +6,13 @@ class CMoveUnitCommand : public CCommand
 private:
 	CUnit* unit;
 	int tileIdx;
+	int firstTileIdx;
 	Vec2 movePos;
 	Vec2 firstPos;
 public:
 	CMoveUnitCommand(CUnit* _unit, Vec2 _pos, int idx) :
-		unit(_unit), movePos(_pos), firstPos(_pos), tileIdx(idx)
+		unit(_unit), movePos(_pos), firstPos(unit->getPos()), tileIdx(idx),
+		firstTileIdx(unit->getTileIdx())
 	{ };
 
 	virtual void excute()
@@ -21,5 +23,6 @@ public:
 	virtual void undo()
 	{
 		unit->setPos(firstPos);
+		unit->setTileIdx(firstTileIdx);
 	}
 };

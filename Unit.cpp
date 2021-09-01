@@ -9,15 +9,18 @@ CUnit::CUnit() :
 	unitType(UNIT_TYPE::NONE), isSelected(false),
 	isMove(false)
 {
+	weaponSetting(unitType);
 }
 
-CUnit::CUnit(UNIT_TYPE _type, Vec2 _pos, int idx) :
+CUnit::CUnit(PLAYER_TYPE _player, UNIT_TYPE _type, Vec2 _pos, int idx, CMap* _map) :
 	CObject(_pos, { TILE_SIZE_X, TILE_SIZE_Y }), tileIdx(idx),
 	unitType(_type), isActive(false), healthPoint(10),
-	isSelected(false), isMove(false), moveSetting(false)
+	isSelected(false), isMove(false), moveSetting(false),
+	map(_map), playerType(_player)
 {
 	memset(tileRange, 0, sizeof(tileRange));
 	settingByType(unitType);
+	weaponSetting(unitType);
 }
 
 CUnit::~CUnit()
@@ -26,21 +29,68 @@ CUnit::~CUnit()
 
 HRESULT CUnit::init()
 {
-	ANIMATION->start("infry_idle_red_on");
-	ANIMATION->start("infry_idle_red_off");
-	ANIMATION->start("mech_idle_red_on");
-	ANIMATION->start("mech_idle_red_off");
-	ANIMATION->start("tank_idle_red_on");
-	ANIMATION->start("tank_idle_red_off");
-	ANIMATION->start("artil_idle_red_on");
-	ANIMATION->start("artil_idle_red_off");
-	ANIMATION->start("APC_idle_red_on");
-	ANIMATION->start("APC_idle_red_off"); 
-	ANIMATION->start("infry_move_left_red");
-	ANIMATION->start("mech_move_left_red");
-	ANIMATION->start("tank_move_left_red");
-	ANIMATION->start("artil_move_left_red");
-	ANIMATION->start("APC_move_left_red");
+	if (playerType == PLAYER_TYPE::PLAYER1)
+	{
+		switch (unitType)
+		{
+		case UNIT_TYPE::INFANTRY:
+			ANIMATION->start("infry_idle_red_on");
+			ANIMATION->start("infry_idle_red_off");
+			ANIMATION->start("infry_move_left_red");
+			break;
+		case UNIT_TYPE::MECH:
+			ANIMATION->start("mech_idle_red_on");
+			ANIMATION->start("mech_idle_red_off");
+			ANIMATION->start("mech_move_left_red");
+			break;
+		case UNIT_TYPE::TANK:
+			ANIMATION->start("tank_idle_red_on");
+			ANIMATION->start("tank_idle_red_off");
+			ANIMATION->start("tank_move_left_red");
+			break;
+		case UNIT_TYPE::ARTILLERY:
+			ANIMATION->start("artil_idle_red_on");
+			ANIMATION->start("artil_idle_red_off");
+			ANIMATION->start("artil_move_left_red");
+			break;
+		case UNIT_TYPE::APC:
+			ANIMATION->start("APC_idle_red_on");
+			ANIMATION->start("APC_idle_red_off");
+			ANIMATION->start("APC_move_left_red");
+			break;
+		}
+	}
+	else if (playerType == PLAYER_TYPE::PLAYER2)
+	{
+		switch (unitType)
+		{
+		case UNIT_TYPE::INFANTRY:
+			ANIMATION->start("infry_idle_blue_on");
+			ANIMATION->start("infry_idle_blue_off");
+			ANIMATION->start("infry_move_left_blue");
+			break;
+		case UNIT_TYPE::MECH:
+			ANIMATION->start("mech_idle_blue_on");
+			ANIMATION->start("mech_idle_blue_off");
+			ANIMATION->start("mech_move_left_blue");
+			break;
+		case UNIT_TYPE::TANK:
+			ANIMATION->start("tank_idle_blue_on");
+			ANIMATION->start("tank_idle_blue_off");
+			ANIMATION->start("tank_move_left_blue");
+			break;
+		case UNIT_TYPE::ARTILLERY:
+			ANIMATION->start("artil_idle_blue_on");
+			ANIMATION->start("artil_idle_blue_off");
+			ANIMATION->start("artil_move_left_blue");
+			break;
+		case UNIT_TYPE::APC:
+			ANIMATION->start("APC_idle_blue_on");
+			ANIMATION->start("APC_idle_blue_off");
+			ANIMATION->start("APC_move_left_blue");
+			break;
+		}
+	}
 
 	return S_OK;
 }
@@ -75,69 +125,137 @@ void CUnit::render()
 
 	if (!isSelected)
 	{
-		switch (unitType)
+		if (playerType == PLAYER_TYPE::PLAYER1)
 		{
-		case UNIT_TYPE::NONE:
-			break;
-		case UNIT_TYPE::INFANTRY:
-			if (isActive)
-				img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("infry_idle_red_on"));
-			else if (!isActive)
-				img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("infry_idle_red_off"));
-			break;
-		case UNIT_TYPE::MECH:
-			if (isActive)
-				img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("mech_idle_red_on"));
-			else if (!isActive)
-				img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("mech_idle_red_off"));
-			break;
-		case UNIT_TYPE::TANK:
-			if (isActive)
-				img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("tank_idle_red_on"));
-			else if (!isActive)
-				img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("tank_idle_red_off"));
-			break;
-		case UNIT_TYPE::ARTILLERY:
-			if (isActive)
-				img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("artil_idle_red_on"));
-			else if (!isActive)
-				img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("artil_idle_red_off"));
-			break;
-		case UNIT_TYPE::APC:
-			if (isActive)
-				img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("APC_idle_red_on"));
-			else if (!isActive)
-				img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("APC_idle_red_off"));
-			break;
+			switch (unitType)
+			{
+			case UNIT_TYPE::NONE:
+				break;
+			case UNIT_TYPE::INFANTRY:
+				if (isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("infry_idle_red_on"));
+				else if (!isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("infry_idle_red_off"));
+				break;
+			case UNIT_TYPE::MECH:
+				if (isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("mech_idle_red_on"));
+				else if (!isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("mech_idle_red_off"));
+				break;
+			case UNIT_TYPE::TANK:
+				if (isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("tank_idle_red_on"));
+				else if (!isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("tank_idle_red_off"));
+				break;
+			case UNIT_TYPE::ARTILLERY:
+				if (isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("artil_idle_red_on"));
+				else if (!isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("artil_idle_red_off"));
+				break;
+			case UNIT_TYPE::APC:
+				if (isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("APC_idle_red_on"));
+				else if (!isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("APC_idle_red_off"));
+				break;
+			}
 		}
+		else if (playerType == PLAYER_TYPE::PLAYER2)
+		{
+			switch (unitType)
+			{
+			case UNIT_TYPE::NONE:
+				break;
+			case UNIT_TYPE::INFANTRY:
+				if (isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("infry_idle_blue_on"));
+				else if (!isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("infry_idle_blue_off"));
+				break;
+			case UNIT_TYPE::MECH:
+				if (isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("mech_idle_blue_on"));
+				else if (!isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("mech_idle_blue_off"));
+				break;
+			case UNIT_TYPE::TANK:
+				if (isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("tank_idle_blue_on"));
+				else if (!isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("tank_idle_blue_off"));
+				break;
+			case UNIT_TYPE::ARTILLERY:
+				if (isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("artil_idle_blue_on"));
+				else if (!isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("artil_idle_blue_off"));
+				break;
+			case UNIT_TYPE::APC:
+				if (isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("APC_idle_blue_on"));
+				else if (!isActive)
+					img->aniRender(getMapDC(), pos.x, pos.y, ANIMATION->findAnimation("APC_idle_blue_off"));
+				break;
+			}
+		}
+		
 	}
 	else
 	{
-		switch (unitType)
+		if (playerType == PLAYER_TYPE::PLAYER1)
 		{
-		case UNIT_TYPE::NONE:
-			break;
-		case UNIT_TYPE::INFANTRY:
-			IMAGE->findImage("infantry_move")->aniRender(getMapDC(), pos.x - 24, pos.y - 32, ANIMATION->findAnimation("infry_move_left_red"));
-			break;
-		case UNIT_TYPE::MECH:
-			IMAGE->findImage("mech_move")->aniRender(getMapDC(), pos.x - 24, pos.y - 32, ANIMATION->findAnimation("infry_move_left_red"));
-			break;
-		case UNIT_TYPE::TANK:
-			IMAGE->findImage("tank_move")->aniRender(getMapDC(), pos.x - 12, pos.y - 32, ANIMATION->findAnimation("infry_move_left_red"));
-			break;
-		case UNIT_TYPE::ARTILLERY:
-			IMAGE->findImage("artillery_move")->aniRender(getMapDC(), pos.x - 12, pos.y - 32, ANIMATION->findAnimation("infry_move_left_red"));
-			break;
-		case UNIT_TYPE::APC:
-			IMAGE->findImage("APC_move")->aniRender(getMapDC(), pos.x - 12, pos.y - 32, ANIMATION->findAnimation("infry_move_left_red"));
-			break;
+			switch (unitType)
+			{
+			case UNIT_TYPE::NONE:
+				break;
+			case UNIT_TYPE::INFANTRY:
+				IMAGE->findImage("infantry_move")->aniRender(getMapDC(), pos.x - 24, pos.y - 32, ANIMATION->findAnimation("infry_move_left_red"));
+				break;
+			case UNIT_TYPE::MECH:
+				IMAGE->findImage("mech_move")->aniRender(getMapDC(), pos.x - 24, pos.y - 32, ANIMATION->findAnimation("infry_move_left_red"));
+				break;
+			case UNIT_TYPE::TANK:
+				IMAGE->findImage("tank_move")->aniRender(getMapDC(), pos.x - 12, pos.y - 32, ANIMATION->findAnimation("infry_move_left_red"));
+				break;
+			case UNIT_TYPE::ARTILLERY:
+				IMAGE->findImage("artillery_move")->aniRender(getMapDC(), pos.x - 12, pos.y - 32, ANIMATION->findAnimation("infry_move_left_red"));
+				break;
+			case UNIT_TYPE::APC:
+				IMAGE->findImage("APC_move")->aniRender(getMapDC(), pos.x - 12, pos.y - 32, ANIMATION->findAnimation("infry_move_left_red"));
+				break;
+			}
+		}
+		if (playerType == PLAYER_TYPE::PLAYER2)
+		{
+			switch (unitType)
+			{
+			case UNIT_TYPE::NONE:
+				break;
+			case UNIT_TYPE::INFANTRY:
+				IMAGE->findImage("infantry_move")->aniRender(getMapDC(), pos.x - 24, pos.y - 32, ANIMATION->findAnimation("infry_move_left_blue"));
+				break;
+			case UNIT_TYPE::MECH:
+				IMAGE->findImage("mech_move")->aniRender(getMapDC(), pos.x - 24, pos.y - 32, ANIMATION->findAnimation("infry_move_left_blue"));
+				break;
+			case UNIT_TYPE::TANK:
+				IMAGE->findImage("tank_move")->aniRender(getMapDC(), pos.x - 12, pos.y - 32, ANIMATION->findAnimation("infry_move_left_blue"));
+				break;
+			case UNIT_TYPE::ARTILLERY:
+				IMAGE->findImage("artillery_move")->aniRender(getMapDC(), pos.x - 12, pos.y - 32, ANIMATION->findAnimation("infry_move_left_blue"));
+				break;
+			case UNIT_TYPE::APC:
+				IMAGE->findImage("APC_move")->aniRender(getMapDC(), pos.x - 12, pos.y - 32, ANIMATION->findAnimation("infry_move_left_blue"));
+				break;
+			}
 		}
 	}
 
 	if (!ASTAR->getRoadList().empty())
 	{
-		wsprintf(str, "%d %d %d", ASTAR->getRoadList().size(), tileIdx, ASTAR->getRoadList().top());
+		wsprintf(str, "%d %d %d %d", ASTAR->getRoadList().size(), tileIdx, ASTAR->getRoadList().top(), fuel);
 		TextOut(getMapDC(), 100, 100, str, strlen(str));
 	}
 }
@@ -150,34 +268,38 @@ void CUnit::move(Vec2 _pos, int idx)
 {
 	if (!moveSetting)
 	{
+		ASTAR->erasePathList();
 		ASTAR->setStartEnd(tileIdx, idx, unitType);
 		ASTAR->update();
 		popIdx = ASTAR->getRoadList().top();
-		ASTAR->eraseRoadList();
 		moveSetting = true;
 	}
-	if (pos == getLeftTopVec2(STAGE->getCurMap()->getTile()[popIdx]->getPos(), TILE_SIZE))
+
+	if (pos == getLeftTopVec2(map->getTile()[popIdx]->getPos(), TILE_SIZE))
 	{
-		ASTAR->eraseRoadList();
-		if(!ASTAR->getRoadList().empty())
+		ASTAR->erasePathList();
+		if (!ASTAR->getRoadList().empty())
+		{
 			popIdx = ASTAR->getRoadList().top();
+			fuel--;
+		}
 	}
-	if (pos.x < getLeftTopVec2(STAGE->getCurMap()->getTile()[popIdx]->getPos(), TILE_SIZE).x)
+	if (pos.x < getLeftTopVec2(map->getTile()[popIdx]->getPos(), TILE_SIZE).x)
 	{
 		pos.x += UNIT_MOVE_SPEED;
 		tileIdx = popIdx;
 	}
-	else if (pos.x > getLeftTopVec2(STAGE->getCurMap()->getTile()[popIdx]->getPos(), TILE_SIZE).x)
+	else if (pos.x > getLeftTopVec2(map->getTile()[popIdx]->getPos(), TILE_SIZE).x)
 	{
 		pos.x -= UNIT_MOVE_SPEED;
 		tileIdx = popIdx;
 	}
-	else if (pos.y < getLeftTopVec2(STAGE->getCurMap()->getTile()[popIdx]->getPos(), TILE_SIZE).y)
+	else if (pos.y < getLeftTopVec2(map->getTile()[popIdx]->getPos(), TILE_SIZE).y)
 	{
 		pos.y += UNIT_MOVE_SPEED;
 		tileIdx = popIdx;
 	}
-	else if (pos.y > getLeftTopVec2(STAGE->getCurMap()->getTile()[popIdx]->getPos(), TILE_SIZE).y)
+	else if (pos.y > getLeftTopVec2(map->getTile()[popIdx]->getPos(), TILE_SIZE).y)
 	{
 		pos.y -= UNIT_MOVE_SPEED;
 		tileIdx = popIdx;
@@ -187,6 +309,8 @@ void CUnit::move(Vec2 _pos, int idx)
 void CUnit::wait()
 {
 	isActive = false;
+	isSelected = false;
+	isMove = false;
 	moveSetting = false;
 }
 
@@ -216,7 +340,7 @@ void CUnit::checkMoveRange(int idx, int cnt)
 {
 	if (tileIdx % 30 > 0 || tileIdx % 30 < 29 || tileIdx > 29 || tileIdx < 579)
 	{
-		ENVIRONMENT_TYPE curTile = STAGE->getCurMap()->getTile()[idx]->getTileType();
+		ENVIRONMENT_TYPE curTile = map->getTile()[idx]->getTileType();
 		bool isOnlyInfry = (curTile == ENVIRONMENT_TYPE::MOUNTAIN) ||
 			(curTile == ENVIRONMENT_TYPE::RIVER_3WAYS) ||
 			(curTile == ENVIRONMENT_TYPE::RIVER_4WAYS) ||
@@ -267,6 +391,34 @@ void CUnit::checkMoveRange(int idx, int cnt)
 		if (tileIdx % 30 < 29) checkMoveRange(idx + 1, cnt);
 		if (tileIdx > 29) checkMoveRange(idx + 30, cnt);
 		if (tileIdx < 579) checkMoveRange(idx - 30, cnt);
+	}
+}
+
+void CUnit::weaponSetting(UNIT_TYPE type)
+{
+	switch (type)
+	{
+	case UNIT_TYPE::NONE:
+	case UNIT_TYPE::APC:
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)] = new CWeapon();
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)] = new CWeapon();
+		break;
+	case UNIT_TYPE::INFANTRY:
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)] = new CWeapon(WEAPON_TYPE::M_GUN, 99, 1);
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)] = new CWeapon();
+		break;
+	case UNIT_TYPE::MECH:
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)] = new CWeapon(WEAPON_TYPE::BAZOOKA, 3, 1);
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)] = new CWeapon(WEAPON_TYPE::M_GUN, 99, 1);
+		break;
+	case UNIT_TYPE::TANK:
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)] = new CWeapon(WEAPON_TYPE::CANNON, 9, 1);
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)] = new CWeapon(WEAPON_TYPE::M_GUN, 99, 1);
+		break;
+	case UNIT_TYPE::ARTILLERY:
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)] = new CWeapon(WEAPON_TYPE::CANNON, 9, 3);
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)] = new CWeapon();
+		break;
 	}
 }
 

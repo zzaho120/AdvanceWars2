@@ -15,4 +15,6 @@ public:
 	void render();
 
 	void cursorMove();
+	
+	int getCursorIdx() { return tileIdx; }
 };

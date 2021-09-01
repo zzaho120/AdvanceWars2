@@ -451,9 +451,7 @@ void CTile::tileRender()
 	case ENVIRONMENT_TYPE::SEA_8WAYS:
 		ani = ANIMATION->findAnimation("sea_8ways");
 		IMAGE->findImage("flow_sea")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
-
 		break;
-
 	}
 
 	

@@ -81,7 +81,7 @@ void CMap::render()
 				RectEdge(tile[idx]->getPos(), tile[idx]->getSize(), RECT_EDGE::BOTTOM));
 
 
-			wsprintf(str, "%d %d %d", idx, tile[idx]->getTileType(), tile[idx]->getBuildtype());
+			wsprintf(str, "%d %d %d", idx, tile[idx]->getTileType(), tile[idx]->getUnitType());
 			TextOut(getMapDC(), tile[idx]->getPos().x - 20, tile[idx]->getPos().y, str, strlen(str));
 		}
 	}

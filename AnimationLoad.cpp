@@ -21,41 +21,70 @@ void CAnimationLoad::resourceLoad()
 	ANIMATION->addAnimation("infry_idle_red_on", "infantry_idle", 0, 2, 3, false, true);
 	ANIMATION->addAnimation("infry_idle_red_off", "infantry_idle", 3, 5, 3, false, true);
 
+	ANIMATION->addAnimation("infry_idle_blue_on", "infantry_idle", 6, 8, 3, false, true);
+	ANIMATION->addAnimation("infry_idle_blue_off", "infantry_idle", 9, 11, 3, false, true);
+
 	ANIMATION->addAnimation("infry_move_left_red", "infantry_move", 0, 2, 8, false, true);
 	ANIMATION->addAnimation("infry_move_down_red", "infantry_move", 3, 5, 3, false, true);
 	ANIMATION->addAnimation("infry_move_up_red", "infantry_move", 6, 8, 3, false, true);
 
+	ANIMATION->addAnimation("infry_move_left_blue", "infantry_move", 9, 11, 8, false, true);
 
+	//============================== MECH =============================
+	//============================== MECH =============================
 	ANIMATION->addAnimation("mech_idle_red_on", "mech_idle", 0, 2, 3, false, true);
 	ANIMATION->addAnimation("mech_idle_red_off", "mech_idle", 3, 5, 3, false, true);
+
+	ANIMATION->addAnimation("mech_idle_blue_on", "mech_idle", 6, 8, 3, false, true);
+	ANIMATION->addAnimation("mech_idle_blue_off", "mech_idle", 9, 11, 3, false, true);
 
 	ANIMATION->addAnimation("mech_move_left_red", "mech_move", 0, 2, 8, false, true);
 	ANIMATION->addAnimation("mech_move_down_red", "mech_move", 3, 5, 3, false, true);
 	ANIMATION->addAnimation("mech_move_up_red", "mech_move", 6, 8, 3, false, true);
 
+	ANIMATION->addAnimation("mech_move_left_blue", "mech_move", 9, 11, 8, false, true);
+
+	//============================== TANK =============================
+	//============================== TANK =============================
 	ANIMATION->addAnimation("tank_idle_red_on", "tank_idle", 0, 2, 3, false, true);
 	ANIMATION->addAnimation("tank_idle_red_off", "tank_idle", 3, 5, 3, false, true);
+
+	ANIMATION->addAnimation("tank_idle_blue_on", "tank_idle", 6, 8, 3, false, true);
+	ANIMATION->addAnimation("tank_idle_blue_off", "tank_idle", 9, 11, 3, false, true);
 
 	ANIMATION->addAnimation("tank_move_left_red", "tank_move", 0, 2, 8, false, true);
 	ANIMATION->addAnimation("tank_move_down_red", "tank_move", 3, 5, 3, false, true);
 	ANIMATION->addAnimation("tank_move_up_red", "tank_move", 6, 8, 3, false, true);
 
+	ANIMATION->addAnimation("tank_move_left_blue", "tank_move", 9, 11, 8, false, true);
+
+	//=========================== ARTILLERY ===========================
+	//=========================== ARTILLERY ===========================
 	ANIMATION->addAnimation("artil_idle_red_on", "artillery_idle", 0, 2, 3, false, true);
 	ANIMATION->addAnimation("artil_idle_red_off", "artillery_idle", 3, 5, 3, false, true);
-	
+
+	ANIMATION->addAnimation("artil_idle_blue_on", "artillery_idle", 6, 8, 3, false, true);
+	ANIMATION->addAnimation("artil_idle_blue_off", "artillery_idle", 9, 11, 3, false, true);
+
 	ANIMATION->addAnimation("artil_move_left_red", "artillery_move", 0, 2, 8, false, true);
 	ANIMATION->addAnimation("artil_move_down_red", "artillery_move", 3, 5, 3, false, true);
 	ANIMATION->addAnimation("artil_move_up_red", "artillery_move", 6, 8, 3, false, true);
 
+	ANIMATION->addAnimation("artil_move_left_blue", "artillery_move", 9, 11, 8, false, true);
+	//=============================== APC =============================
+	//=============================== APC =============================
 	ANIMATION->addAnimation("APC_idle_red_on", "APC_idle", 0, 2, 3, false, true);
 	ANIMATION->addAnimation("APC_idle_red_off", "APC_idle", 3, 5, 3, false, true);
+
+	ANIMATION->addAnimation("APC_idle_blue_on", "APC_idle", 6, 8, 3, false, true);
+	ANIMATION->addAnimation("APC_idle_blue_off", "APC_idle", 9, 11, 3, false, true);
 
 	ANIMATION->addAnimation("APC_move_left_red", "APC_move", 0, 2, 8, false, true);
 	ANIMATION->addAnimation("APC_move_down_red", "APC_move", 3, 5, 3, false, true);
 	ANIMATION->addAnimation("APC_move_up_red", "APC_move", 6, 8, 3, false, true);
 
-	//============================ INFANTRY ===========================
-	//============================ INFANTRY ===========================
+	ANIMATION->addAnimation("APC_move_left_blue", "APC_move", 9, 11, 8, false, true);
+
 	//============================== SEA ==============================
 	//============================== SEA ==============================
 
