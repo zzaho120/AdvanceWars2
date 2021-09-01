@@ -3,7 +3,7 @@
 
 CTestGame::CTestGame() :
 	cam(new CCamera),
-	map(new CMap("save/spannisland.map")),
+	map(new CMap("save/spannisland.map", cam)),
 	cursor({ map->getTile()[158]->getPos().x, map->getTile()[158]->getPos().y }),
 	cursorIdx(158),
 	unitMgr(new CUnitManager), isSelected(false), isMove(false),
@@ -18,7 +18,6 @@ CTestGame::~CTestGame()
 HRESULT CTestGame::init()
 {
 	ANIMATION->start("cursor_ani");
-	map->setCameraLink(cam);
 	unitMgr->init();
 	STAGE->setCurMap(map);
 	ASTAR->init();

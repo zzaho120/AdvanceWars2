@@ -6,7 +6,7 @@
 #include "UnitManager.h"
 #include "BuildingManager.h"
 
-class GameManager : public gameNode
+class CGameManager : public gameNode
 {
 private:
 	CMap* map;
@@ -16,8 +16,8 @@ private:
 	CBuildingManager* buildingMgr;
 
 public:
-	GameManager();
-	~GameManager();
+	CGameManager();
+	~CGameManager();
 
 	HRESULT init();
 	void release();

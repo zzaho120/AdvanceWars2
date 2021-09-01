@@ -1,34 +1,43 @@
 #include "framework.h"
 #include "GameManager.h"
 
-GameManager::GameManager() :
+CGameManager::CGameManager() :
 	cam(new CCamera),
-	map(new CMap("save/spannisland.map")),
+	map(new CMap("save/spannisland.map", cam)),
 	cursor(new CCursor(map->getTile()[158]->getPos(), 158)),
 	unitMgr(new CUnitManager),
 	buildingMgr(new CBuildingManager)
 {
 }
 
-GameManager::~GameManager()
+CGameManager::~CGameManager()
 {
 }
 
-HRESULT GameManager::init()
+HRESULT CGameManager::init()
 {
 	return S_OK;
 }
 
-void GameManager::release()
+void CGameManager::release()
 {
 }
 
-void GameManager::update()
+void CGameManager::update()
 {
+	cam->update();
+	map->update();
+	//cam->setTargetVec2(cursor);
 	cursor->update();
+	unitMgr->update();
+
 }
 
-void GameManager::render()
+void CGameManager::render()
 {
+	map->render();
+	unitMgr->render();
 	cursor->render();
+	this->getMapBuffer()->render(getMemDC(), 0, 0, cam->getCam1().x, cam->getCam1().y, cam->getCamSize().x, cam->getCamSize().y);
+
 }
