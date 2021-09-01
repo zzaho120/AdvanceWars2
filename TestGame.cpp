@@ -2,8 +2,8 @@
 #include "TestGame.h"
 
 CTestGame::CTestGame() :
-	map(new CMap("save/spannisland.map")),
 	cam(new CCamera),
+	map(new CMap("save/spannisland.map")),
 	cursor({ map->getTile()[158]->getPos().x, map->getTile()[158]->getPos().y }),
 	cursorIdx(158),
 	unitMgr(new CUnitManager), isSelected(false), isMove(false),

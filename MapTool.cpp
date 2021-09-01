@@ -70,7 +70,6 @@ void CMapTool::setMap()
 				{
 					tile->setBuildingType(BUILDING_TYPE::NONE);
 					tile->setPlayerType(PLAYER_TYPE::NONE);
-					map->eraseBuilding(idx);
 				}
 				switch (SUBWIN->GetTileFrame().x)
 				{
@@ -138,8 +137,6 @@ void CMapTool::setMap()
 			else if (SUBWIN->GetTileFrame().y == 2)
 			{
 				tile->setTileType(ENVIRONMENT_TYPE::NONE);
-				if (tile->getBuildtype() != BUILDING_TYPE::NONE)
-					map->eraseBuilding(idx);
 				switch (SUBWIN->GetTileFrame().x)
 				{
 				case 0:
@@ -157,8 +154,6 @@ void CMapTool::setMap()
 			else if (SUBWIN->GetTileFrame().y == 3)
 			{
 				tile->setTileType(ENVIRONMENT_TYPE::NONE);
-				if (tile->getBuildtype() != BUILDING_TYPE::NONE)
-					map->eraseBuilding(idx);
 				switch (SUBWIN->GetTileFrame().x)
 				{
 				case 0:
@@ -904,29 +899,13 @@ void CMapTool::setBuilding(int tileNum, BUILDING_TYPE building, PLAYER_TYPE play
 {
 	map->getTile()[tileNum]->setPlayerType(player);
 	map->getTile()[tileNum]->setBuildingType(building);
-	if(building == BUILDING_TYPE::FACTORY)
-		map->addBuilding(player, map->getTile()[tileNum]->getPos(), true, false, tileNum);
-	else if(building == BUILDING_TYPE::CITY)
-		map->addBuilding(player, map->getTile()[tileNum]->getPos(), false, false, tileNum);
 }
 
 void CMapTool::setHQ(int tileNum, PLAYER_TYPE player)
 {
-	for (int vecIdx = 0; vecIdx < map->getVecBuilding().size(); vecIdx++)
-	{
-		if (map->getVecBuilding()[vecIdx]->getIsHQ() &&
-			map->getVecBuilding()[vecIdx]->getPlayerType() == player)
-		{
-			int tileIdx = map->getVecBuilding()[vecIdx]->getTileIdx();
-			map->getTile()[tileIdx]->setTileType(ENVIRONMENT_TYPE::PLAIN);
-			map->getTile()[tileIdx]->setBuildingType(BUILDING_TYPE::NONE);
-			map->getTile()[tileIdx]->setPlayerType(PLAYER_TYPE::NONE);
-			map->eraseBuilding(tileIdx);
-		}
-	}
+	// hq는 하나 플레이어당 가질 수 있도록 조건을 추가할 것
 	map->getTile()[tileNum]->setPlayerType(player);
 	map->getTile()[tileNum]->setBuildingType(BUILDING_TYPE::HEADQUATERS);
-	map->addBuilding(player, map->getTile()[tileNum]->getPos(), false, true, tileNum);
 }
 
 bool CMapTool::save(const char* fileName)
@@ -961,24 +940,9 @@ bool CMapTool::load(const char* fileName)
 
 	result = ReadFile(file, load, sizeof(load), &read, NULL);
 
-	map->clearBuilding();
 	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
 	{
-		bool isFactory = false, isHQ = false;
 		map->getTile()[idx] = new CTile(load[idx]);
-
-		if (map->getTile()[idx]->getBuildtype() != BUILDING_TYPE::NONE)
-		{
-			if (map->getTile()[idx]->getBuildtype() == BUILDING_TYPE::FACTORY)
-				isFactory = true;
-			else if (map->getTile()[idx]->getBuildtype() == BUILDING_TYPE::HEADQUATERS)
-				isHQ = true;
-			map->addBuilding(map->getTile()[idx]->getPlayerType(),
-				map->getTile()[idx]->getPos(),
-				isFactory,
-				isHQ,
-				idx);
-		}			
 	}
 
 	CloseHandle(file);

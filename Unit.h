@@ -17,7 +17,7 @@ private:
 	bool isActive;
 	bool isSelected;
 	bool isMove;
-	bool setting;
+	bool moveSetting;
 	bool tileRange[TILE_NUM_X * TILE_NUM_Y];
 	// 무기를 2종 담을 수 있는 벡터와 그 클래스를 만들 것
 public:

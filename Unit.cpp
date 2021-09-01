@@ -14,7 +14,7 @@ CUnit::CUnit() :
 CUnit::CUnit(UNIT_TYPE _type, Vec2 _pos, int idx) :
 	CObject(_pos, { TILE_SIZE_X, TILE_SIZE_Y }), tileIdx(idx),
 	unitType(_type), isActive(false), healthPoint(10),
-	isSelected(false), isMove(false), setting(false)
+	isSelected(false), isMove(false), moveSetting(false)
 {
 	memset(tileRange, 0, sizeof(tileRange));
 	settingByType(unitType);
@@ -148,13 +148,13 @@ void CUnit::select()
 
 void CUnit::move(Vec2 _pos, int idx)
 {
-	if (!setting)
+	if (!moveSetting)
 	{
 		ASTAR->setStartEnd(tileIdx, idx, unitType);
 		ASTAR->update();
 		popIdx = ASTAR->getRoadList().top();
 		ASTAR->eraseRoadList();
-		setting = true;
+		moveSetting = true;
 	}
 	if (pos == getLeftTopVec2(STAGE->getCurMap()->getTile()[popIdx]->getPos(), TILE_SIZE))
 	{
@@ -187,6 +187,7 @@ void CUnit::move(Vec2 _pos, int idx)
 void CUnit::wait()
 {
 	isActive = false;
+	moveSetting = false;
 }
 
 void CUnit::floodFill()

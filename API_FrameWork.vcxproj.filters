@@ -112,6 +112,15 @@
     <Filter Include="Manager\stageMgr">
       <UniqueIdentifier>{9bd8241d-3a19-4b2f-bcee-cc647e0ea827}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager\buildingMgr">
+      <UniqueIdentifier>{3748b163-3902-4c1b-bb31-f1f535a31863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\gameMgr">
+      <UniqueIdentifier>{e25f7b3d-4654-45bf-a6bc-debaf283c441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\Cursor">
+      <UniqueIdentifier>{e988c281-da25-4c33-91e0-db24dd61a4af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -243,6 +252,15 @@
     <ClInclude Include="StageManager.h">
       <Filter>Manager\stageMgr</Filter>
     </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Manager\gameMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingManager.h">
+      <Filter>Manager\buildingMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Cursor.h">
+      <Filter>Class\Object\Cursor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -343,6 +361,15 @@
     </ClCompile>
     <ClCompile Include="StageManager.cpp">
       <Filter>Manager\stageMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Manager\gameMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingManager.cpp">
+      <Filter>Manager\buildingMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Cursor.cpp">
+      <Filter>Class\Object\Cursor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

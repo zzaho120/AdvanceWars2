@@ -16,7 +16,6 @@ HRESULT CUnitManager::init()
 
 void CUnitManager::release()
 {
-  
 }
 
 void CUnitManager::update()

@@ -1,6 +1,7 @@
 #pragma once
+#include"gameNode.h"
 #include"Unit.h"
-class CUnitManager
+class CUnitManager : public gameNode
 {
 private:
 	vector<CUnit*> vecUnit;

@@ -33,6 +33,12 @@ CMap::CMap(const char* fileName)
 	load(fileName);
 }
 
+CMap::CMap(const char* fileName, CCamera* camera) :
+	cam(camera)
+{
+	load(fileName);
+}
+
 CMap::~CMap()
 {
 	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
@@ -93,14 +99,14 @@ void CMap::load(const char* fileName)
 
 	result = ReadFile(file, load, sizeof(load), &read, NULL);
 
-	clearBuilding();
+	//clearBuilding();
 	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
 	{
-		bool isFactory = false, isHQ = false;
+		//bool isFactory = false, isHQ = false;
 		tile[idx] = new CTile(load[idx]);
 		tile[idx]->init();
 
-		if (tile[idx]->getBuildtype() != BUILDING_TYPE::NONE)
+		/*if (tile[idx]->getBuildtype() != BUILDING_TYPE::NONE)
 		{
 			if (tile[idx]->getBuildtype() == BUILDING_TYPE::FACTORY)
 				isFactory = true;
@@ -111,28 +117,28 @@ void CMap::load(const char* fileName)
 				isFactory,
 				isHQ,
 				idx);
-		}
+		}*/
 	}
 
 	CloseHandle(file);
 }
 
 
-void CMap::addBuilding(PLAYER_TYPE type, Vec2 pos,bool factory, bool HQ, int idx)
-{
-	vecBuilding.push_back(new CBuilding(type, pos, factory, HQ, idx));
-}
+//void CMap::addBuilding(PLAYER_TYPE type, Vec2 pos,bool factory, bool HQ, int idx)
+//{
+//	vecBuilding.push_back(new CBuilding(type, pos, factory, HQ, idx));
+//}
 
-void CMap::eraseBuilding(int idx)
-{
-	for (int i = 0; i < vecBuilding.size(); i++)
-	{
-		if(vecBuilding[i]->getTileIdx() == idx)
-			vecBuilding.erase(vecBuilding.begin() + i);
-	}
-}
-
-void CMap::clearBuilding()
-{
-	vecBuilding.clear();
-}
+//void CMap::eraseBuilding(int idx)
+//{
+//	for (int i = 0; i < vecBuilding.size(); i++)
+//	{
+//		if(vecBuilding[i]->getTileIdx() == idx)
+//			vecBuilding.erase(vecBuilding.begin() + i);
+//	}
+//}
+//
+//void CMap::clearBuilding()
+//{
+//	vecBuilding.clear();
+//}
