@@ -3,11 +3,14 @@
 #include"Unit.h"
 
 class CMap;
+class CGameManager;
 class CUnitManager : public gameNode
 {
 private:
 	vector<CUnit*> vecUnit;
 	vector<CUnit*>::iterator iterUnit;
+
+	CGameManager* mgr;
 public:
 	CUnitManager();
 	~CUnitManager();

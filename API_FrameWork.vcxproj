@@ -148,6 +148,7 @@
     <ClInclude Include="API_FrameWork.h" />
     <ClInclude Include="Astar.h" />
     <ClInclude Include="Building.h" />
+    <ClInclude Include="BuildingFactory.h" />
     <ClInclude Include="BuildingManager.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Command.h" />
@@ -199,6 +200,7 @@
     </ClCompile>
     <ClCompile Include="Astar.cpp" />
     <ClCompile Include="Building.cpp" />
+    <ClCompile Include="BuildingFactory.cpp" />
     <ClCompile Include="BuildingManager.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CommandHistory.cpp" />

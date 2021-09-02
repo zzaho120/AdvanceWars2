@@ -267,6 +267,9 @@
     <ClInclude Include="Weapon.h">
       <Filter>Class\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="BuildingFactory.h">
+      <Filter>Pattern\Factory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -379,6 +382,9 @@
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>Class\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingFactory.cpp">
+      <Filter>Pattern\Factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

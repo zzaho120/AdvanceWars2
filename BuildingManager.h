@@ -14,4 +14,8 @@ public:
 	void release();
 	void update();
 	void render();
+
+	void addBuilding(PLAYER_TYPE player, Vec2 pos, bool factory, bool HQ, int tileIdx);
+
+	vector<CBuilding*> getVecBuilding() { return vecBuilding; }
 };

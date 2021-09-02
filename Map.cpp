@@ -28,13 +28,14 @@ CMap::CMap(Vec2 startPos, Vec2 size) :
 	}
 }
 
-CMap::CMap(const char* fileName)
+CMap::CMap(const char* fileName, CCamera* camera) :
+	cam(camera), gameMgr(nullptr)
 {
 	load(fileName);
 }
 
-CMap::CMap(const char* fileName, CCamera* camera) :
-	cam(camera)
+CMap::CMap(const char* fileName) :
+	gameMgr(nullptr), cam(nullptr)
 {
 	load(fileName);
 }
@@ -52,6 +53,12 @@ CMap::~CMap()
 
 HRESULT CMap::init()
 {
+	return S_OK;
+}
+
+HRESULT CMap::init(CGameManager* mgr)
+{
+	gameMgr = mgr;
 	return S_OK;
 }
 
@@ -99,46 +106,11 @@ void CMap::load(const char* fileName)
 
 	result = ReadFile(file, load, sizeof(load), &read, NULL);
 
-	//clearBuilding();
 	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
 	{
-		//bool isFactory = false, isHQ = false;
 		tile[idx] = new CTile(load[idx]);
 		tile[idx]->init();
-
-		/*if (tile[idx]->getBuildtype() != BUILDING_TYPE::NONE)
-		{
-			if (tile[idx]->getBuildtype() == BUILDING_TYPE::FACTORY)
-				isFactory = true;
-			else if (tile[idx]->getBuildtype() == BUILDING_TYPE::HEADQUATERS)
-				isHQ = true;
-			addBuilding(tile[idx]->getPlayerType(),
-				tile[idx]->getPos(),
-				isFactory,
-				isHQ,
-				idx);
-		}*/
 	}
 
 	CloseHandle(file);
 }
-
-
-//void CMap::addBuilding(PLAYER_TYPE type, Vec2 pos,bool factory, bool HQ, int idx)
-//{
-//	vecBuilding.push_back(new CBuilding(type, pos, factory, HQ, idx));
-//}
-
-//void CMap::eraseBuilding(int idx)
-//{
-//	for (int i = 0; i < vecBuilding.size(); i++)
-//	{
-//		if(vecBuilding[i]->getTileIdx() == idx)
-//			vecBuilding.erase(vecBuilding.begin() + i);
-//	}
-//}
-//
-//void CMap::clearBuilding()
-//{
-//	vecBuilding.clear();
-//}

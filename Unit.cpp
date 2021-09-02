@@ -14,7 +14,7 @@ CUnit::CUnit() :
 
 CUnit::CUnit(PLAYER_TYPE _player, UNIT_TYPE _type, Vec2 _pos, int idx, CMap* _map) :
 	CObject(_pos, { TILE_SIZE_X, TILE_SIZE_Y }), tileIdx(idx),
-	unitType(_type), isActive(false), healthPoint(10),
+	unitType(_type), isActive(false), isArrive(false), healthPoint(10),
 	isSelected(false), isMove(false), moveSetting(false),
 	map(_map), playerType(_player)
 {
@@ -260,9 +260,6 @@ void CUnit::render()
 	}
 }
 
-void CUnit::select()
-{
-}
 
 void CUnit::move(Vec2 _pos, int idx)
 {
@@ -283,6 +280,8 @@ void CUnit::move(Vec2 _pos, int idx)
 			popIdx = ASTAR->getRoadList().top();
 			fuel--;
 		}
+		else if(!isArrive)
+			isArrive = true;
 	}
 	if (pos.x < getLeftTopVec2(map->getTile()[popIdx]->getPos(), TILE_SIZE).x)
 	{

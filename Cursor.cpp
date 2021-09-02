@@ -2,17 +2,18 @@
 #include "Cursor.h"
 
 CCursor::CCursor() :
-	CObject(), tileIdx(0)
+	CObject(), tileIdx(0), gameMgr(nullptr)
 {
 	ANIMATION->start("cursor_ani");
 }
 
 CCursor::CCursor(Vec2 pos, int tileIndex) :
 	CObject(pos, TILE_SIZE, IMAGE->findImage("cursor"), ANIMATION->findAnimation("cursor_ani")),
-	tileIdx(tileIndex)
+	tileIdx(tileIndex), gameMgr(nullptr)
 {
 	ANIMATION->start("cursor_ani");
 }
+
 
 CCursor::~CCursor()
 {
@@ -22,6 +23,13 @@ HRESULT CCursor::init()
 {
 	ANIMATION->start("cursor_ani");
     return S_OK;
+}
+
+HRESULT CCursor::init(CGameManager* mgr)
+{
+	gameMgr = mgr;
+	ANIMATION->start("cursor_ani");
+	return S_OK;
 }
 
 void CCursor::release()

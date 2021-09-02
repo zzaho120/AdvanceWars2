@@ -20,6 +20,7 @@ private:
 	bool isActive;
 	bool isSelected;
 	bool isMove;
+	bool isArrive;
 	bool moveSetting;
 
 	bool tileRange[TILE_NUM_X * TILE_NUM_Y];
@@ -37,7 +38,6 @@ public:
 	void update();
 	void render();
 
-	void select();
 	void move(Vec2 _pos, int idx);
 	void wait();
 	
@@ -50,7 +50,10 @@ public:
 	bool getSelected() { return isSelected; }
 	bool getActive() { return isActive; }
 	bool getMove() { return isMove; }
+	bool getArrive() { return isArrive; }
+
 	UNIT_TYPE getUnitType() { return unitType; }
+	PLAYER_TYPE getPlayerType() { return playerType; }
 	
 	int getTileIdx() { return tileIdx; }
 
@@ -62,4 +65,5 @@ public:
 	void setMove(bool move) { isMove = move; }
 	void setTileIdx(int idx) { tileIdx = idx; }
 	void setMoveSetting(bool moveSet) { moveSetting = moveSet; }
+	void setArrive(bool arrive) { isArrive = arrive; }
 };

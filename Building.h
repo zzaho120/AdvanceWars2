@@ -7,8 +7,8 @@ private:
 	bool isHQ;
 
 	int tileIdx;
-	//int income;
-	//int def;
+	int capturePoint;
+
 	PLAYER_TYPE playerType;
 public:
 	CBuilding();

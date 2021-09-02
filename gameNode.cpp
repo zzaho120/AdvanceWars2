@@ -76,6 +76,7 @@ void gameNode::release()
 		EFFECT->releaseSingleton();
 		SUBWIN->releaseSingleton();
 		UNITFACTORY->releaseSingleton();
+		BUILDINGFACTORY->releaseSingleton();
 		ASTAR->releaseSingleton();
 		HISTORY->releaseSingleton();
 

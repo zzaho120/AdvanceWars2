@@ -6,11 +6,13 @@ CBuilding::CBuilding() :
 	isHQ(false),
 	isFactory(false),
 	tileIdx(0),
-	playerType(PLAYER_TYPE::NONE)
+	playerType(PLAYER_TYPE::NONE),
+	capturePoint(0)
 { }
 
 CBuilding::CBuilding(PLAYER_TYPE type, Vec2 pos, bool factory, bool HQ, int idx) : 
-	CObject(pos, { TILE_SIZE_X, TILE_NUM_Y }), playerType(type), isFactory(factory), isHQ(HQ), tileIdx(idx)
+	CObject(pos, { TILE_SIZE_X, TILE_NUM_Y }), playerType(type), isFactory(factory), 
+	isHQ(HQ), tileIdx(idx), capturePoint(20)
 { }
 
 CBuilding::~CBuilding()

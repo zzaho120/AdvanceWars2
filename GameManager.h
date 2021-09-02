@@ -14,6 +14,11 @@ private:
 
 	CPlayer* playerArr[2];
 	CPlayer* curPlayer;
+
+	CUnitManager* unitMgr;
+	CBuildingManager* buildingMgr;
+
+	CCommand* command;
 public:
 	CGameManager();
 	~CGameManager();
@@ -23,5 +28,24 @@ public:
 	void update();
 	void render();
 
-	void changePlayer(int type);
+	// 맵 클래스 기반의 데이터로 빌딩과 유닛을 매니저에 추가
+	void initObject();
+
+	// 플레이어 턴 교체 메세지
+	void changePlayerMsg();
+
+	// 유닛 생성 관련 메세지
+	void generateUnitMsg(UNIT_TYPE type);
+	
+	// 유닛 선택 관련 메세지
+	void selectUnitMsg();
+	void selectUnitCancelMsg();
+
+	// 유닛 이동 관련 메세지 및 함수
+	void moveUnitSettingMsg();
+	void moveUndoMsg();
+	void completeMoveUnitMsg();
+	bool isUnitArrive();
+	
+	void commandExcute();
 };

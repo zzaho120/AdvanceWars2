@@ -50,6 +50,7 @@
 #include"utils.h"
 #include"SubWindow.h"
 #include"UnitFactory.h"
+#include"BuildingFactory.h"
 #include"Astar.h"
 #include"CommandHistory.h"
 //======================================
@@ -65,6 +66,7 @@
 #define EFFECT			effectManager::getSingleton()
 #define SUBWIN			CSubWindow::getSingleton()
 #define UNITFACTORY		CUnitFactory::getSingleton()
+#define BUILDINGFACTORY	CBuildingFactory::getSingleton()
 #define ASTAR			CAstar::getSingleton()
 #define HISTORY			CCommandHistory::getSingleton()
 //==========================================

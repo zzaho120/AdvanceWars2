@@ -1,9 +1,11 @@
 #pragma once
 #include "gameNode.h"
+#include "GameManager.h"
 #include "Tile.h"
 
 class CCamera;
 class CBuilding;
+class CGameManager;
 class CMap : public gameNode
 {
 private:
@@ -11,6 +13,8 @@ private:
 	CCamera* cam;
 
 	bool isDebug;
+
+	CGameManager* gameMgr;
 public:
 	CMap();
 	CMap(Vec2 startPos, Vec2 size);
@@ -19,6 +23,7 @@ public:
 	~CMap();
 
 	HRESULT init();
+	HRESULT init(CGameManager* mgr);
 	void release();
 	void update();
 	void render();
