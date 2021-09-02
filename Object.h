@@ -15,7 +15,7 @@ public:
 	CObject(const CObject* copy);
 	CObject(Vec2 _pos, Vec2 _size, image* _img = nullptr, animation* _ani = nullptr);
 	~CObject();
-
+	
 	virtual HRESULT init();
 	virtual void release();
 	virtual void update();

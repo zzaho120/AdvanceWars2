@@ -163,3 +163,9 @@ enum class EVENT_MSG
 	UNIT_GENERATE,
 	UNIT_SELECT
 };
+
+enum class UI_TYPE
+{
+	FACTORY_UI,
+	NONE
+};

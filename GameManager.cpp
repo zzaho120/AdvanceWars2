@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "GameManager.h"
+#include "FactoryUI.h"
 
 CGameManager::CGameManager() :
 	cam(new CCamera),
@@ -7,6 +8,7 @@ CGameManager::CGameManager() :
 	cursor(new CCursor(map->getTile()[158]->getPos(), 158)),
 	unitMgr(new CUnitManager),
 	buildingMgr(new CBuildingManager),
+	uiMgr(new CUIManager),
 	command(nullptr)
 {
 	playerArr[0] = new CPlayer(PLAYER_TYPE::PLAYER1);
@@ -23,8 +25,13 @@ HRESULT CGameManager::init()
 {
 	map->init(this);
 	cursor->init(this);
+
+	CUI* factoryUI = new CFactoryUI(this);
+	uiMgr->addUI(factoryUI);
+
 	for (int idx = 0; idx < static_cast<int>(PLAYER_TYPE::NONE); idx++)
 		playerArr[idx]->init(this);
+
 	initObject();
 	return S_OK;
 }
@@ -41,6 +48,7 @@ void CGameManager::update()
 	curPlayer->update();
 	unitMgr->update();
 	buildingMgr->update();
+	uiMgr->update();
 
 	// 커서 이동에 따른 카메라 이동
 	cam->setTargetVec2(cursor->getPos());
@@ -50,17 +58,16 @@ void CGameManager::render()
 {
 	map->render();
 	cursor->render();
-	for (int idx = 0; idx < 2; idx++)
-		playerArr[idx]->render();
-	
 	unitMgr->render();
 	buildingMgr->render();
+	uiMgr->render();
 
 	// 플레이어 턴이 넘어가는지 확인 값
 	TCHAR str[128];
 	int p1 = 0;
 	int p2 = 0;
 	int none = 0;
+	
 	for (int idx = 0; idx < buildingMgr->getVecBuilding().size(); idx++)
 	{
 		switch (buildingMgr->getVecBuilding()[idx]->getPlayerType())
@@ -145,7 +152,10 @@ void CGameManager::generateUnitMsg(UNIT_TYPE type)
 	if (map->getTile()[cursor->getCursorIdx()]->getUnitType() == UNIT_TYPE::NONE)
 	{
 		map->getTile()[cursor->getCursorIdx()]->setUnitType(type);
-		unitMgr->addUnit(curPlayer->getPlayerType(), type, cursor->getPos(), cursor->getCursorIdx(), map);
+		command = new CGenerateUnitCommand(curPlayer->getPlayerType(), type, cursor->getPos(), cursor->getCursorIdx(), unitMgr, map);
+		HISTORY->add(command);
+		curPlayer->setFactorySelect(false);
+		commandExcute();
 	}
 }
 
@@ -192,6 +202,7 @@ void CGameManager::moveUnitSettingMsg()
 				unitMgr->getUnit(idx)->setMove(true);
 				unitMgr->getUnit(idx)->setMoveSetting(false);
 				unitMgr->getUnit(idx)->setArrive(false);
+				curPlayer->setMove(true);
 				map->getTile()[unitMgr->getUnit(idx)->getTileIdx()]->setUnitType(UNIT_TYPE::NONE);
 				command = new CMoveUnitCommand(unitMgr->getUnit(idx), getLeftTopVec2(cursor->getPos(), TILE_SIZE), cursor->getCursorIdx());
 				HISTORY->add(command);
@@ -250,8 +261,15 @@ void CGameManager::viewFactoryMsg()
 	{
 		if (buildingMgr->getVecBuilding()[idx]->getTileIdx() == cursor->getCursorIdx())
 		{
-			// 여기에 ui의 값을 바꿔서 렌더와 업데이트가 되도록 만들어야겠네
-			curPlayer->setFactorySelect(true);
+			for (int j = 0; j < uiMgr->getVecUI().size(); j++)
+			{
+				if (uiMgr->getVecUI()[j]->getUIType() == UI_TYPE::FACTORY_UI)
+				{
+					uiMgr->enterUI(j);
+					curPlayer->setFactorySelect(true);
+					break;
+				}
+			}
 			break;
 		}
 	}

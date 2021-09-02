@@ -10,15 +10,16 @@ private:
 	Vec2 finalPos;
 	Vec2 firstPos;
 public:
+	CMoveUnitCommand() { }
 	CMoveUnitCommand(CUnit* _unit, Vec2 _pos, int idx) :
 		unit(_unit), finalPos(_pos), firstPos(unit->getPos()), finalTileIdx(idx),
 		firstTileIdx(unit->getTileIdx())
-	{ };
+	{ }
 
 	virtual void excute()
 	{
 		unit->move(finalPos, finalTileIdx);
-	};
+	}
 
 	virtual void undo()
 	{

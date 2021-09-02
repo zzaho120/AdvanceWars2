@@ -1,15 +1,28 @@
 #pragma once
-#include "Object.h"
-class CUI : public CObject
+#include "gameNode.h"
+
+class CUI : public gameNode
 {
-private:
-
+protected:
+	bool isActive;
+	UI_TYPE uiType;
 public:
-	CUI();
-	~CUI();
+	CUI() : isActive(false), uiType(UI_TYPE::NONE)
+	{ };
+	CUI(UI_TYPE type) : isActive(false), uiType(type)
+	{ };
+	~CUI() { };
 
-	HRESULT init();
-	void release();
-	void update();
-	void render();
+	virtual HRESULT init() { return S_OK; }
+	virtual void release() { }
+	virtual void update() { }
+	virtual void render() { }
+
+	virtual void enter() { }
+	virtual void exit() { }
+
+	bool getActive() { return isActive; }
+	void setActive(bool active) { isActive = active; }
+
+	UI_TYPE getUIType() { return uiType; }
 };

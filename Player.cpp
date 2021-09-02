@@ -41,15 +41,9 @@ void CPlayer::release()
 
 void CPlayer::update()
 {
-	selectUnit();
 	selectFactory();
+	selectUnit();
 	moveUnit();
-
-	if (InputManager->isOnceKeyDown('G')) gameMgr->generateUnitMsg(UNIT_TYPE::INFANTRY);
-    if (InputManager->isOnceKeyDown('H')) gameMgr->generateUnitMsg(UNIT_TYPE::MECH);
-    if (InputManager->isOnceKeyDown('J')) gameMgr->generateUnitMsg(UNIT_TYPE::TANK);
-    if (InputManager->isOnceKeyDown('K')) gameMgr->generateUnitMsg(UNIT_TYPE::ARTILLERY);
-    if (InputManager->isOnceKeyDown('L')) gameMgr->generateUnitMsg(UNIT_TYPE::APC);
 
 	if (InputManager->isOnceKeyDown('C'))
 		gameMgr->changePlayerMsg();
@@ -76,7 +70,6 @@ void CPlayer::moveUnit()
 	// 이동 타일 선택
 	if (isUnitSelect && !isMove && InputManager->isOnceKeyDown('Z'))
 	{
-		isMove = true;
 		gameMgr->moveUnitSettingMsg();
 	}
 

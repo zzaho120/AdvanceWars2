@@ -109,9 +109,6 @@
     <Filter Include="Manager\buildingMgr">
       <UniqueIdentifier>{3748b163-3902-4c1b-bb31-f1f535a31863}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Manager\gameMgr">
-      <UniqueIdentifier>{e25f7b3d-4654-45bf-a6bc-debaf283c441}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Class\Object\Cursor">
       <UniqueIdentifier>{e988c281-da25-4c33-91e0-db24dd61a4af}</UniqueIdentifier>
     </Filter>
@@ -126,6 +123,21 @@
     </Filter>
     <Filter Include="Class\Object\UI">
       <UniqueIdentifier>{439a5e34-20de-4286-87fd-a129b7c327f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\UI\FactoryUI">
+      <UniqueIdentifier>{daafec18-3dc4-4695-bf2c-799bbef8d68a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Command\GenerateUnit">
+      <UniqueIdentifier>{5b588f9f-8b2d-4ba9-a30d-1389758c5ddb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Command\MoveUnit">
+      <UniqueIdentifier>{2d528c68-2772-4518-8709-5070955237e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\UIMgr">
+      <UniqueIdentifier>{54d84d15-bd69-4186-8fed-e9376bfca96f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\GameMgr">
+      <UniqueIdentifier>{e25f7b3d-4654-45bf-a6bc-debaf283c441}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -246,14 +258,11 @@
     <ClInclude Include="globalValue.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="MoveUnitCommand.h">
-      <Filter>Pattern\Command</Filter>
-    </ClInclude>
     <ClInclude Include="Astar.h">
       <Filter>Class\Astar</Filter>
     </ClInclude>
     <ClInclude Include="GameManager.h">
-      <Filter>Manager\gameMgr</Filter>
+      <Filter>Manager\GameMgr</Filter>
     </ClInclude>
     <ClInclude Include="BuildingManager.h">
       <Filter>Manager\buildingMgr</Filter>
@@ -275,6 +284,18 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>Class\Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FactoryUI.h">
+      <Filter>Class\Object\UI\FactoryUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GenerateUnitCommand.h">
+      <Filter>Pattern\Command\GenerateUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveUnitCommand.h">
+      <Filter>Pattern\Command\MoveUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Manager\UIMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -365,14 +386,11 @@
     <ClCompile Include="UnitFactory.cpp">
       <Filter>Pattern\Factory</Filter>
     </ClCompile>
-    <ClCompile Include="MoveUnitCommand.cpp">
-      <Filter>Pattern\Command</Filter>
-    </ClCompile>
     <ClCompile Include="Astar.cpp">
       <Filter>Class\Astar</Filter>
     </ClCompile>
     <ClCompile Include="GameManager.cpp">
-      <Filter>Manager\gameMgr</Filter>
+      <Filter>Manager\GameMgr</Filter>
     </ClCompile>
     <ClCompile Include="BuildingManager.cpp">
       <Filter>Manager\buildingMgr</Filter>
@@ -394,6 +412,15 @@
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>Class\Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="FactoryUI.cpp">
+      <Filter>Class\Object\UI\FactoryUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GenerateUnitCommand.cpp">
+      <Filter>Pattern\Command\GenerateUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Manager\UIMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

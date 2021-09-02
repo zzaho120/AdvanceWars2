@@ -25,6 +25,8 @@ const int UNIT_MOVE_SPEED = 8;
 
 const int ASTAR_MAX_NUM = 5000;
 
+const int UNIT_MAX_NUM = 5;
+
 const Vec2 TILE_SIZE = { TILE_SIZE_X, TILE_SIZE_Y };
 const Vec2 TILE_SIZE_HALF = { TILE_SIZE_X / 2, TILE_SIZE_Y / 2};
 

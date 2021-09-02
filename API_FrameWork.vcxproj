@@ -158,9 +158,11 @@
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="enum.h" />
+    <ClInclude Include="FactoryUI.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="gameNode.h" />
+    <ClInclude Include="GenerateUnitCommand.h" />
     <ClInclude Include="globalValue.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="ImageLoad.h" />
@@ -185,6 +187,7 @@
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="UIManager.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitFactory.h" />
     <ClInclude Include="UnitManager.h" />
@@ -208,8 +211,10 @@
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
+    <ClCompile Include="FactoryUI.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="gameNode.cpp" />
+    <ClCompile Include="GenerateUnitCommand.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="ImageLoad.cpp" />
     <ClCompile Include="imageManager.cpp" />
@@ -218,7 +223,6 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapTool.cpp" />
     <ClCompile Include="MapToolSub.cpp" />
-    <ClCompile Include="MoveUnitCommand.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourceLoadFacade.cpp" />
@@ -229,6 +233,7 @@
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitFactory.cpp" />
     <ClCompile Include="UnitManager.cpp" />

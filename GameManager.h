@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "Cursor.h"
 #include "Player.h"
+#include "UIManager.h"
 
 class CGameManager : public gameNode
 {
@@ -17,6 +18,7 @@ private:
 
 	CUnitManager* unitMgr;
 	CBuildingManager* buildingMgr;
+	CUIManager* uiMgr;
 
 	CCommand* command;
 public:
@@ -51,4 +53,6 @@ public:
 	void viewFactoryMsg();
 	
 	void commandExcute();
+
+	CPlayer* getCurPlayer() { return curPlayer; }
 };
