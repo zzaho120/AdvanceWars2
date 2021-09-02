@@ -454,8 +454,6 @@ void CTile::tileRender()
 		break;
 	}
 
-	
-
 	int playerColor = 0;
 	switch (playerType)
 	{

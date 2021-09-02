@@ -184,6 +184,7 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="UnitFactory.h" />
     <ClInclude Include="UnitManager.h" />
@@ -227,6 +228,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="UnitFactory.cpp" />
     <ClCompile Include="UnitManager.cpp" />

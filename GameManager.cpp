@@ -133,6 +133,8 @@ void CGameManager::completeMoveUnitMsg()
 		{
 			map->getTile()[unitMgr->getUnit(idx)->getTileIdx()]->setUnitType(unitMgr->getUnit(idx)->getUnitType());
 			unitMgr->getUnit(idx)->wait();
+			curPlayer->setUnitSelect(false);
+			break;
 		}
 	}
 }
@@ -155,7 +157,11 @@ void CGameManager::selectUnitMsg()
 		if (unitMgr->getVecUnit()[idx]->getTileIdx() == cursor->getCursorIdx())
 		{
 			if (unitMgr->getVecUnit()[idx]->getActive())
+			{
 				unitMgr->getUnit(idx)->setSelected(true);
+				curPlayer->setUnitSelect(true);
+				break;
+			}
 		}
 	}
 }
@@ -166,7 +172,11 @@ void CGameManager::selectUnitCancelMsg()
 	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
 	{
 		if (unitMgr->getVecUnit()[idx]->getSelected())
+		{
 			unitMgr->getUnit(idx)->setSelected(false);
+			curPlayer->setUnitSelect(false);
+			break;
+		}
 	}
 }
 
@@ -202,6 +212,7 @@ void CGameManager::moveUndoMsg()
 		{
 			unitMgr->getUnit(idx)->setMove(false);
 			map->getTile()[unitMgr->getUnit(idx)->getTileIdx()]->setUnitType(unitMgr->getUnit(idx)->getUnitType());
+			curPlayer->setMove(false);
 			break;
 		}
 	}
@@ -231,6 +242,19 @@ void CGameManager::changePlayerMsg()
 		break;
 	}
 	curPlayer->enter();
+}
+
+void CGameManager::viewFactoryMsg()
+{
+	for (int idx = 0; idx < buildingMgr->getVecBuilding().size(); idx++)
+	{
+		if (buildingMgr->getVecBuilding()[idx]->getTileIdx() == cursor->getCursorIdx())
+		{
+			// 여기에 ui의 값을 바꿔서 렌더와 업데이트가 되도록 만들어야겠네
+			curPlayer->setFactorySelect(true);
+			break;
+		}
+	}
 }
 
 void CGameManager::commandExcute()

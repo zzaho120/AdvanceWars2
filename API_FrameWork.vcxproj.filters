@@ -124,6 +124,9 @@
     <Filter Include="Class\Weapon">
       <UniqueIdentifier>{92bdda6d-bb14-4de1-b11c-830b06eee73f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Class\Object\UI">
+      <UniqueIdentifier>{439a5e34-20de-4286-87fd-a129b7c327f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -270,6 +273,9 @@
     <ClInclude Include="BuildingFactory.h">
       <Filter>Pattern\Factory</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Class\Object\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -385,6 +391,9 @@
     </ClCompile>
     <ClCompile Include="BuildingFactory.cpp">
       <Filter>Pattern\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Class\Object\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

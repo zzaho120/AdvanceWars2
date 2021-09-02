@@ -8,7 +8,8 @@
 class CPlayer : public gameNode
 {
 private:
-	bool isSelected;
+	bool isUnitSelect;
+	bool isFactorySelect;
 	bool isMove;
 
 	PLAYER_TYPE playerType;
@@ -32,5 +33,9 @@ public:
 	void exit();
 
 	PLAYER_TYPE getPlayerType() { return playerType; }
+
+	void setUnitSelect(bool select) { isUnitSelect = select; }
+	void setFactorySelect(bool select) { isFactorySelect = select; }
+	void setMove(bool move) { isMove = move; }
 };
 

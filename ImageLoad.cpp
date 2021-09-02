@@ -62,6 +62,9 @@ void CImageLoad::resourceLoad()
 
 	IMAGE->addImage("black", "images/UI/bgblack.bmp", WINSIZEX, WINSIZEY);
 	IMAGE->addImage("tileTool", "images/tile/maptool_tile.bmp", TILE_SIZE_X * 8, TILE_SIZE_Y * 4);
+
+	IMAGE->addImage("factory_arrow", "images/UI/factory_arrow.bmp", 200, 100);
+	IMAGE->addImage("factory_plate", "images/UI/factory_plate.bmp", 400, 500);
 	//============================ EFFECT ============================
 	//============================ EFFECT ============================
 

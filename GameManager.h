@@ -46,6 +46,9 @@ public:
 	void moveUndoMsg();
 	void completeMoveUnitMsg();
 	bool isUnitArrive();
+
+	// 유닛 생산 관련 메세지 및 함수
+	void viewFactoryMsg();
 	
 	void commandExcute();
 };

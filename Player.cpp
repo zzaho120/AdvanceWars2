@@ -3,7 +3,8 @@
 #include "GameManager.h"
 
 CPlayer::CPlayer() :
-	isSelected(false),
+	isUnitSelect(false),
+	isFactorySelect(false),
     isMove(false),
 	playerType(PLAYER_TYPE::NONE),
 	gameMgr(nullptr)
@@ -11,7 +12,8 @@ CPlayer::CPlayer() :
 }
 
 CPlayer::CPlayer(PLAYER_TYPE player) :
-	isSelected(false),
+	isUnitSelect(false),
+	isFactorySelect(false),
 	isMove(false),
 	playerType(player),
 	gameMgr(nullptr)
@@ -57,24 +59,22 @@ void CPlayer::update()
 void CPlayer::selectUnit()
 {
 	// 유닛 선택
-	if (!isSelected && InputManager->isOnceKeyDown('Z'))
+	if (!isUnitSelect && InputManager->isOnceKeyDown('Z'))
 	{
 		gameMgr->selectUnitMsg();
-		isSelected = true;
 	}
 
 	// 유닛 선택 취소
-	if (isSelected && !isMove && InputManager->isOnceKeyDown('X'))
+	if (isUnitSelect && !isMove && InputManager->isOnceKeyDown('X'))
 	{
 		gameMgr->selectUnitCancelMsg();
-		isSelected = false;
 	}
 }
 
 void CPlayer::moveUnit()
 {
 	// 이동 타일 선택
-	if (isSelected && !isMove && InputManager->isOnceKeyDown('Z'))
+	if (isUnitSelect && !isMove && InputManager->isOnceKeyDown('Z'))
 	{
 		isMove = true;
 		gameMgr->moveUnitSettingMsg();
@@ -87,40 +87,40 @@ void CPlayer::moveUnit()
 	}
 
 	// 이동 타일이 선택이 됐다면
-	if (isSelected && isMove)
+	if (isUnitSelect && isMove)
 	{
 		// 이동 취소
 		if (InputManager->isOnceKeyDown('X'))
 		{
 			gameMgr->moveUndoMsg();
-			isMove = false;
 		}
 
 		// 이동 명령 완료
 		else if (InputManager->isOnceKeyDown('Z'))
 		{
 			gameMgr->completeMoveUnitMsg();
-			isSelected = false;
 		}
 	}
 }
 
 void CPlayer::selectFactory()
 {
-	if (!isSelected && !isMove && InputManager->isOnceKeyDown('Z'))
+	if (!isUnitSelect && !isFactorySelect && !isMove && InputManager->isOnceKeyDown('Z'))
 	{
-
+		gameMgr->viewFactoryMsg();
 	}
 }
 
 void CPlayer::enter()
 {
-	isSelected = false;
+	isUnitSelect = false;
+	isFactorySelect = false;
 	isMove = false;
 }
 
 void CPlayer::exit()
 {
-	isSelected = false;
+	isUnitSelect = false;
+	isFactorySelect = false;
 	isMove = false;
 }
