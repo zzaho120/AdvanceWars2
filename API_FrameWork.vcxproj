@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ActionUI.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="AnimationLoad.h" />
     <ClInclude Include="animationManager.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="image.h" />
     <ClInclude Include="ImageLoad.h" />
     <ClInclude Include="imageManager.h" />
+    <ClInclude Include="InfoUI.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="Map.h" />
@@ -174,6 +176,7 @@
     <ClInclude Include="MapToolSub.h" />
     <ClInclude Include="MoveUnitCommand.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="OptionUI.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
@@ -196,6 +199,7 @@
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActionUI.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="AnimationLoad.cpp" />
     <ClCompile Include="animationManager.cpp" />
@@ -218,12 +222,14 @@
     <ClCompile Include="image.cpp" />
     <ClCompile Include="ImageLoad.cpp" />
     <ClCompile Include="imageManager.cpp" />
+    <ClCompile Include="InfoUI.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapTool.cpp" />
     <ClCompile Include="MapToolSub.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="OptionUI.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourceLoadFacade.cpp" />
     <ClCompile Include="sceneManager.cpp" />

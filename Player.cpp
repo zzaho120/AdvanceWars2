@@ -4,8 +4,9 @@
 
 CPlayer::CPlayer() :
 	isUnitSelect(false),
-	isFactorySelect(false),
+	isOnUI(false),
     isMove(false),
+	money(0),
 	playerType(PLAYER_TYPE::NONE),
 	gameMgr(nullptr)
 {
@@ -13,8 +14,9 @@ CPlayer::CPlayer() :
 
 CPlayer::CPlayer(PLAYER_TYPE player) :
 	isUnitSelect(false),
-	isFactorySelect(false),
+	isOnUI(false),
 	isMove(false),
+	money(0),
 	playerType(player),
 	gameMgr(nullptr)
 {
@@ -41,14 +43,39 @@ void CPlayer::release()
 
 void CPlayer::update()
 {
-	selectFactory();
-	selectUnit();
-	moveUnit();
-
-	if (InputManager->isOnceKeyDown('C'))
-		gameMgr->changePlayerMsg();
+	playerInput();
 }
 
+
+void CPlayer::playerInput()
+{
+	bool isFactory = gameMgr->getMap()->getTile()[gameMgr->getCursor()->getCursorIdx()]->getBuildtype() == BUILDING_TYPE::FACTORY;
+	bool isNoneUnit = gameMgr->getMap()->getTile()[gameMgr->getCursor()->getCursorIdx()]->getUnitType() == UNIT_TYPE::NONE;
+
+	// 커서 타일이 팩토리라면
+	if (!isUnitSelect)
+	{
+		if (!isNoneUnit)
+		{
+			selectUnit();
+		}
+		else if(isNoneUnit)
+		{
+			if (isFactory)
+			{
+				viewFactory();
+			}
+			else if (!isFactory)
+			{
+				viewOption();
+			}
+		}
+	}
+	else
+	{
+		moveUnit();
+	}
+}
 
 void CPlayer::selectUnit()
 {
@@ -57,20 +84,20 @@ void CPlayer::selectUnit()
 	{
 		gameMgr->selectUnitMsg();
 	}
-
-	// 유닛 선택 취소
-	if (isUnitSelect && !isMove && InputManager->isOnceKeyDown('X'))
-	{
-		gameMgr->selectUnitCancelMsg();
-	}
 }
 
 void CPlayer::moveUnit()
 {
 	// 이동 타일 선택
-	if (isUnitSelect && !isMove && InputManager->isOnceKeyDown('Z'))
+	if (!isMove && InputManager->isOnceKeyDown('Z'))
 	{
 		gameMgr->moveUnitSettingMsg();
+	}
+
+	// 유닛 선택 취소
+	if (!isMove && InputManager->isOnceKeyDown('X'))
+	{
+		gameMgr->selectUnitCancelMsg();
 	}
 
 	// 이동 커맨드 실행
@@ -80,7 +107,7 @@ void CPlayer::moveUnit()
 	}
 
 	// 이동 타일이 선택이 됐다면
-	if (isUnitSelect && isMove)
+	if (isMove && !gameMgr->isUnitArrive())
 	{
 		// 이동 취소
 		if (InputManager->isOnceKeyDown('X'))
@@ -96,24 +123,30 @@ void CPlayer::moveUnit()
 	}
 }
 
-void CPlayer::selectFactory()
+void CPlayer::viewFactory()
 {
-	if (!isUnitSelect && !isFactorySelect && !isMove && InputManager->isOnceKeyDown('Z'))
-	{
+	if (InputManager->isOnceKeyDown('Z'))
 		gameMgr->viewFactoryMsg();
-	}
+}
+
+void CPlayer::viewOption()
+{
+	if (InputManager->isOnceKeyDown('Z'))
+		gameMgr->viewOptionMsg();
 }
 
 void CPlayer::enter()
 {
 	isUnitSelect = false;
-	isFactorySelect = false;
+	isOnUI = false;
 	isMove = false;
+
+	gameMgr->incomeMoneyMsg();
 }
 
 void CPlayer::exit()
 {
 	isUnitSelect = false;
-	isFactorySelect = false;
+	isOnUI = false;
 	isMove = false;
 }

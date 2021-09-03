@@ -1,7 +1,7 @@
 #pragma once
-#include "UI.h"
-#include "GameManager.h"
-class CFactoryUI : public CUI
+#include"UI.h"
+#include"GameManager.h"
+class COptionUI : public CUI
 {
 private:
 	int cursorIdx;
@@ -9,9 +9,9 @@ private:
 
 	CGameManager* gameMgr;
 public:
-	CFactoryUI();
-	CFactoryUI(CGameManager* mgr);
-	~CFactoryUI();
+	COptionUI();
+	COptionUI(CGameManager* mgr);
+	~COptionUI();
 
 	virtual HRESULT init();
 	virtual void release();
@@ -22,8 +22,7 @@ public:
 	virtual void exit();
 
 	void cursorMove();
-	void unitGenerate();
-	void closeFactoryUI();
-
-	int getCursorIdx() { return cursorIdx; }
+	void turnOver();
+	void closeOptionUI();
 };
+

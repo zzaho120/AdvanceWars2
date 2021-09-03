@@ -43,15 +43,15 @@ void CFactoryUI::render()
         switch (curPlayerType)
         {
         case PLAYER_TYPE::PLAYER1:
-            IMAGE->render("factory_panel_red", getMapDC(), 100, 100);
+            IMAGE->render("factory_panel_red", getMemDC(), 50, 120);
             break;
         case PLAYER_TYPE::PLAYER2:
-            IMAGE->render("factory_panel_blue", getMapDC(), 100, 100);
+            IMAGE->render("factory_panel_blue", getMemDC(), 50, 120);
             break;
         default:
             break;
         }
-        IMAGE->render("factory_arrow", getMapDC(), 100, 100 + cursorIdx * 100);
+        IMAGE->render("factory_arrow", getMemDC(), 30, 180 + cursorIdx * 90);
     }
 }
 
@@ -79,8 +79,32 @@ void CFactoryUI::unitGenerate()
 {
     if (InputManager->isOnceKeyDown('Z'))
     {
-        gameMgr->generateUnitMsg(static_cast<UNIT_TYPE>(cursorIdx + 1));
-        exit();
+        int cost = 0;
+        switch (static_cast<UNIT_TYPE>(cursorIdx + 1))
+        {
+        case UNIT_TYPE::INFANTRY:
+            cost = 1000;
+            break;
+        case UNIT_TYPE::MECH:
+            cost = 3000;
+            break;
+        case UNIT_TYPE::TANK:
+            cost = 7000;
+            break;
+        case UNIT_TYPE::ARTILLERY:
+            cost = 6000;
+            break;
+        case UNIT_TYPE::APC:
+            cost = 5000;
+            break;
+        }
+
+        if (cost <= gameMgr->getCurPlayer()->getMoney())
+        {
+            gameMgr->generateUnitMsg(static_cast<UNIT_TYPE>(cursorIdx + 1));
+            gameMgr->closeUIMsg();
+            exit();
+        }
     }
 }
 
@@ -88,6 +112,7 @@ void CFactoryUI::closeFactoryUI()
 {
     if (InputManager->isOnceKeyDown('X'))
     {
+        gameMgr->closeUIMsg();
         exit();
     }
 }

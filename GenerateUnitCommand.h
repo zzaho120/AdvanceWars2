@@ -23,7 +23,7 @@ public:
 
 	virtual void excute()
 	{
-		unitMgr->addUnit(playerType, unitType, generatePos, generateIdx, map);
+		unitMgr->addUnit(playerType, unitType, generatePos, generateIdx);
 	}
 
 	virtual void undo()

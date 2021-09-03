@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "GameManager.h"
 #include "Unit.h"
 #include "Map.h"
 
@@ -12,16 +13,17 @@ CUnit::CUnit() :
 	weaponSetting(unitType);
 }
 
-CUnit::CUnit(PLAYER_TYPE _player, UNIT_TYPE _type, Vec2 _pos, int idx, CMap* _map) :
+CUnit::CUnit(PLAYER_TYPE _player, UNIT_TYPE _type, Vec2 _pos, int idx, CGameManager* mgr) :
 	CObject(_pos, { TILE_SIZE_X, TILE_SIZE_Y }), tileIdx(idx),
 	unitType(_type), isActive(false), isArrive(false), healthPoint(10),
 	isSelected(false), isMove(false), moveSetting(false),
-	map(_map), playerType(_player)
+	gameMgr(mgr), playerType(_player)
 {
 	memset(tileRange, 0, sizeof(tileRange));
 	settingByType(unitType);
 	weaponSetting(unitType);
 }
+
 
 CUnit::~CUnit()
 {
@@ -272,33 +274,35 @@ void CUnit::move(Vec2 _pos, int idx)
 		moveSetting = true;
 	}
 
-	if (pos == getLeftTopVec2(map->getTile()[popIdx]->getPos(), TILE_SIZE))
+
+	CTile** tile = gameMgr->getMap()->getTile();
+	if (pos == getLeftTopVec2(tile[popIdx]->getPos(), TILE_SIZE))
 	{
 		ASTAR->erasePathList();
+		fuel--;
 		if (!ASTAR->getRoadList().empty())
 		{
 			popIdx = ASTAR->getRoadList().top();
-			fuel--;
 		}
 		else if(!isArrive)
 			isArrive = true;
 	}
-	if (pos.x < getLeftTopVec2(map->getTile()[popIdx]->getPos(), TILE_SIZE).x)
+	if (pos.x < getLeftTopVec2(tile[popIdx]->getPos(), TILE_SIZE).x)
 	{
 		pos.x += UNIT_MOVE_SPEED;
 		tileIdx = popIdx;
 	}
-	else if (pos.x > getLeftTopVec2(map->getTile()[popIdx]->getPos(), TILE_SIZE).x)
+	else if (pos.x > getLeftTopVec2(tile[popIdx]->getPos(), TILE_SIZE).x)
 	{
 		pos.x -= UNIT_MOVE_SPEED;
 		tileIdx = popIdx;
 	}
-	else if (pos.y < getLeftTopVec2(map->getTile()[popIdx]->getPos(), TILE_SIZE).y)
+	else if (pos.y < getLeftTopVec2(tile[popIdx]->getPos(), TILE_SIZE).y)
 	{
 		pos.y += UNIT_MOVE_SPEED;
 		tileIdx = popIdx;
 	}
-	else if (pos.y > getLeftTopVec2(map->getTile()[popIdx]->getPos(), TILE_SIZE).y)
+	else if (pos.y > getLeftTopVec2(tile[popIdx]->getPos(), TILE_SIZE).y)
 	{
 		pos.y -= UNIT_MOVE_SPEED;
 		tileIdx = popIdx;
@@ -316,30 +320,38 @@ void CUnit::wait()
 void CUnit::floodFill()
 {
 	int cnt = 0;
+	int checkFuel = fuel;
 	memset(tileRange, 0, sizeof(tileRange));
 	if (isSelected && !isMove)
 	{
 		if (tileIdx % 30 > 0 || tileIdx % 30 < 29 || tileIdx > 29 || tileIdx < 579)
 		{
-			cnt++;
 			tileRange[tileIdx] = true;
 
-			if (tileIdx % 30 > 0) checkMoveRange(tileIdx - 1, cnt);
-			if (tileIdx % 30 < 29) checkMoveRange(tileIdx + 1, cnt);
-			if (tileIdx > 29) checkMoveRange(tileIdx + 30, cnt);
-			if (tileIdx < 579) checkMoveRange(tileIdx - 30, cnt);
-
-			if (cnt >= movement) return;
+			//if (checkFuel <= 0) return;
+			if (tileIdx % 30 > 0) checkMoveRange(tileIdx - 1, cnt, checkFuel);
+			if (tileIdx % 30 < 29) checkMoveRange(tileIdx + 1, cnt, checkFuel);
+			if (tileIdx > 29) checkMoveRange(tileIdx + 30, cnt, checkFuel);
+			if (tileIdx < 579) checkMoveRange(tileIdx - 30, cnt, checkFuel);
 		}
 
 	}
 }
 
-void CUnit::checkMoveRange(int idx, int cnt)
+void CUnit::checkMoveRange(int idx, int cnt, int checkFuel)
 {
 	if (tileIdx % 30 > 0 || tileIdx % 30 < 29 || tileIdx > 29 || tileIdx < 579)
 	{
-		ENVIRONMENT_TYPE curTile = map->getTile()[idx]->getTileType();
+		bool isUnit = gameMgr->getMap()->getTile()[idx]->getUnitType() != UNIT_TYPE::NONE;
+		bool isOppsitPlayer = gameMgr->getMap()->getTile()[idx]->getPlayerType() != playerType;
+
+		if (isUnit && isOppsitPlayer) return;
+
+		bool isEnoughFuel = checkFuel > 0;
+
+		if (!isEnoughFuel) return;
+
+		ENVIRONMENT_TYPE curTile = gameMgr->getMap()->getTile()[idx]->getTileType();
 		bool isOnlyInfry = (curTile == ENVIRONMENT_TYPE::MOUNTAIN) ||
 			(curTile == ENVIRONMENT_TYPE::RIVER_3WAYS) ||
 			(curTile == ENVIRONMENT_TYPE::RIVER_4WAYS) ||
@@ -366,6 +378,7 @@ void CUnit::checkMoveRange(int idx, int cnt)
 			if (!isSea)
 			{
 				cnt++;
+				checkFuel--;
 				tileRange[idx] = true;
 			}
 			break;
@@ -375,6 +388,7 @@ void CUnit::checkMoveRange(int idx, int cnt)
 			if (!isOnlyInfry && !isSea)
 			{
 				cnt++;
+				checkFuel--;
 				tileRange[idx] = true;
 			}
 			else if (isOnlyInfry)
@@ -385,11 +399,11 @@ void CUnit::checkMoveRange(int idx, int cnt)
 		default:
 			break;
 		}
-		if (cnt > movement || isSea) return;
-		if (tileIdx % 30 > 0) checkMoveRange(idx - 1, cnt);
-		if (tileIdx % 30 < 29) checkMoveRange(idx + 1, cnt);
-		if (tileIdx > 29) checkMoveRange(idx + 30, cnt);
-		if (tileIdx < 579) checkMoveRange(idx - 30, cnt);
+		if (cnt >= movement || isSea) return;
+		if (tileIdx % 30 > 0) checkMoveRange(idx - 1, cnt, checkFuel);
+		if (tileIdx % 30 < 29) checkMoveRange(idx + 1, cnt, checkFuel);
+		if (tileIdx > 29) checkMoveRange(idx + 30, cnt, checkFuel);
+		if (tileIdx < 579) checkMoveRange(idx - 30, cnt, checkFuel);
 	}
 }
 
@@ -449,7 +463,7 @@ void CUnit::settingByType(UNIT_TYPE type)
 		break;
 	case UNIT_TYPE::TANK:
 		img = IMAGE->findImage("tank_idle");
-		fuel = 70;
+		fuel = 3;
 		movement = 6;
 		matchType = UNIT_MATCH::VEHICLE;
 		break;

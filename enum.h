@@ -167,5 +167,7 @@ enum class EVENT_MSG
 enum class UI_TYPE
 {
 	FACTORY_UI,
+	OPTION_UI,
+	INFO_UI,
 	NONE
 };

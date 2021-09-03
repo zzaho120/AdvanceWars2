@@ -28,7 +28,7 @@ void CMapTool::release()
 
 void CMapTool::update()
 {
-	if (!SUBWIN->GetIsActive() && InputManager->isOnceKeyDown(VK_SPACE))
+	if (!SUBWIN->GetIsActive() && InputManager->isOnceKeyDown('Z'))
 		setMap();
 
 	if (InputManager->isOnceKeyDown('J'))

@@ -10,9 +10,10 @@ class CPlayer : public gameNode
 {
 private:
 	bool isUnitSelect;
-	bool isFactorySelect;
+	bool isOnUI;
 	bool isMove;
 
+	int money;
 	PLAYER_TYPE playerType;
 
 	CGameManager* gameMgr;
@@ -25,18 +26,24 @@ public:
 	HRESULT init(CGameManager* mgr);
 	void release();
 	void update();
+	
+	void playerInput();
 
 	void selectUnit();
 	void moveUnit();
-	void selectFactory();
+	void viewFactory();
+	void viewOption();
 
 	void enter();
 	void exit();
 
 	PLAYER_TYPE getPlayerType() { return playerType; }
+	bool getOnUI() { return isOnUI; }
+	int getMoney() { return money; }
 
 	void setUnitSelect(bool select) { isUnitSelect = select; }
-	void setFactorySelect(bool select) { isFactorySelect = select; }
+	void setOnUI(bool select) { isOnUI = select; }
 	void setMove(bool move) { isMove = move; }
+	void setMoney(int _money) { money = _money; }
 };
 

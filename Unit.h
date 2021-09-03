@@ -3,7 +3,7 @@
 #include"Weapon.h"
 #include"Astar.h"
 
-class CMap;
+class CGameManager;
 class CUnit : public CObject
 {
 private:
@@ -27,10 +27,10 @@ private:
 
 	CWeapon* weaponArr[static_cast<int>(WEAPON_NUMBER::END)];
 
-	CMap* map;
+	CGameManager* gameMgr;
 public:
 	CUnit();
-	CUnit(PLAYER_TYPE _player, UNIT_TYPE _type, Vec2 _pos, int idx, CMap* _map);
+	CUnit(PLAYER_TYPE _player, UNIT_TYPE _type, Vec2 _pos, int idx, CGameManager* mgr);
 	~CUnit();
 
 	HRESULT init();
@@ -42,7 +42,7 @@ public:
 	void wait();
 	
 	void floodFill();
-	void checkMoveRange(int idx, int cnt);
+	void checkMoveRange(int idx, int cnt, int checkfuel);
 	bool correctMove(int idx);
 	
 	void weaponSetting(UNIT_TYPE type);

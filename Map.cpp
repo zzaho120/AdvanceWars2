@@ -22,6 +22,7 @@ CMap::CMap(Vec2 startPos, Vec2 size) :
 		for (int vertical = 0; vertical < TILE_NUM_X; vertical++)
 		{
 			tile[horizontal * TILE_NUM_X + vertical] = new CTile(startPos , size);
+			tile[horizontal * TILE_NUM_X + vertical]->init();
 			startPos += Vec2{ size.x, 0 };
 		}
 		startPos = { tempPos.x, startPos.y + size.y };

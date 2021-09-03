@@ -1,17 +1,18 @@
 #pragma once
-#include "UI.h"
+#include"UI.h"
 #include "GameManager.h"
-class CFactoryUI : public CUI
+class CInfoUI : public CUI
 {
 private:
-	int cursorIdx;
+	Vec2 goldInfoPos;
+
 	PLAYER_TYPE curPlayerType;
 
 	CGameManager* gameMgr;
 public:
-	CFactoryUI();
-	CFactoryUI(CGameManager* mgr);
-	~CFactoryUI();
+	CInfoUI();
+	CInfoUI(CGameManager* mgr);
+	~CInfoUI();
 
 	virtual HRESULT init();
 	virtual void release();
@@ -20,10 +21,5 @@ public:
 
 	virtual void enter();
 	virtual void exit();
-
-	void cursorMove();
-	void unitGenerate();
-	void closeFactoryUI();
-
-	int getCursorIdx() { return cursorIdx; }
 };
+

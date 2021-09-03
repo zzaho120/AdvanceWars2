@@ -50,7 +50,7 @@ void CImageLoad::resourceLoad()
 	//=============================== UI =============================
 
 	IMAGE->addFrameImage("cursor", "images/UI/cursor.bmp", 64 * 5, 64, 5, 1);
-	IMAGE->addFrameImage("number", "images/UI/number.bmp", 80, 8, 10, 1);
+	IMAGE->addFrameImage("number", "images/UI/number.bmp", 30 * 11, 30, 11, 1);
 
 	IMAGE->addFrameImage("unit_hp", "images/UI/unit_hp.bmp", 80, 8, 10, 1);
 	IMAGE->addFrameImage("unit_name", "images/UI/unit_name.bmp", 160, 16, 5, 1);
@@ -63,9 +63,15 @@ void CImageLoad::resourceLoad()
 	IMAGE->addImage("black", "images/UI/bgblack.bmp", WINSIZEX, WINSIZEY);
 	IMAGE->addImage("tileTool", "images/tile/maptool_tile.bmp", TILE_SIZE_X * 8, TILE_SIZE_Y * 4);
 
-	IMAGE->addImage("factory_arrow", "images/UI/factory_arrow.bmp", 200, 100);
-	IMAGE->addImage("factory_panel_red", "images/UI/factory_panel_red.bmp", 400, 500);
-	IMAGE->addImage("factory_panel_blue", "images/UI/factory_panel_blue.bmp", 400, 500);
+	IMAGE->addImage("factory_arrow", "images/UI/factory_arrow.bmp", 70, 40);
+	IMAGE->addImage("factory_panel_red", "images/UI/factory_panel_red.bmp", 600, 600);
+	IMAGE->addImage("factory_panel_blue", "images/UI/factory_panel_blue.bmp", 600, 600);
+
+	IMAGE->addImage("option_panel_red", "images/UI/option_panel_red.bmp", 300, 400);
+	IMAGE->addImage("option_panel_blue", "images/UI/option_panel_blue.bmp", 300, 400);
+
+	IMAGE->addImage("infoUI_gold_red", "images/UI/infoUI_gold_red.bmp", 250, 100);
+	IMAGE->addImage("infoUI_gold_blue", "images/UI/infoUI_gold_blue.bmp", 250, 100);
 	//============================ EFFECT ============================
 	//============================ EFFECT ============================
 

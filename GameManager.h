@@ -21,6 +21,7 @@ private:
 	CUIManager* uiMgr;
 
 	CCommand* command;
+
 public:
 	CGameManager();
 	~CGameManager();
@@ -51,8 +52,14 @@ public:
 
 	// 유닛 생산 관련 메세지 및 함수
 	void viewFactoryMsg();
+	void viewOptionMsg();
+	void closeUIMsg();
 	
+	void incomeMoneyMsg();
+
 	void commandExcute();
 
+	CMap* getMap() { return map; }
 	CPlayer* getCurPlayer() { return curPlayer; }
+	CCursor* getCursor() { return cursor; }
 };

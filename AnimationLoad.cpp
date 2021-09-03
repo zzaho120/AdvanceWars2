@@ -15,6 +15,26 @@ void CAnimationLoad::resourceLoad()
 	//============================ CURSOR =============================
 	
 	ANIMATION->addAnimation("cursor_ani", "cursor", 0, 4, 10, false, true);
+
+	//============================== CITY =============================
+	//============================== CITY =============================
+
+	ANIMATION->addAnimation("city_red", "city", 0, 1, 1, false, true);
+	ANIMATION->addAnimation("city_blue", "city", 2, 3, 1, false, true);
+
+	//============================ FACTORY ============================
+	//============================ FACTORY ============================
+
+	ANIMATION->addAnimation("factory_red", "factory", 0, 1, 1, false, true);
+	ANIMATION->addAnimation("factory_blue", "factory", 2, 3, 1, false, true);
+
+
+	//============================== HQ ===============================
+	//============================== HQ ===============================
+
+	ANIMATION->addAnimation("HQ_red", "HQ", 0, 1, 1, false, true);
+	ANIMATION->addAnimation("HQ_blue", "HQ", 2, 3, 1, false, true);
+
 	//============================ INFANTRY ===========================
 	//============================ INFANTRY ===========================
 

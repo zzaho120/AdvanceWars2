@@ -35,3 +35,4 @@ public:
 
 	CUnit* getMoveUnit() { return unit; }
 };
+

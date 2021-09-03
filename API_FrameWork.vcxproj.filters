@@ -139,6 +139,15 @@
     <Filter Include="Manager\GameMgr">
       <UniqueIdentifier>{e25f7b3d-4654-45bf-a6bc-debaf283c441}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Class\Object\UI\OptionUI">
+      <UniqueIdentifier>{ea6062b9-9fa7-47ae-b702-ef953c8e64d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\UI\InfoUI">
+      <UniqueIdentifier>{ebce1f58-9642-41ae-a448-22e8e0c700ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\UI\AcionUI">
+      <UniqueIdentifier>{0732b2ca-5c16-49bf-9c24-4b09ee00d0b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -297,6 +306,15 @@
     <ClInclude Include="UIManager.h">
       <Filter>Manager\UIMgr</Filter>
     </ClInclude>
+    <ClInclude Include="OptionUI.h">
+      <Filter>Class\Object\UI\OptionUI</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoUI.h">
+      <Filter>Class\Object\UI\InfoUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionUI.h">
+      <Filter>Class\Object\UI\AcionUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -421,6 +439,15 @@
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
       <Filter>Manager\UIMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionUI.cpp">
+      <Filter>Class\Object\UI\OptionUI</Filter>
+    </ClCompile>
+    <ClCompile Include="InfoUI.cpp">
+      <Filter>Class\Object\UI\InfoUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionUI.cpp">
+      <Filter>Class\Object\UI\AcionUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

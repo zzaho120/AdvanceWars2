@@ -96,6 +96,13 @@ HRESULT CTile::init()
 	ANIMATION->start("sea_vertical01");
 	ANIMATION->start("sea_vertical02");
 	ANIMATION->start("sea_noway");
+
+	ANIMATION->start("city_red");
+	ANIMATION->start("city_blue");
+
+	ANIMATION->start("factory_red");
+	ANIMATION->start("factory_blue");
+
 	return S_OK;
 }
 
@@ -472,13 +479,52 @@ void CTile::tileRender()
 	case BUILDING_TYPE::NONE:
 		break;
 	case BUILDING_TYPE::CITY:
-		IMAGE->frameRender("city", getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP) - 64, 0, playerColor);
+		switch (playerType)
+		{
+		case PLAYER_TYPE::NONE:
+			IMAGE->frameRender("city", getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP) - 64, 0, 5);
+			break;
+		case PLAYER_TYPE::PLAYER1:
+			ani = ANIMATION->findAnimation("city_red"); 
+			IMAGE->findImage("city")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP) - 64, ani);
+			break;
+		case PLAYER_TYPE::PLAYER2:
+			ani = ANIMATION->findAnimation("city_blue");
+			IMAGE->findImage("city")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP) - 64, ani);
+			break;
+		}
 		break;
 	case BUILDING_TYPE::HEADQUATERS:
-		IMAGE->frameRender("HQ", getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP) - 64, 0, playerColor);
+		switch (playerType)
+		{
+		case PLAYER_TYPE::NONE:
+			IMAGE->frameRender("HQ", getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP) - 64, 0, 5);
+			break;
+		case PLAYER_TYPE::PLAYER1:
+			ani = ANIMATION->findAnimation("HQ_red");
+			IMAGE->findImage("HQ")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP) - 64, ani);
+			break;
+		case PLAYER_TYPE::PLAYER2:
+			ani = ANIMATION->findAnimation("HQ_blue");
+			IMAGE->findImage("HQ")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP) - 64, ani);
+			break;
+		}
 		break;
 	case BUILDING_TYPE::FACTORY:
-		IMAGE->frameRender("factory", getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), 0, playerColor);
+		switch (playerType)
+		{
+		case PLAYER_TYPE::NONE:
+			IMAGE->frameRender("factory", getTileDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), 0, 5);
+			break;
+		case PLAYER_TYPE::PLAYER1:
+			ani = ANIMATION->findAnimation("factory_red");
+			IMAGE->findImage("factory")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
+			break;
+		case PLAYER_TYPE::PLAYER2:
+			ani = ANIMATION->findAnimation("factory_blue");
+			IMAGE->findImage("factory")->aniRender(getMapDC(), RectEdge(pos, size, RECT_EDGE::LEFT), RectEdge(pos, size, RECT_EDGE::TOP), ani);
+			break;
+		}
 		break;
 	}
 }
