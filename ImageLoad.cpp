@@ -72,6 +72,16 @@ void CImageLoad::resourceLoad()
 
 	IMAGE->addImage("infoUI_gold_red", "images/UI/infoUI_gold_red.bmp", 250, 100);
 	IMAGE->addImage("infoUI_gold_blue", "images/UI/infoUI_gold_blue.bmp", 250, 100);
+
+	IMAGE->addImage("action_panel_red", "images/UI/action_panel_red.bmp", 250, 360);
+	IMAGE->addImage("action_panel_blue", "images/UI/action_panel_blue.bmp", 250, 360);
+
+	IMAGE->addImage("action_failed", "images/UI/action_failed.bmp", 70, 70);
+	IMAGE->addImage("action_capture", "images/UI/action_capture.bmp", 210, 75);
+	IMAGE->addImage("action_fire", "images/UI/action_fire.bmp", 210, 75);
+	IMAGE->addImage("action_supply", "images/UI/action_supply.bmp", 210, 75);
+	IMAGE->addImage("action_wait", "images/UI/action_wait.bmp", 210, 75);
+
 	//============================ EFFECT ============================
 	//============================ EFFECT ============================
 

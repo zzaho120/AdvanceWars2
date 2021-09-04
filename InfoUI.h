@@ -4,7 +4,7 @@
 class CInfoUI : public CUI
 {
 private:
-	Vec2 goldInfoPos;
+	Vec2 panelPos;
 
 	PLAYER_TYPE curPlayerType;
 

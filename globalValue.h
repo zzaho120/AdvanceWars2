@@ -27,6 +27,8 @@ const int ASTAR_MAX_NUM = 5000;
 
 const int UNIT_MAX_NUM = 4;
 
+const int ACTION_MAX = 3;
+
 const int MONEY_MAX = 999999;
 
 const Vec2 TILE_SIZE = { TILE_SIZE_X, TILE_SIZE_Y };

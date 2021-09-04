@@ -169,5 +169,6 @@ enum class UI_TYPE
 	FACTORY_UI,
 	OPTION_UI,
 	INFO_UI,
+	ACTION_UI,
 	NONE
 };

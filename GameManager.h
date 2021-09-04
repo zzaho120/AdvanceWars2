@@ -53,6 +53,7 @@ public:
 	// 유닛 생산 관련 메세지 및 함수
 	void viewFactoryMsg();
 	void viewOptionMsg();
+	void viewActionMsg();
 	void closeUIMsg();
 	
 	void incomeMoneyMsg();
@@ -62,4 +63,5 @@ public:
 	CMap* getMap() { return map; }
 	CPlayer* getCurPlayer() { return curPlayer; }
 	CCursor* getCursor() { return cursor; }
+	CUnitManager* getUnitMgr() { return unitMgr; }
 };

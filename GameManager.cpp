@@ -3,6 +3,7 @@
 #include "FactoryUI.h"
 #include "OptionUI.h"
 #include "InfoUI.h"
+#include "ActionUI.h"
 
 CGameManager::CGameManager() :
 	cam(new CCamera),
@@ -32,6 +33,7 @@ HRESULT CGameManager::init()
 	uiMgr->addUI(new CFactoryUI(this));
 	uiMgr->addUI(new COptionUI(this));
 	uiMgr->addUI(new CInfoUI(this));
+	uiMgr->addUI(new CActionUI(this));
 
 	for (int idx = 0; idx < static_cast<int>(PLAYER_TYPE::NONE); idx++)
 		playerArr[idx]->init(this);
@@ -262,7 +264,6 @@ void CGameManager::changePlayerMsg()
 		break;
 	}
 	curPlayer->enter();
-	curPlayer->setOnUI(false);
 	for (int idx = 0; idx < uiMgr->getVecUI().size(); idx++)
 	{
 		bool isInfoUI = uiMgr->getVecUI()[idx]->getUIType() == UI_TYPE::INFO_UI;
@@ -307,6 +308,20 @@ void CGameManager::viewOptionMsg()
 	}
 }
 
+void CGameManager::viewActionMsg()
+{
+	for (int idx = 0; idx < uiMgr->getVecUI().size(); idx++)
+	{
+		bool isAction = uiMgr->getVecUI()[idx]->getUIType() == UI_TYPE::ACTION_UI;
+		if (isAction)
+		{
+			uiMgr->enterUI(idx);
+			curPlayer->setOnUI(true);
+			break;
+		}
+	}
+}
+
 void CGameManager::closeUIMsg()
 {
 	curPlayer->setOnUI(false);
@@ -340,8 +355,8 @@ bool CGameManager::isUnitArrive()
 		if (unitMgr->getVecUnit()[idx]->getSelected())
 		{
 			if (!unitMgr->getVecUnit()[idx]->getArrive())
-				return true;
+				return false;
 		}
 	}
-	return false;
+	return true;
 }
