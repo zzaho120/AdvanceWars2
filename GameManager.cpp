@@ -4,10 +4,13 @@
 #include "OptionUI.h"
 #include "InfoUI.h"
 #include "ActionUI.h"
+#include "MoveUnitCommand.h"
+#include "GenerateUnitCommand.h"
+#include "CaptureBuildingCommand.h"
 
 CGameManager::CGameManager() :
 	cam(new CCamera),
-	map(new CMap("save/beanisland.map")),
+	map(new CMap("save/beansisland.map")),
 	cursor(new CCursor(map->getTile()[158]->getPos(), 158)),
 	unitMgr(new CUnitManager),
 	buildingMgr(new CBuildingManager),
@@ -204,22 +207,39 @@ void CGameManager::selectUnitCancelMsg()
 // 이동을 위한 데이터 세팅 메세지
 void CGameManager::moveUnitSettingMsg()
 {
+	CBuilding* curBuilding = nullptr;
+	CUnit* curUnit = nullptr;
 	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
 	{
 		if (unitMgr->getVecUnit()[idx]->getSelected())
 		{
-			if (unitMgr->getUnit(idx)->correctMove(cursor->getCursorIdx()) && unitMgr->getUnit(idx)->getTileIdx() != cursor->getCursorIdx())
-			{
-				unitMgr->getUnit(idx)->setMove(true);
-				unitMgr->getUnit(idx)->setMoveSetting(false);
-				unitMgr->getUnit(idx)->setArrive(false);
-				curPlayer->setMove(true);
-				map->getTile()[unitMgr->getUnit(idx)->getTileIdx()]->setUnitType(UNIT_TYPE::NONE);
-				command = new CMoveUnitCommand(unitMgr->getUnit(idx), getLeftTopVec2(cursor->getPos(), TILE_SIZE), cursor->getCursorIdx());
-				HISTORY->add(command);
-				break;
-			}
+			curUnit = unitMgr->getUnit(idx);
+			break;
 		}
+	}
+
+	for (int idx = 0; idx < buildingMgr->getVecBuilding().size(); idx++)
+	{
+		if (buildingMgr->getVecBuilding()[idx]->getTileIdx() == curUnit->getTileIdx())
+		{
+			curBuilding = buildingMgr->getVecBuilding()[idx];
+		}
+	}
+
+	if (curUnit->correctMove(cursor->getCursorIdx()) && curUnit->getTileIdx() != cursor->getCursorIdx())
+	{
+		curUnit->setMove(true);
+		curUnit->setMoveSetting(false);
+		curUnit->setArrive(false);
+		curPlayer->setMove(true);
+		map->getTile()[curUnit->getTileIdx()]->setUnitType(UNIT_TYPE::NONE);
+		command = new CMoveUnitCommand(curUnit, curBuilding, getLeftTopVec2(cursor->getPos(), TILE_SIZE), cursor->getCursorIdx());
+		HISTORY->add(command);
+	}
+	else if (curUnit->getTileIdx() == cursor->getCursorIdx())
+	{
+		curUnit->setMove(true);
+		viewActionMsg();
 	}
 }
 
@@ -325,6 +345,32 @@ void CGameManager::viewActionMsg()
 void CGameManager::closeUIMsg()
 {
 	curPlayer->setOnUI(false);
+}
+
+void CGameManager::captureBuildingMsg()
+{
+	CUnit* curUnit = nullptr;
+	CBuilding* curBuilding = nullptr;
+	CTile* curTile = nullptr;
+	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+	{
+		if (unitMgr->getVecUnit()[idx]->getSelected())
+		{
+			curUnit = unitMgr->getVecUnit()[idx];
+		}
+	}
+
+	for (int idx = 0; idx < buildingMgr->getVecBuilding().size(); idx++)
+	{
+		if (buildingMgr->getVecBuilding()[idx]->getTileIdx() == curUnit->getTileIdx())
+		{
+			curBuilding = buildingMgr->getVecBuilding()[idx];
+		}
+	}
+	curTile = map->getTile()[curBuilding->getTileIdx()];
+	command = new CCaptureBuildingCommand(curUnit, curBuilding, curTile);
+	HISTORY->add(command);
+	commandExcute();
 }
 
 void CGameManager::incomeMoneyMsg()

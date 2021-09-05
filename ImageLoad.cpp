@@ -53,15 +53,17 @@ void CImageLoad::resourceLoad()
 	IMAGE->addFrameImage("number", "images/UI/number.bmp", 30 * 11, 30, 11, 1);
 
 	IMAGE->addFrameImage("unit_hp", "images/UI/unit_hp.bmp", 80, 8, 10, 1);
-	IMAGE->addFrameImage("unit_name", "images/UI/unit_name.bmp", 160, 16, 5, 1);
-	IMAGE->addFrameImage("unit_status_mark", "images/UI/unit_status_mark.bmp", 24, 40, 3, 5);
+	IMAGE->addFrameImage("unit_status_mark", "images/UI/unit_status_mark.bmp", 25 * 3, 25 * 5, 3, 5);
 	IMAGE->addFrameImage("unit_warnings", "images/UI/unit_warnings.bmp", 16, 8, 2, 1);
 
 	IMAGE->addFrameImage("move_arrow", "images/UI/move_arrow.bmp", 112, 32, 6, 2);
 	IMAGE->addFrameImage("supply_message", "images/UI/supply_message.bmp", 128, 32, 2, 1);
 
 	IMAGE->addImage("black", "images/UI/bgblack.bmp", WINSIZEX, WINSIZEY);
+	IMAGE->addImage("black_info1", "images/UI/bgblack.bmp", 150, 200);
+	IMAGE->addImage("black_info2", "images/UI/bgblack.bmp", 300, 200);
 	IMAGE->addImage("tileTool", "images/tile/maptool_tile.bmp", TILE_SIZE_X * 8, TILE_SIZE_Y * 4);
+	IMAGE->addFrameImage("tileTool_frame", "images/tile/maptool_tile.bmp", TILE_SIZE_X * 8, TILE_SIZE_Y * 4, 8, 4);
 
 	IMAGE->addImage("factory_arrow", "images/UI/factory_arrow.bmp", 70, 40);
 	IMAGE->addImage("factory_panel_red", "images/UI/factory_panel_red.bmp", 600, 600);
@@ -81,6 +83,11 @@ void CImageLoad::resourceLoad()
 	IMAGE->addImage("action_fire", "images/UI/action_fire.bmp", 210, 75);
 	IMAGE->addImage("action_supply", "images/UI/action_supply.bmp", 210, 75);
 	IMAGE->addImage("action_wait", "images/UI/action_wait.bmp", 210, 75);
+
+	IMAGE->addFrameImage("tile_name", "images/UI/tile_name.bmp", 100 * 10, TILE_SIZE_Y, 10, 1);
+	IMAGE->addFrameImage("unit_name", "images/UI/unit_name.bmp", 100 * 5, TILE_SIZE_Y, 5, 1);
+	IMAGE->addFrameImage("unit_type", "images/UI/unit_type.bmp", TILE_SIZE_X * 5, TILE_SIZE_Y * 2, 5, 2);
+	IMAGE->addFrameImage("info_icon", "images/UI/info_icon.bmp", 40 * 4, 40, 4, 1);
 
 	//============================ EFFECT ============================
 	//============================ EFFECT ============================

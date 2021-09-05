@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "Tile.h"
+#include "Building.h"
 
 CTile::CTile() :
 	CObject(),
@@ -8,7 +9,8 @@ CTile::CTile() :
 	unitType(UNIT_TYPE::NONE),
 	playerType(PLAYER_TYPE::NONE),
 	directionType(DIRECTION_SPRITE::NO),
-	rotateType(ROTATE_TYPE::NONE)
+	rotateType(ROTATE_TYPE::NONE),
+	defense(0)
 { }
 
 CTile::CTile(Vec2 _pos, Vec2 _size, image* _img, animation* _ani) :
@@ -18,7 +20,8 @@ CTile::CTile(Vec2 _pos, Vec2 _size, image* _img, animation* _ani) :
 	unitType(UNIT_TYPE::NONE),
 	playerType(PLAYER_TYPE::NONE),
 	directionType(DIRECTION_SPRITE::NO),
-	rotateType(ROTATE_TYPE::DEG0)
+	rotateType(ROTATE_TYPE::DEG0),
+	defense(0)
 {}
 
 CTile::~CTile()
@@ -103,6 +106,7 @@ HRESULT CTile::init()
 	ANIMATION->start("factory_red");
 	ANIMATION->start("factory_blue");
 
+	defenseSetting();
 	return S_OK;
 }
 
@@ -527,6 +531,72 @@ void CTile::tileRender()
 		}
 		break;
 	}
+}
+
+void CTile::defenseSetting()
+{
+	bool isBuilding = buildingType != BUILDING_TYPE::NONE;
+	if (isBuilding)
+	{
+		switch (buildingType)
+		{
+		case BUILDING_TYPE::CITY:
+		case BUILDING_TYPE::FACTORY:
+			defense = 3;
+			break;
+		case BUILDING_TYPE::HEADQUATERS:
+			defense = 4;
+			break;
+		}
+	}
+	else
+	{
+		switch (tileType)
+		{
+		case ENVIRONMENT_TYPE::PLAIN:
+			defense = 1;
+			break;
+		case ENVIRONMENT_TYPE::WOOD:
+			defense = 2;
+			break;
+		case ENVIRONMENT_TYPE::MOUNTAIN:
+			defense = 4;
+			break;
+		case ENVIRONMENT_TYPE::RIVER:
+		case ENVIRONMENT_TYPE::SEA:
+		case ENVIRONMENT_TYPE::ROAD:
+		case ENVIRONMENT_TYPE::BRIDGE:
+		case ENVIRONMENT_TYPE::RIVER_LINE:
+		case ENVIRONMENT_TYPE::RIVER_CURVE:
+		case ENVIRONMENT_TYPE::RIVER_3WAYS:
+		case ENVIRONMENT_TYPE::RIVER_4WAYS:
+		case ENVIRONMENT_TYPE::ROAD_LINE:
+		case ENVIRONMENT_TYPE::ROAD_CURVE:
+		case ENVIRONMENT_TYPE::ROAD_3WAYS:
+		case ENVIRONMENT_TYPE::ROAD_4WAYS:
+		case ENVIRONMENT_TYPE::SEA_2WAYS:
+		case ENVIRONMENT_TYPE::SEA_3WAYS:
+		case ENVIRONMENT_TYPE::SEA_4WAYS:
+		case ENVIRONMENT_TYPE::SEA_5WAYS:
+		case ENVIRONMENT_TYPE::SEA_6WAYS:
+		case ENVIRONMENT_TYPE::SEA_7WAYS:
+		case ENVIRONMENT_TYPE::SEA_8WAYS:
+		case ENVIRONMENT_TYPE::SEA_VERTICAL00:
+		case ENVIRONMENT_TYPE::SEA_VERTICAL01:
+		case ENVIRONMENT_TYPE::SEA_VERTICAL02:
+		case ENVIRONMENT_TYPE::SEA_HORIZONTAL00:
+		case ENVIRONMENT_TYPE::SEA_HORIZONTAL01:
+		case ENVIRONMENT_TYPE::SEA_HORIZONTAL02:
+		case ENVIRONMENT_TYPE::SEA_NOWAYS:
+			defense = 0;
+			break;
+		}
+	}
+}
+
+void CTile::capture(CBuilding* building)
+{
+	playerType = building->getPlayerType();
 }
 
 CTile& CTile::operator=(const CTile& ref)

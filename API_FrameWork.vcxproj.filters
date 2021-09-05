@@ -148,6 +148,9 @@
     <Filter Include="Class\Object\UI\AcionUI">
       <UniqueIdentifier>{0732b2ca-5c16-49bf-9c24-4b09ee00d0b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pattern\Command\CaptureBuilding">
+      <UniqueIdentifier>{455fb440-c83c-4576-b841-787ca93f5bd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -315,6 +318,9 @@
     <ClInclude Include="ActionUI.h">
       <Filter>Class\Object\UI\AcionUI</Filter>
     </ClInclude>
+    <ClInclude Include="CaptureBuildingCommand.h">
+      <Filter>Pattern\Command\CaptureBuilding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -448,6 +454,9 @@
     </ClCompile>
     <ClCompile Include="ActionUI.cpp">
       <Filter>Class\Object\UI\AcionUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptureBuildingCommand.cpp">
+      <Filter>Pattern\Command\CaptureBuilding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

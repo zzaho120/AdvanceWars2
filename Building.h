@@ -20,7 +20,11 @@ public:
 	void update();
 	void render();
 
+	void capture(CUnit* unit);
+	void unCapture();
+
 	int getTileIdx() { return tileIdx; }
+	int getCapturePoint() { return capturePoint; }
 	bool getIsHQ() { return isHQ; }
 	bool getIsFactory() { return isFactory; }
 	PLAYER_TYPE getPlayerType() { return playerType; }

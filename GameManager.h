@@ -50,12 +50,15 @@ public:
 	void completeMoveUnitMsg();
 	bool isUnitArrive();
 
-	// 유닛 생산 관련 메세지 및 함수
+	// UI 관련 메세지 및 함수
 	void viewFactoryMsg();
 	void viewOptionMsg();
 	void viewActionMsg();
 	void closeUIMsg();
 	
+	// 빌딩 점령 관련 메시지 및 함수
+	void captureBuildingMsg();
+
 	void incomeMoneyMsg();
 
 	void commandExcute();
@@ -64,4 +67,5 @@ public:
 	CPlayer* getCurPlayer() { return curPlayer; }
 	CCursor* getCursor() { return cursor; }
 	CUnitManager* getUnitMgr() { return unitMgr; }
+	CBuildingManager* getBuildingMgr() { return buildingMgr; }
 };

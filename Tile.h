@@ -9,6 +9,8 @@ private:
 	PLAYER_TYPE playerType;
 	DIRECTION_SPRITE directionType;
 	ROTATE_TYPE rotateType;
+
+	int defense;
 public:
 	CTile();
 	CTile(Vec2 _pos, Vec2 _size, image* _img = nullptr, animation* _ani = nullptr);
@@ -20,6 +22,8 @@ public:
 	void render();
 
 	void tileRender();
+	void defenseSetting();
+	void capture(CBuilding* building);
 
 	CTile& operator=(const CTile& ref);
 	CTile* operator=(const CTile* ref);
@@ -30,6 +34,7 @@ public:
 	PLAYER_TYPE getPlayerType() { return playerType; }
 	DIRECTION_SPRITE getDirection() { return directionType; }
 	ROTATE_TYPE getRotateType() { return rotateType; }
+	int getDefense() { return defense; }
 
 	void setTileType(ENVIRONMENT_TYPE type) { tileType = type; }
 	void setBuildingType(BUILDING_TYPE type) { buildingType = type; }

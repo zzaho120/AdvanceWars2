@@ -8,7 +8,7 @@ CUnit::CUnit() :
 	movement(0), healthPoint(1), tileIdx(0),
 	matchType(UNIT_MATCH::NONE), isActive(false),
 	unitType(UNIT_TYPE::NONE), isSelected(false),
-	isMove(false)
+	isCapturing(false), isMove(false)
 {
 	weaponSetting(unitType);
 }
@@ -16,7 +16,7 @@ CUnit::CUnit() :
 CUnit::CUnit(PLAYER_TYPE _player, UNIT_TYPE _type, Vec2 _pos, int idx, CGameManager* mgr) :
 	CObject(_pos, { TILE_SIZE_X, TILE_SIZE_Y }), tileIdx(idx),
 	unitType(_type), isActive(false), isArrive(false), healthPoint(10),
-	isSelected(false), isMove(false), moveSetting(false),
+	isSelected(false), isMove(false), moveSetting(false), isCapturing(false),
 	gameMgr(mgr), playerType(_player)
 {
 	memset(tileRange, 0, sizeof(tileRange));
@@ -108,7 +108,6 @@ void CUnit::update()
 
 void CUnit::render()
 {
-	TCHAR str[128];
 	if (isSelected && !isMove)
 	{
 		for (int i = 0; i < TILE_NUM_Y; i++)
@@ -255,13 +254,11 @@ void CUnit::render()
 		}
 	}
 
-	if (!ASTAR->getRoadList().empty())
+	if (isCapturing)
 	{
-		wsprintf(str, "%d %d %d %d", ASTAR->getRoadList().size(), tileIdx, ASTAR->getRoadList().top(), fuel);
-		TextOut(getMapDC(), 100, 100, str, strlen(str));
+		IMAGE->frameRender("unit_status_mark", getMapDC(), pos.x + 39, pos.y + 39, 1, static_cast<int>(playerType));
 	}
 }
-
 
 void CUnit::move(Vec2 _pos, int idx)
 {
@@ -328,7 +325,6 @@ void CUnit::floodFill()
 		{
 			tileRange[tileIdx] = true;
 
-			//if (checkFuel <= 0) return;
 			if (tileIdx % 30 > 0) checkMoveRange(tileIdx - 1, cnt, checkFuel);
 			if (tileIdx % 30 < 29) checkMoveRange(tileIdx + 1, cnt, checkFuel);
 			if (tileIdx > 29) checkMoveRange(tileIdx + 30, cnt, checkFuel);
@@ -340,10 +336,16 @@ void CUnit::floodFill()
 
 void CUnit::checkMoveRange(int idx, int cnt, int checkFuel)
 {
-	if (tileIdx % 30 > 0 || tileIdx % 30 < 29 || tileIdx > 29 || tileIdx < 579)
+	if (idx % 30 > 0 || idx % 30 < 29 || idx > 29 || idx < 579)
 	{
 		bool isUnit = gameMgr->getMap()->getTile()[idx]->getUnitType() != UNIT_TYPE::NONE;
-		bool isOppsitPlayer = gameMgr->getMap()->getTile()[idx]->getPlayerType() != playerType;
+		bool isOppsitPlayer = false;
+
+		for (int i = 0; i < gameMgr->getUnitMgr()->getVecUnit().size(); i++)
+		{
+			if (gameMgr->getUnitMgr()->getVecUnit()[i]->getTileIdx() == idx)
+				isOppsitPlayer = gameMgr->getUnitMgr()->getVecUnit()[i]->getPlayerType() != playerType;
+		}
 
 		if (isUnit && isOppsitPlayer) return;
 
@@ -441,6 +443,16 @@ bool CUnit::correctMove(int idx)
 		return true;
 	else
 		return false;
+}
+
+void CUnit::capture()
+{
+	isCapturing = true;
+}
+
+void CUnit::unCapture()
+{
+	isCapturing = false;
 }
 
 void CUnit::settingByType(UNIT_TYPE type)

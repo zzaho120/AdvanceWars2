@@ -10,6 +10,7 @@ private:
 	Vec2 panelPos;
 	int cursorIdx;
 
+	bool isCapture;
 	CGameManager* gameMgr;
 public:
 	CActionUI();
@@ -26,4 +27,5 @@ public:
 
 	void cursorMove();
 	void chooseAction();
+	void checkCapture();
 };

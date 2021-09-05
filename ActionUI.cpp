@@ -6,6 +6,7 @@ CActionUI::CActionUI() :
 	curPlayerType(PLAYER_TYPE::NONE),
 	panelPos({ 50, 50 }),
 	cursorIdx(0),
+	isCapture(false),
 	gameMgr(nullptr)
 {
 }
@@ -14,6 +15,7 @@ CActionUI::CActionUI(CGameManager* mgr) :
 	CUI(UI_TYPE::ACTION_UI),
 	panelPos({ 50, 50 }),
 	cursorIdx(0),
+	isCapture(false),
 	curPlayerType(PLAYER_TYPE::NONE)
 {
 	gameMgr = mgr;
@@ -36,6 +38,7 @@ void CActionUI::update()
 {
 	if (isActive && curPlayerType != PLAYER_TYPE::NONE)
 	{
+		checkCapture();
 		cursorMove();
 		chooseAction();
 	}
@@ -71,7 +74,9 @@ void CActionUI::render()
 			{
 			case UNIT_TYPE::INFANTRY:
 			case UNIT_TYPE::MECH:
-				IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5 +75 * 2);
+				IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5 + 75 * 2);
+				if(!isCapture)
+					IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5 + 75);
 				break;
 			case UNIT_TYPE::TANK:
 			case UNIT_TYPE::ARTILLERY:
@@ -126,6 +131,13 @@ void CActionUI::chooseAction()
 		case 0: // 공격
 			break;
 		case 1: // 점령
+			if (isCapture)
+			{
+				gameMgr->captureBuildingMsg();
+				gameMgr->completeMoveUnitMsg();
+				gameMgr->closeUIMsg();
+				exit();
+			}
 			break;
 		case 2: // 보급
 			break;
@@ -134,6 +146,38 @@ void CActionUI::chooseAction()
 			gameMgr->closeUIMsg();
 			exit();
 			break;
+		}
+	}
+	else if (InputManager->isOnceKeyDown('X'))
+	{
+		gameMgr->moveUndoMsg();
+		gameMgr->closeUIMsg();
+		exit();
+	}
+}
+
+void CActionUI::checkCapture()
+{
+	isCapture = false;
+	if (curUnitType == UNIT_TYPE::INFANTRY || curUnitType == UNIT_TYPE::MECH)
+	{
+		for (int idx = 0; idx < gameMgr->getUnitMgr()->getVecUnit().size(); idx++)
+		{
+			bool isSelected = gameMgr->getUnitMgr()->getVecUnit()[idx]->getSelected();
+			if (isSelected)
+			{
+				int unitTileIdx = gameMgr->getUnitMgr()->getVecUnit()[idx]->getTileIdx();
+				for (int i = 0; i < gameMgr->getBuildingMgr()->getVecBuilding().size(); i++)
+				{
+					bool isBuilding = gameMgr->getBuildingMgr()->getVecBuilding()[i]->getTileIdx() == unitTileIdx;
+					bool isOppositPlayer = gameMgr->getBuildingMgr()->getVecBuilding()[i]->getPlayerType() != curPlayerType;
+					if (isBuilding && isOppositPlayer)
+					{
+						isCapture = true;
+						return;
+					}
+				}
+			}
 		}
 	}
 }

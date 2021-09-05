@@ -5,6 +5,7 @@ class CInfoUI : public CUI
 {
 private:
 	Vec2 panelPos;
+	Vec2 infoPos;
 
 	PLAYER_TYPE curPlayerType;
 
@@ -21,5 +22,7 @@ public:
 
 	virtual void enter();
 	virtual void exit();
+
+	void infoRender();
 };
 

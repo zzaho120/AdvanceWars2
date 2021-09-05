@@ -106,23 +106,10 @@ void CPlayer::moveUnit()
 		gameMgr->commandExcute();
 	}
 
-	
-
 	// 이동 타일이 선택이 됐다면
 	if (isMove && gameMgr->isUnitArrive())
 	{
 		gameMgr->viewActionMsg();
-		//// 이동 취소
-		//if (InputManager->isOnceKeyDown('X'))
-		//{
-		//	gameMgr->moveUndoMsg();
-		//}
-
-		//// 이동 명령 완료
-		//else if (InputManager->isOnceKeyDown('Z'))
-		//{
-		//	gameMgr->completeMoveUnitMsg();
-		//}
 	}
 }
 

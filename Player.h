@@ -1,7 +1,5 @@
 #pragma once
 #include"gameNode.h"
-#include "MoveUnitCommand.h"
-#include "GenerateUnitCommand.h"
 #include "UnitManager.h"
 #include "BuildingManager.h"
 #include "Unit.h"

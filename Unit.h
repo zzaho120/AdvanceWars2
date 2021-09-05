@@ -21,6 +21,7 @@ private:
 	bool isSelected;
 	bool isMove;
 	bool isArrive;
+	bool isCapturing;
 	bool moveSetting;
 
 	bool tileRange[TILE_NUM_X * TILE_NUM_Y];
@@ -44,6 +45,8 @@ public:
 	void floodFill();
 	void checkMoveRange(int idx, int cnt, int checkfuel);
 	bool correctMove(int idx);
+	void capture();
+	void unCapture();
 	
 	void weaponSetting(UNIT_TYPE type);
 
@@ -51,6 +54,8 @@ public:
 	bool getActive() { return isActive; }
 	bool getMove() { return isMove; }
 	bool getArrive() { return isArrive; }
+	int getHP() { return healthPoint; }
+	int getFuel() { return fuel; }
 
 	UNIT_TYPE getUnitType() { return unitType; }
 	PLAYER_TYPE getPlayerType() { return playerType; }

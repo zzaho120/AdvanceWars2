@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "Unit.h"
 #include "Building.h"
 
 CBuilding::CBuilding() :
@@ -34,4 +35,22 @@ void CBuilding::update()
 
 void CBuilding::render()
 {
+}
+
+void CBuilding::capture(CUnit* unit)
+{
+	if (capturePoint > 0)
+	{
+		capturePoint -= unit->getHP();
+		if (capturePoint <= 0)
+		{
+			playerType = unit->getPlayerType();
+			unCapture();
+		}
+	}
+}
+
+void CBuilding::unCapture()
+{
+	capturePoint = 20;
 }
