@@ -2,6 +2,7 @@
 #include"Object.h"
 #include"Weapon.h"
 #include"Astar.h"
+#include"Tile.h"
 
 class CGameManager;
 class CUnit : public CObject
@@ -9,9 +10,9 @@ class CUnit : public CObject
 private:
 	int fuel;
 	int movement;
-	int healthPoint;
 	int tileIdx;
 	int popIdx;
+	int healthPoint;
 
 	UNIT_MATCH matchType;
 	UNIT_TYPE unitType;
@@ -22,9 +23,11 @@ private:
 	bool isMove;
 	bool isArrive;
 	bool isCapturing;
+	bool isAttack;
 	bool moveSetting;
 
-	bool tileRange[TILE_NUM_X * TILE_NUM_Y];
+	bool moveRange[TILE_NUM_X * TILE_NUM_Y];
+	bool attackRange[TILE_NUM_X * TILE_NUM_Y];
 
 	CWeapon* weaponArr[static_cast<int>(WEAPON_NUMBER::END)];
 
@@ -42,11 +45,28 @@ public:
 	void move(Vec2 _pos, int idx);
 	void wait();
 	
-	void floodFill();
+	// 이동 관렴 함수
+	void moveFloodFill();
 	void checkMoveRange(int idx, int cnt, int checkfuel);
+	void checkAttackRange(int idx, int cnt, CWeapon* useWeapon);
 	bool correctMove(int idx);
+
+	// 공격 관련 함수
+	void attackFloodFill();
+	float calculateDamage(CUnit* unit, CTile* tile);
+	float weaponDamage(UNIT_TYPE type, WEAPON_NUMBER num);
+	bool correctAttack(int idx);
+	bool isEnemyInFocus();
+	void attack(CUnit* oppositUnit, CTile* oppositTile);
+	void damaged(float damage);
+	void bulletCount(CUnit* oppositUnit);
+
+	// 점령 관련 함수
 	void capture();
 	void unCapture();
+
+	// 보급 관련 함수
+	void supply();
 	
 	void weaponSetting(UNIT_TYPE type);
 
@@ -71,4 +91,5 @@ public:
 	void setTileIdx(int idx) { tileIdx = idx; }
 	void setMoveSetting(bool moveSet) { moveSetting = moveSet; }
 	void setArrive(bool arrive) { isArrive = arrive; }
+	void setAttack(bool attack) { isAttack = attack; }
 };

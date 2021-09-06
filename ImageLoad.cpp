@@ -27,6 +27,7 @@ void CImageLoad::resourceLoad()
 	IMAGE->addFrameImage("single_environment", "images/tile/single_environment.bmp", 64 * 5, 64, 5, 1);
 	IMAGE->addFrameImage("wood", "images/tile/wood.bmp", TILE_SIZE_X * 4, TILE_SIZE_Y * 3, 4, 3);
 	IMAGE->addImage("move_range", "images/tile/moveRange.bmp", TILE_SIZE_X, TILE_SIZE_Y);
+	IMAGE->addImage("attack_range", "images/tile/attackRange.bmp", TILE_SIZE_X, TILE_SIZE_Y);
 
 	//============================= UNIT =============================
 	//============================= UNIT =============================
@@ -52,7 +53,7 @@ void CImageLoad::resourceLoad()
 	IMAGE->addFrameImage("cursor", "images/UI/cursor.bmp", 64 * 5, 64, 5, 1);
 	IMAGE->addFrameImage("number", "images/UI/number.bmp", 30 * 11, 30, 11, 1);
 
-	IMAGE->addFrameImage("unit_hp", "images/UI/unit_hp.bmp", 80, 8, 10, 1);
+	IMAGE->addFrameImage("unit_hp", "images/UI/unit_hp.bmp", 25 * 10, 25, 10, 1);
 	IMAGE->addFrameImage("unit_status_mark", "images/UI/unit_status_mark.bmp", 25 * 3, 25 * 5, 3, 5);
 	IMAGE->addFrameImage("unit_warnings", "images/UI/unit_warnings.bmp", 16, 8, 2, 1);
 
@@ -88,9 +89,10 @@ void CImageLoad::resourceLoad()
 	IMAGE->addFrameImage("unit_name", "images/UI/unit_name.bmp", 100 * 5, TILE_SIZE_Y, 5, 1);
 	IMAGE->addFrameImage("unit_type", "images/UI/unit_type.bmp", TILE_SIZE_X * 5, TILE_SIZE_Y * 2, 5, 2);
 	IMAGE->addFrameImage("info_icon", "images/UI/info_icon.bmp", 40 * 4, 40, 4, 1);
+	IMAGE->addImage("damageUI", "images/UI/damage_UI.bmp", 32 * 3, 28 * 3);
 
 	//============================ EFFECT ============================
 	//============================ EFFECT ============================
 
-	EFFECT->addEffect("ground_destroy", "images/effect/ground_destroy.bmp", 288, 32, 32, 32, 1, 0.3f, 100);
+	EFFECT->addEffect("ground_destroy", "images/effect/ground_destroy.bmp", 288, 32, 32, 32, 60, 0.45f, 100);
 }

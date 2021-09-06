@@ -7,6 +7,8 @@
 #include "MoveUnitCommand.h"
 #include "GenerateUnitCommand.h"
 #include "CaptureBuildingCommand.h"
+#include "AttackUnitCommand.h"
+#include "DestroyUnitCommand.h"
 
 CGameManager::CGameManager() :
 	cam(new CCamera),
@@ -61,7 +63,6 @@ void CGameManager::update()
 	buildingMgr->update();
 	uiMgr->update();
 
-	
 	if (!curPlayer->getOnUI())
 	{
 		curPlayer->update();
@@ -268,19 +269,11 @@ void CGameManager::changePlayerMsg()
 	{
 	case PLAYER_TYPE::PLAYER1:
 		curPlayer = playerArr[static_cast<int>(PLAYER_TYPE::PLAYER2)];
-		for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
-		{
-			if (unitMgr->getVecUnit()[idx]->getPlayerType() == PLAYER_TYPE::PLAYER2)
-				unitMgr->getVecUnit()[idx]->setActive(true);
-		}
+		unitMgr->setAllActive(PLAYER_TYPE::PLAYER1, true);
 		break;
 	case PLAYER_TYPE::PLAYER2:
 		curPlayer = playerArr[static_cast<int>(PLAYER_TYPE::PLAYER1)];
-		for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
-		{
-			if (unitMgr->getVecUnit()[idx]->getPlayerType() == PLAYER_TYPE::PLAYER1)
-				unitMgr->getVecUnit()[idx]->setActive(true);
-		}
+		unitMgr->setAllActive(PLAYER_TYPE::PLAYER2, true);
 		break;
 	}
 	curPlayer->enter();
@@ -330,6 +323,16 @@ void CGameManager::viewOptionMsg()
 
 void CGameManager::viewActionMsg()
 {
+	CUnit* curUnit = nullptr;
+	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+	{
+		if (unitMgr->getVecUnit()[idx]->getSelected())
+		{
+			curUnit = unitMgr->getVecUnit()[idx];
+		}
+	}
+	curUnit->setAttack(false);
+
 	for (int idx = 0; idx < uiMgr->getVecUI().size(); idx++)
 	{
 		bool isAction = uiMgr->getVecUI()[idx]->getUIType() == UI_TYPE::ACTION_UI;
@@ -371,6 +374,131 @@ void CGameManager::captureBuildingMsg()
 	command = new CCaptureBuildingCommand(curUnit, curBuilding, curTile);
 	HISTORY->add(command);
 	commandExcute();
+}
+
+void CGameManager::attackUnitSettingMsg()
+{
+	CUnit* curUnit = nullptr;
+	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+	{
+		if (unitMgr->getVecUnit()[idx]->getSelected())
+		{
+			curUnit = unitMgr->getVecUnit()[idx];
+		}
+	}
+	curUnit->setAttack(true);
+	curPlayer->setAttack(true);
+}
+
+void CGameManager::attackUnitMsg()
+{
+	CTile* curTile = nullptr;
+	CTile* oppositTile = nullptr;
+	CUnit* curUnit = nullptr;
+	CUnit* oppositUnit = nullptr;
+
+	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+	{
+		if (unitMgr->getVecUnit()[idx]->getSelected())
+		{
+			curUnit = unitMgr->getUnit(idx);
+			curTile = map->getTile()[curUnit->getTileIdx()];
+			break;
+		}
+	}
+	if (curUnit->correctAttack(cursor->getCursorIdx()))
+	{
+		for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+		{
+			if(unitMgr->getVecUnit()[idx]->getTileIdx() == cursor->getCursorIdx())
+				oppositUnit = unitMgr->getVecUnit()[idx];
+
+		}
+		oppositTile = map->getTile()[oppositUnit->getTileIdx()];
+	}
+
+	command = new CAttackUnitCommand(curUnit, oppositUnit, curTile, oppositTile);
+	HISTORY->add(command);
+	commandExcute();
+
+	completeMoveUnitMsg();
+
+	curUnit->setAttack(false);
+	curPlayer->setAttack(false);
+	curPlayer->setMove(false);
+}
+
+bool CGameManager::isAvailableAttack()
+{
+	CUnit* curUnit = nullptr;
+	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+	{
+		if (unitMgr->getVecUnit()[idx]->getSelected())
+		{
+			curUnit = unitMgr->getUnit(idx);
+			break;
+		}
+	}
+
+	return curUnit->isEnemyInFocus();
+}
+
+bool CGameManager::isAttackMode()
+{
+	return curPlayer->getAttack();
+}
+
+bool CGameManager::isUnitOnCursor()
+{
+	bool isCursorOnUnit = false;
+	CUnit* curUnit = nullptr;
+	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+	{
+		if (unitMgr->getVecUnit()[idx]->getSelected())
+		{
+			curUnit = unitMgr->getUnit(idx);
+			break;
+		}
+	}
+	isCursorOnUnit = curUnit->correctAttack(cursor->getCursorIdx());
+
+	return isCursorOnUnit;
+}
+
+int CGameManager::predictDamaged()
+{
+	CUnit* curUnit = nullptr;
+	CUnit* oppositUnit = nullptr;
+	CTile* oppositTile = nullptr;
+	int damage = 0;
+	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+	{
+		if (unitMgr->getVecUnit()[idx]->getSelected())
+		{
+			curUnit = unitMgr->getUnit(idx);
+			break;
+		}
+	}
+	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+	{
+		if (unitMgr->getVecUnit()[idx]->getTileIdx() == cursor->getCursorIdx())
+		{
+			oppositUnit = unitMgr->getVecUnit()[idx];
+			break;
+		}
+	}
+	
+	oppositTile = map->getTile()[oppositUnit->getTileIdx()];
+	damage = curUnit->calculateDamage(oppositUnit, oppositTile);
+	return damage;
+}
+
+void CGameManager::destroyUnitMsg(CUnit* unit)
+{
+	int tileIdx = unit->getTileIdx();
+	map->getTile()[tileIdx]->setUnitType(UNIT_TYPE::NONE);
+	command = new CDestroyUnitCommand(unit, unitMgr);
+	command->excute();
 }
 
 void CGameManager::incomeMoneyMsg()

@@ -24,5 +24,6 @@ public:
 	virtual void exit();
 
 	void infoRender();
+
 };
 

@@ -10,6 +10,7 @@ private:
 	bool isUnitSelect;
 	bool isOnUI;
 	bool isMove;
+	bool isAttack;
 
 	int money;
 	PLAYER_TYPE playerType;
@@ -28,7 +29,7 @@ public:
 	void playerInput();
 
 	void selectUnit();
-	void moveUnit();
+	void actionUnit();
 	void viewFactory();
 	void viewOption();
 
@@ -37,11 +38,13 @@ public:
 
 	PLAYER_TYPE getPlayerType() { return playerType; }
 	bool getOnUI() { return isOnUI; }
+	bool getAttack() { return isAttack; }
 	int getMoney() { return money; }
 
 	void setUnitSelect(bool select) { isUnitSelect = select; }
 	void setOnUI(bool select) { isOnUI = select; }
 	void setMove(bool move) { isMove = move; }
 	void setMoney(int _money) { money = _money; }
+	void setAttack(bool attack) { isAttack = attack; }
 };
 

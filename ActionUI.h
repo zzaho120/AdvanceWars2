@@ -11,6 +11,7 @@ private:
 	int cursorIdx;
 
 	bool isCapture;
+	bool isAttack;
 	CGameManager* gameMgr;
 public:
 	CActionUI();
@@ -28,4 +29,5 @@ public:
 	void cursorMove();
 	void chooseAction();
 	void checkCapture();
+	void checkAttack();
 };

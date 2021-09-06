@@ -12,7 +12,7 @@ CInfoUI::CInfoUI(CGameManager* mgr) :
     CUI(UI_TYPE::INFO_UI),
     panelPos({ 750, 50 }),
     infoPos({ 850, 550 }),
-	curPlayerType(PLAYER_TYPE::PLAYER1),
+    curPlayerType(PLAYER_TYPE::PLAYER1),
 	gameMgr(mgr)
 {
 }
@@ -60,6 +60,8 @@ void CInfoUI::render()
     if (curMoney > 9)
         IMAGE->frameRender("number", getMemDC(), panelPos.x + 170, panelPos.y + 10, curMoney % 100 / 10, 0); // 10의 자리
     IMAGE->frameRender("number", getMemDC(), panelPos.x + 200, panelPos.y + 10, curMoney % 10, 0); // 1의 자리
+
+    
 }
 
 void CInfoUI::enter()
@@ -272,4 +274,12 @@ void CInfoUI::infoRender()
 
     IMAGE->frameRender("info_icon", getMemDC(), infoPos.x + 20, infoPos.y + 90, 2, 0);
     IMAGE->frameRender("number", getMemDC(), infoPos.x + 60, infoPos.y + 95, defense, 0);
+
+    if (gameMgr->isAttackMode() && gameMgr->isUnitOnCursor())
+    {
+        IMAGE->render("damageUI", getMemDC(), infoPos.x - 150 + 30, infoPos.y - 95);
+        if(gameMgr->predictDamaged() > 9)
+            IMAGE->frameRender("number", getMemDC(), infoPos.x - 150 + 43, infoPos.y - 60, gameMgr->predictDamaged() / 10, 0);
+        IMAGE->frameRender("number", getMemDC(), infoPos.x - 150 + 43 + 25, infoPos.y - 60, gameMgr->predictDamaged() % 10, 0);
+    }
 }

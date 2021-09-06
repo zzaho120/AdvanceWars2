@@ -148,6 +148,7 @@
     <ClInclude Include="animationManager.h" />
     <ClInclude Include="API_FrameWork.h" />
     <ClInclude Include="Astar.h" />
+    <ClInclude Include="AttackUnitCommand.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="BuildingFactory.h" />
     <ClInclude Include="BuildingManager.h" />
@@ -157,6 +158,7 @@
     <ClInclude Include="CommandHistory.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="Cursor.h" />
+    <ClInclude Include="DestroyUnitCommand.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="enum.h" />
@@ -208,6 +210,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Astar.cpp" />
+    <ClCompile Include="AttackUnitCommand.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="BuildingFactory.cpp" />
     <ClCompile Include="BuildingManager.cpp" />
@@ -215,6 +218,7 @@
     <ClCompile Include="CaptureBuildingCommand.cpp" />
     <ClCompile Include="CommandHistory.cpp" />
     <ClCompile Include="Cursor.cpp" />
+    <ClCompile Include="DestroyUnitCommand.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="FactoryUI.cpp" />

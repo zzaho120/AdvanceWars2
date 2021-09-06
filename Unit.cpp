@@ -8,7 +8,7 @@ CUnit::CUnit() :
 	movement(0), healthPoint(1), tileIdx(0),
 	matchType(UNIT_MATCH::NONE), isActive(false),
 	unitType(UNIT_TYPE::NONE), isSelected(false),
-	isCapturing(false), isMove(false)
+	isCapturing(false), isMove(false), isAttack(false)
 {
 	weaponSetting(unitType);
 }
@@ -16,10 +16,10 @@ CUnit::CUnit() :
 CUnit::CUnit(PLAYER_TYPE _player, UNIT_TYPE _type, Vec2 _pos, int idx, CGameManager* mgr) :
 	CObject(_pos, { TILE_SIZE_X, TILE_SIZE_Y }), tileIdx(idx),
 	unitType(_type), isActive(false), isArrive(false), healthPoint(10),
-	isSelected(false), isMove(false), moveSetting(false), isCapturing(false),
+	isSelected(false), isMove(false), moveSetting(false), isCapturing(false), isAttack(false),
 	gameMgr(mgr), playerType(_player)
 {
-	memset(tileRange, 0, sizeof(tileRange));
+	memset(moveRange, 0, sizeof(moveRange));
 	settingByType(unitType);
 	weaponSetting(unitType);
 }
@@ -103,7 +103,8 @@ void CUnit::release()
 
 void CUnit::update()
 {
-	floodFill();
+	moveFloodFill();
+	attackFloodFill();
 }
 
 void CUnit::render()
@@ -114,12 +115,27 @@ void CUnit::render()
 		{
 			for (int j = 0; j < TILE_NUM_X; j++)
 			{
-				if (!tileRange[i * TILE_NUM_X + j]) continue;
+				if (!moveRange[i * TILE_NUM_X + j]) continue;
 
 				int left = 35 + j % TILE_NUM_X * TILE_SIZE_X - TILE_SIZE_X / 2;
 				int top = 35 + i % TILE_NUM_Y * TILE_SIZE_Y - TILE_SIZE_Y / 2;
 				IMAGE->alphaRender("move_range", getMapDC(), left, top, 200);
 
+			}
+		}
+	}
+
+	if (isSelected && isAttack)
+	{
+		for (int i = 0; i < TILE_NUM_Y; i++)
+		{
+			for (int j = 0; j < TILE_NUM_X; j++)
+			{
+				if (!attackRange[i * TILE_NUM_X + j]) continue;
+
+				int left = 35 + j % TILE_NUM_X * TILE_SIZE_X - TILE_SIZE_X / 2;
+				int top = 35 + i % TILE_NUM_Y * TILE_SIZE_Y - TILE_SIZE_Y / 2;
+				IMAGE->alphaRender("attack_range", getMapDC(), left, top, 200);
 			}
 		}
 	}
@@ -255,9 +271,9 @@ void CUnit::render()
 	}
 
 	if (isCapturing)
-	{
-		IMAGE->frameRender("unit_status_mark", getMapDC(), pos.x + 39, pos.y + 39, 1, static_cast<int>(playerType));
-	}
+		IMAGE->frameRender("unit_status_mark", getMapDC(), pos.x, pos.y + 39, 1, static_cast<int>(playerType));
+	if (healthPoint < 9)
+		IMAGE->frameRender("unit_hp", getMapDC(), pos.x + 39, pos.y + 39, healthPoint - 1, 0);
 }
 
 void CUnit::move(Vec2 _pos, int idx)
@@ -314,23 +330,167 @@ void CUnit::wait()
 	moveSetting = false;
 }
 
-void CUnit::floodFill()
+void CUnit::moveFloodFill()
 {
 	int cnt = 0;
 	int checkFuel = fuel;
-	memset(tileRange, 0, sizeof(tileRange));
+	memset(moveRange, 0, sizeof(moveRange));
 	if (isSelected && !isMove)
 	{
 		if (tileIdx % 30 > 0 || tileIdx % 30 < 29 || tileIdx > 29 || tileIdx < 579)
 		{
-			tileRange[tileIdx] = true;
+			moveRange[tileIdx] = true;
 
 			if (tileIdx % 30 > 0) checkMoveRange(tileIdx - 1, cnt, checkFuel);
 			if (tileIdx % 30 < 29) checkMoveRange(tileIdx + 1, cnt, checkFuel);
 			if (tileIdx > 29) checkMoveRange(tileIdx + 30, cnt, checkFuel);
 			if (tileIdx < 579) checkMoveRange(tileIdx - 30, cnt, checkFuel);
 		}
+	}
+}
 
+void CUnit::attackFloodFill()
+{
+	int cnt = 0;
+	CWeapon* useWeapon = weaponArr[0]->getMaxRange() >= weaponArr[1]->getMaxRange() ? weaponArr[0] : weaponArr[1];
+
+	memset(attackRange, 0, sizeof(attackRange));
+	if (isSelected)
+	{
+		if (tileIdx % 30 > 0 || tileIdx % 30 < 29 || tileIdx > 29 || tileIdx < 579)
+		{
+			attackRange[tileIdx] = false;
+
+			if (tileIdx % 30 > 0) checkAttackRange(tileIdx - 1, cnt, useWeapon);
+			if (tileIdx % 30 < 29) checkAttackRange(tileIdx + 1, cnt, useWeapon);
+			if (tileIdx > 29) checkAttackRange(tileIdx - 30, cnt, useWeapon);
+			if (tileIdx < 579) checkAttackRange(tileIdx + 30, cnt, useWeapon);
+		}
+	}
+}
+
+float CUnit::calculateDamage(CUnit* unit, CTile* tile)
+{
+	float weaponDamage1 = weaponDamage(unit->getUnitType(), WEAPON_NUMBER::WEAPON1);
+	float weaponDamage2 = weaponDamage(unit->getUnitType(), WEAPON_NUMBER::WEAPON2);
+	float resultDamage = 0;
+
+	weaponDamage1 *= healthPoint;
+	weaponDamage1 -= (weaponDamage1 / 10.0) * tile->getDefense();
+	weaponDamage2 *= healthPoint;
+	weaponDamage2 -= (weaponDamage2 / 10.0) * tile->getDefense();
+
+	if (weaponDamage1 >= weaponDamage2) resultDamage = weaponDamage1;
+	else resultDamage = weaponDamage2;
+
+	return resultDamage;
+}
+
+float CUnit::weaponDamage(UNIT_TYPE type, WEAPON_NUMBER num)
+{
+	float damage = 0;
+
+	switch (weaponArr[static_cast<int>(num)]->getWeaponType())
+	{
+	case WEAPON_TYPE::M_GUN:
+		switch (type)
+		{
+		case UNIT_TYPE::INFANTRY:
+		case UNIT_TYPE::MECH:
+			damage = 5.5f;
+			break;
+		case UNIT_TYPE::TANK:
+		case UNIT_TYPE::ARTILLERY:
+		case UNIT_TYPE::APC:
+			damage = 0.5f;
+			break;
+		default:
+			break;
+		}
+		break;
+	case WEAPON_TYPE::BAZOOKA:
+		switch (type)
+		{
+		case UNIT_TYPE::INFANTRY:
+		case UNIT_TYPE::MECH:
+			damage = 0;
+			break;
+		case UNIT_TYPE::TANK:
+		case UNIT_TYPE::ARTILLERY:
+		case UNIT_TYPE::APC:
+			damage = 6.5f;
+			break;
+		default:
+			break;
+		}
+		break;
+	case WEAPON_TYPE::CANNON:
+		switch (type)
+		{
+		case UNIT_TYPE::INFANTRY:
+		case UNIT_TYPE::MECH:
+			damage = 8.0f;
+			break;
+		case UNIT_TYPE::TANK:
+		case UNIT_TYPE::ARTILLERY:
+		case UNIT_TYPE::APC:
+			damage = 5.5f;
+			break;
+		default:
+			break;
+		}
+		break;
+	default:
+		break;
+	}
+	return damage;
+}
+
+bool CUnit::correctAttack(int idx)
+{
+	return attackRange[idx];
+}
+
+bool CUnit::isEnemyInFocus()
+{
+	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
+	{
+		if (attackRange[idx])
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void CUnit::attack(CUnit* oppositUnit, CTile* oppositTile)
+{
+	float damage = 0;
+	damage = calculateDamage(oppositUnit, oppositTile);
+	bulletCount(oppositUnit);
+	oppositUnit->damaged(damage / 10.0);
+}
+
+void CUnit::damaged(float damage)
+{
+	healthPoint -= damage;
+	
+	if (healthPoint < 0) healthPoint = 0;
+}
+
+void CUnit::bulletCount(CUnit* oppositUnit)
+{
+	float weaponDamage1 = weaponDamage(oppositUnit->getUnitType(), WEAPON_NUMBER::WEAPON1);
+	float weaponDamage2 = weaponDamage(oppositUnit->getUnitType(), WEAPON_NUMBER::WEAPON2);
+
+	if (weaponDamage1 >= weaponDamage2)
+	{
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)]->setAmmo(weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)]->getAmmo() - 1);
+	}
+	else
+	{
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)]->setAmmo(weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)]->getAmmo() - 1);
 	}
 }
 
@@ -381,7 +541,7 @@ void CUnit::checkMoveRange(int idx, int cnt, int checkFuel)
 			{
 				cnt++;
 				checkFuel--;
-				tileRange[idx] = true;
+				moveRange[idx] = true;
 			}
 			break;
 		case UNIT_TYPE::TANK:
@@ -391,7 +551,7 @@ void CUnit::checkMoveRange(int idx, int cnt, int checkFuel)
 			{
 				cnt++;
 				checkFuel--;
-				tileRange[idx] = true;
+				moveRange[idx] = true;
 			}
 			else if (isOnlyInfry)
 			{
@@ -402,10 +562,73 @@ void CUnit::checkMoveRange(int idx, int cnt, int checkFuel)
 			break;
 		}
 		if (cnt >= movement || isSea) return;
-		if (tileIdx % 30 > 0) checkMoveRange(idx - 1, cnt, checkFuel);
-		if (tileIdx % 30 < 29) checkMoveRange(idx + 1, cnt, checkFuel);
-		if (tileIdx > 29) checkMoveRange(idx + 30, cnt, checkFuel);
-		if (tileIdx < 579) checkMoveRange(idx - 30, cnt, checkFuel);
+		if (idx % 30 > 0) checkMoveRange(idx - 1, cnt, checkFuel);
+		if (idx % 30 < 29) checkMoveRange(idx + 1, cnt, checkFuel);
+		if (idx > 29) checkMoveRange(idx + 30, cnt, checkFuel);
+		if (idx < 579) checkMoveRange(idx - 30, cnt, checkFuel);
+	}
+}
+
+void CUnit::checkAttackRange(int idx, int cnt, CWeapon* useWeapon)
+{
+	if (idx % 30 > 0 || idx % 30 < 29 || idx > 29 || idx < 579)
+	{
+		cnt++;
+
+		if (cnt > useWeapon->getMaxRange())
+			return;
+
+		if (cnt >= useWeapon->getMinRange())
+		{
+			for (int i = 0; i < gameMgr->getUnitMgr()->getVecUnit().size(); i++)
+			{
+				if (gameMgr->getUnitMgr()->getVecUnit()[i]->getTileIdx() == idx)
+				{
+					if(gameMgr->getUnitMgr()->getVecUnit()[i]->getPlayerType() != playerType)
+						attackRange[idx] = true;
+				}
+			}
+		}
+		else attackRange[idx] = false;
+
+		if (idx % 30 > 0) checkAttackRange(idx - 1, cnt, useWeapon);
+		if (idx % 30 < 29) checkAttackRange(idx + 1, cnt, useWeapon);
+		if (idx > 29) checkAttackRange(idx - 30, cnt, useWeapon);
+		if (idx < 579) checkAttackRange(idx + 30, cnt, useWeapon);
+	}
+}
+
+void CUnit::supply()
+{
+	switch (unitType)
+	{
+	case UNIT_TYPE::INFANTRY:		
+		fuel = 99;
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)]->reloadAmmo();
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)]->reloadAmmo();
+		break;
+	case UNIT_TYPE::MECH:
+		fuel = 70;
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)]->reloadAmmo();
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)]->reloadAmmo();
+		break;
+	case UNIT_TYPE::TANK:
+		fuel = 70;
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)]->reloadAmmo();
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)]->reloadAmmo();
+		break;
+	case UNIT_TYPE::ARTILLERY:
+		fuel = 50;
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)]->reloadAmmo();
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)]->reloadAmmo();
+		break;
+	case UNIT_TYPE::APC:
+		fuel = 70;
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)]->reloadAmmo();
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)]->reloadAmmo();
+		break;
+	default:
+		break;
 	}
 }
 
@@ -419,19 +642,19 @@ void CUnit::weaponSetting(UNIT_TYPE type)
 		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)] = new CWeapon();
 		break;
 	case UNIT_TYPE::INFANTRY:
-		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)] = new CWeapon(WEAPON_TYPE::M_GUN, 99, 1);
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)] = new CWeapon(WEAPON_TYPE::M_GUN, 99, 1, 1);
 		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)] = new CWeapon();
 		break;
 	case UNIT_TYPE::MECH:
-		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)] = new CWeapon(WEAPON_TYPE::BAZOOKA, 3, 1);
-		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)] = new CWeapon(WEAPON_TYPE::M_GUN, 99, 1);
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)] = new CWeapon(WEAPON_TYPE::BAZOOKA, 3, 1, 1);
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)] = new CWeapon(WEAPON_TYPE::M_GUN, 99, 1, 1);
 		break;
 	case UNIT_TYPE::TANK:
-		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)] = new CWeapon(WEAPON_TYPE::CANNON, 9, 1);
-		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)] = new CWeapon(WEAPON_TYPE::M_GUN, 99, 1);
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)] = new CWeapon(WEAPON_TYPE::CANNON, 9, 1, 1);
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)] = new CWeapon(WEAPON_TYPE::M_GUN, 99, 1, 1);
 		break;
 	case UNIT_TYPE::ARTILLERY:
-		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)] = new CWeapon(WEAPON_TYPE::CANNON, 9, 3);
+		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)] = new CWeapon(WEAPON_TYPE::CANNON, 9, 2, 3);
 		weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON2)] = new CWeapon();
 		break;
 	}
@@ -439,10 +662,7 @@ void CUnit::weaponSetting(UNIT_TYPE type)
 
 bool CUnit::correctMove(int idx)
 {
-	if (tileRange[idx])
-		return true;
-	else
-		return false;
+	return moveRange[idx];
 }
 
 void CUnit::capture()
@@ -475,7 +695,7 @@ void CUnit::settingByType(UNIT_TYPE type)
 		break;
 	case UNIT_TYPE::TANK:
 		img = IMAGE->findImage("tank_idle");
-		fuel = 3;
+		fuel = 70;
 		movement = 6;
 		matchType = UNIT_MATCH::VEHICLE;
 		break;

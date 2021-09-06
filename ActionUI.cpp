@@ -7,6 +7,7 @@ CActionUI::CActionUI() :
 	panelPos({ 50, 50 }),
 	cursorIdx(0),
 	isCapture(false),
+	isAttack(false),
 	gameMgr(nullptr)
 {
 }
@@ -16,6 +17,7 @@ CActionUI::CActionUI(CGameManager* mgr) :
 	panelPos({ 50, 50 }),
 	cursorIdx(0),
 	isCapture(false),
+	isAttack(false),
 	curPlayerType(PLAYER_TYPE::NONE)
 {
 	gameMgr = mgr;
@@ -39,6 +41,7 @@ void CActionUI::update()
 	if (isActive && curPlayerType != PLAYER_TYPE::NONE)
 	{
 		checkCapture();
+		checkAttack();
 		cursorMove();
 		chooseAction();
 	}
@@ -46,50 +49,49 @@ void CActionUI::update()
 
 void CActionUI::render()
 {
-	if (isActive && curPlayerType != PLAYER_TYPE::NONE)
+	if (isActive && !isAttack && curPlayerType != PLAYER_TYPE::NONE )
 	{
-		if (isActive)
+		switch (curPlayerType)
 		{
-			switch (curPlayerType)
-			{
-			case PLAYER_TYPE::PLAYER1:
-				IMAGE->render("action_panel_red", getMemDC(), panelPos.x, panelPos.y);
-				break;
-			case PLAYER_TYPE::PLAYER2:
-				IMAGE->render("action_panel_blue", getMemDC(), panelPos.x, panelPos.y);
-				break;
-			default:
-				break;
-			}
+		case PLAYER_TYPE::PLAYER1:
+			IMAGE->render("action_panel_red", getMemDC(), panelPos.x, panelPos.y);
+			break;
+		case PLAYER_TYPE::PLAYER2:
+			IMAGE->render("action_panel_blue", getMemDC(), panelPos.x, panelPos.y);
+			break;
+		}
 
-			int buttonX = panelPos.x + 20;
-			int buttonY = panelPos.y + 25;
-			IMAGE->render("action_fire", getMemDC(), buttonX, buttonY);
-			IMAGE->render("action_capture", getMemDC(), buttonX, buttonY + 75);
-			IMAGE->render("action_supply", getMemDC(), buttonX, buttonY + 75 * 2);
-			IMAGE->render("action_wait", getMemDC(), buttonX, buttonY + 75 * 3);
-			IMAGE->render("factory_arrow", getMemDC(), 30, panelPos.y + 45 + cursorIdx * 75);
+		int buttonX = panelPos.x + 20;
+		int buttonY = panelPos.y + 25;
+		IMAGE->render("action_fire", getMemDC(), buttonX, buttonY);
+		IMAGE->render("action_capture", getMemDC(), buttonX, buttonY + 75);
+		IMAGE->render("action_supply", getMemDC(), buttonX, buttonY + 75 * 2);
+		IMAGE->render("action_wait", getMemDC(), buttonX, buttonY + 75 * 3);
+		IMAGE->render("factory_arrow", getMemDC(), 30, panelPos.y + 45 + cursorIdx * 75);
 
-			switch (curUnitType)
-			{
-			case UNIT_TYPE::INFANTRY:
-			case UNIT_TYPE::MECH:
-				IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5 + 75 * 2);
-				if(!isCapture)
-					IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5 + 75);
-				break;
-			case UNIT_TYPE::TANK:
-			case UNIT_TYPE::ARTILLERY:
-				IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5 + 75);
-				IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5 + 75 * 2);
-				break;
-			case UNIT_TYPE::APC:
+		switch (curUnitType)
+		{
+		case UNIT_TYPE::INFANTRY:
+		case UNIT_TYPE::MECH:
+			if (!gameMgr->isAvailableAttack())
 				IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5);
+			IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5 + 75 * 2);
+			if(!isCapture)
 				IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5 + 75);
-				break;
-			default:
-				break;
-			}
+			break;
+		case UNIT_TYPE::TANK:
+		case UNIT_TYPE::ARTILLERY:
+			if (!gameMgr->isAvailableAttack())
+				IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5);
+			IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5 + 75);
+			IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5 + 75 * 2);
+			break;
+		case UNIT_TYPE::APC:
+			IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5);
+			IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5 + 75);
+			break;
+		default:
+			break;
 		}
 	}
 }
@@ -98,6 +100,7 @@ void CActionUI::enter()
 {
 	cursorIdx = 0;
 	isActive = true;
+	isAttack = false;
 	curPlayerType = gameMgr->getCurPlayer()->getPlayerType();
 
 	for (int idx = 0; idx < gameMgr->getUnitMgr()->getVecUnit().size(); idx++)
@@ -129,6 +132,13 @@ void CActionUI::chooseAction()
 		switch (cursorIdx)
 		{
 		case 0: // 공격
+			if (gameMgr->isAvailableAttack())
+			{
+				gameMgr->attackUnitSettingMsg();
+				gameMgr->closeUIMsg();
+				isAttack = true;
+				exit();
+			}
 			break;
 		case 1: // 점령
 			if (isCapture)
@@ -180,4 +190,8 @@ void CActionUI::checkCapture()
 			}
 		}
 	}
+}
+
+void CActionUI::checkAttack()
+{
 }

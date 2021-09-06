@@ -73,7 +73,7 @@ void CPlayer::playerInput()
 	}
 	else
 	{
-		moveUnit();
+		actionUnit();
 	}
 }
 
@@ -86,30 +86,36 @@ void CPlayer::selectUnit()
 	}
 }
 
-void CPlayer::moveUnit()
+void CPlayer::actionUnit()
 {
-	// 이동 타일 선택
-	if (!isMove && InputManager->isOnceKeyDown('Z'))
+	if (!isMove)
 	{
-		gameMgr->moveUnitSettingMsg();
-	}
+		if(!isAttack && InputManager->isOnceKeyDown('Z'))
+			gameMgr->moveUnitSettingMsg();
+		else if(isAttack && InputManager->isOnceKeyDown('Z'))
+			gameMgr->attackUnitMsg(); 
+		else if (isAttack && InputManager->isOnceKeyDown('X'))
+		{
+			isAttack = false;
+			gameMgr->viewActionMsg();
+		}
 
-	// 유닛 선택 취소
-	if (!isMove && InputManager->isOnceKeyDown('X'))
-	{
-		gameMgr->selectUnitCancelMsg();
+		if(!isAttack && InputManager->isOnceKeyDown('X'))
+			gameMgr->selectUnitCancelMsg();
 	}
-
-	// 이동 커맨드 실행
-	if (isMove && !gameMgr->isUnitArrive())
+	else if (isMove)
 	{
-		gameMgr->commandExcute();
-	}
-
-	// 이동 타일이 선택이 됐다면
-	if (isMove && gameMgr->isUnitArrive())
-	{
-		gameMgr->viewActionMsg();
+		if(!isAttack && !gameMgr->isUnitArrive())
+			gameMgr->commandExcute();
+		else if (!isAttack && gameMgr->isUnitArrive() && !isOnUI)
+			gameMgr->viewActionMsg();
+		else if (isAttack && InputManager->isOnceKeyDown('Z'))
+			gameMgr->attackUnitMsg();
+		else if (isAttack && InputManager->isOnceKeyDown('X'))
+		{
+			isAttack = false;
+			gameMgr->viewActionMsg();
+		}
 	}
 }
 

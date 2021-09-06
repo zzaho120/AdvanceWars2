@@ -626,4 +626,3 @@ CTile* CTile::operator=(const CTile* ref)
 
 	return this;
 }
-

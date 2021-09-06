@@ -85,9 +85,6 @@
     <Filter Include="Manager\timeMgr">
       <UniqueIdentifier>{bcdc498b-bfe9-49b8-bc01-aeabf3adcf9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Manager\unitMgr">
-      <UniqueIdentifier>{4f146de9-b125-4a04-98d3-11b6220a7adf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Class\Object\Tile">
       <UniqueIdentifier>{ee643981-644b-44fa-ad4f-5770380a956f}</UniqueIdentifier>
     </Filter>
@@ -150,6 +147,15 @@
     </Filter>
     <Filter Include="Pattern\Command\CaptureBuilding">
       <UniqueIdentifier>{455fb440-c83c-4576-b841-787ca93f5bd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\UnitMgr">
+      <UniqueIdentifier>{4f146de9-b125-4a04-98d3-11b6220a7adf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Command\AttackUnit">
+      <UniqueIdentifier>{4c1bb701-c038-4c9c-9682-54dcca1f0144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Command\DestroyUnit">
+      <UniqueIdentifier>{b5406861-79cb-4957-bfc1-4be67754ec2d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -259,7 +265,7 @@
       <Filter>Manager\timeMgr</Filter>
     </ClInclude>
     <ClInclude Include="UnitManager.h">
-      <Filter>Manager\unitMgr</Filter>
+      <Filter>Manager\UnitMgr</Filter>
     </ClInclude>
     <ClInclude Include="UnitFactory.h">
       <Filter>Pattern\Factory</Filter>
@@ -320,6 +326,12 @@
     </ClInclude>
     <ClInclude Include="CaptureBuildingCommand.h">
       <Filter>Pattern\Command\CaptureBuilding</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackUnitCommand.h">
+      <Filter>Pattern\Command\AttackUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="DestroyUnitCommand.h">
+      <Filter>Pattern\Command\DestroyUnit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -405,7 +417,7 @@
       <Filter>Manager\timeMgr</Filter>
     </ClCompile>
     <ClCompile Include="UnitManager.cpp">
-      <Filter>Manager\unitMgr</Filter>
+      <Filter>Manager\UnitMgr</Filter>
     </ClCompile>
     <ClCompile Include="UnitFactory.cpp">
       <Filter>Pattern\Factory</Filter>
@@ -457,6 +469,12 @@
     </ClCompile>
     <ClCompile Include="CaptureBuildingCommand.cpp">
       <Filter>Pattern\Command\CaptureBuilding</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackUnitCommand.cpp">
+      <Filter>Pattern\Command\AttackUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="DestroyUnitCommand.cpp">
+      <Filter>Pattern\Command\DestroyUnit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -21,7 +21,6 @@ private:
 	CUIManager* uiMgr;
 
 	CCommand* command;
-
 public:
 	CGameManager();
 	~CGameManager();
@@ -59,6 +58,17 @@ public:
 	// 빌딩 점령 관련 메시지 및 함수
 	void captureBuildingMsg();
 
+	// 공격 관련 메시지 및 함수
+	void attackUnitSettingMsg();
+	void attackUnitMsg();
+	bool isAvailableAttack();
+	bool isAttackMode();
+	bool isUnitOnCursor();
+	int predictDamaged();
+
+	// 유닛 삭제 관련 메시지 및 함수
+	void destroyUnitMsg(CUnit* unit);
+
 	void incomeMoneyMsg();
 
 	void commandExcute();
@@ -68,4 +78,5 @@ public:
 	CCursor* getCursor() { return cursor; }
 	CUnitManager* getUnitMgr() { return unitMgr; }
 	CBuildingManager* getBuildingMgr() { return buildingMgr; }
+
 };
