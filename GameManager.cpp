@@ -19,16 +19,59 @@ CGameManager::CGameManager() :
 	unitMgr(new CUnitManager),
 	buildingMgr(new CBuildingManager),
 	uiMgr(new CUIManager),
+	gameData(new CGameData),
 	curPlayer(nullptr),
-	command(nullptr)
+	command(nullptr),
+	isGameover(false)
 {
 	playerArr[0] = new CPlayer(PLAYER_TYPE::PLAYER1);
 	playerArr[1] = new CPlayer(PLAYER_TYPE::PLAYER2);
 	ASTAR->init(map);
+	isKO[0] = false;
+	isKO[1] = false;
+}
+
+CGameManager::CGameManager(const char* fileName) :
+	cam(new CCamera),
+	map(new CMap(fileName)),
+	cursor(new CCursor(map->getTile()[158]->getPos(), 158)),
+	unitMgr(new CUnitManager),
+	buildingMgr(new CBuildingManager),
+	uiMgr(new CUIManager),
+	gameData(new CGameData),
+	curPlayer(nullptr),
+	command(nullptr),
+	isGameover(false)
+{
+	playerArr[0] = new CPlayer(PLAYER_TYPE::PLAYER1);
+	playerArr[1] = new CPlayer(PLAYER_TYPE::PLAYER2);
+	ASTAR->init(map);
+	isKO[0] = false;
+	isKO[1] = false;
 }
 
 CGameManager::~CGameManager()
 {
+	map->release();
+	SAFE_DELETE(map);
+	cam->release();
+	SAFE_DELETE(cam);
+	cursor->release();
+	SAFE_DELETE(cursor);
+	for (int idx = 0; idx < 2; idx++)
+	{
+		playerArr[idx]->release();
+		SAFE_DELETE(playerArr[idx]);
+	}
+	unitMgr->release();
+	SAFE_DELETE(unitMgr);
+	buildingMgr->release();
+	SAFE_DELETE(buildingMgr);
+	uiMgr->release();
+	SAFE_DELETE(uiMgr);
+	SAFE_DELETE(gameData);
+	command = nullptr;
+	SAFE_DELETE(command);
 }
 
 HRESULT CGameManager::init()
@@ -55,23 +98,48 @@ HRESULT CGameManager::init()
 
 void CGameManager::release()
 {
+	map->release();
+	SAFE_DELETE(map);
+	cam->release();
+	SAFE_DELETE(cam);
+	cursor->release();
+	SAFE_DELETE(cursor);
+	for (int idx = 0; idx < 2; idx++)
+	{
+		playerArr[idx]->release();
+		SAFE_DELETE(playerArr[idx]);
+	}
+	unitMgr->release();
+	SAFE_DELETE(unitMgr);
+	buildingMgr->release();
+	SAFE_DELETE(buildingMgr);
+	uiMgr->release();
+	SAFE_DELETE(uiMgr);
+	SAFE_DELETE(gameData);
+	command = nullptr;
+	SAFE_DELETE(command);
 }
 
 void CGameManager::update()
 {
-	cam->update();
-	map->update();
-	unitMgr->update();
-	buildingMgr->update();
-	uiMgr->update();
-
-	EFFECT->update();
-	if (!curPlayer->getOnUI())
+	if (!isGameover)
 	{
-		curPlayer->update();
-		cursor->update();
-		// 커서 이동에 따른 카메라 이동
-		cam->setTargetVec2(cursor->getPos());
+		cam->update();
+		map->update();
+		unitMgr->update();
+		buildingMgr->update();
+		uiMgr->update();
+
+		EFFECT->update();
+		if (!curPlayer->getOnUI())
+		{
+			curPlayer->update();
+			cursor->update();
+			// 커서 이동에 따른 카메라 이동
+			cam->setTargetVec2(cursor->getPos());
+		}
+
+		isGameEnd();
 	}
 }
 
@@ -139,6 +207,20 @@ void CGameManager::completeMoveUnitMsg()
 	}
 }
 
+// 유닛이 도착했는지 판별하는 함수
+bool CGameManager::isUnitArrive()
+{
+	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+	{
+		if (unitMgr->getVecUnit()[idx]->getSelected())
+		{
+			if (!unitMgr->getVecUnit()[idx]->getArrive())
+				return false;
+		}
+	}
+	return true;
+}
+
 // 유닛 생성 매세지
 void CGameManager::generateUnitMsg(UNIT_TYPE type)
 {
@@ -171,6 +253,8 @@ void CGameManager::generateUnitMsg(UNIT_TYPE type)
 		}
 
 		curPlayer->setMoney(curPlayer->getMoney() - cost);
+		gameData->plusGenerate(curPlayer->getPlayerType());
+		gameData->plusSpending(curPlayer->getPlayerType(), cost);
 	}
 }
 
@@ -186,6 +270,7 @@ void CGameManager::selectUnitMsg()
 			if (unitMgr->getVecUnit()[idx]->getActive())
 			{
 				unitMgr->getUnit(idx)->setSelected(true);
+				unitMgr->getUnit(idx)->moveFloodFill();
 				curPlayer->setUnitSelect(true);
 				break;
 			}
@@ -279,6 +364,7 @@ void CGameManager::changePlayerMsg()
 		break;
 	}
 	curPlayer->enter();
+	gameData->plusTurn();
 	for (int idx = 0; idx < uiMgr->getVecUI().size(); idx++)
 	{
 		bool isInfoUI = uiMgr->getVecUI()[idx]->getUIType() == UI_TYPE::INFO_UI;
@@ -287,6 +373,7 @@ void CGameManager::changePlayerMsg()
 	}
 }
 
+// 공장 생산 UI 출력 메시지
 void CGameManager::viewFactoryMsg()
 {
 	for (int idx = 0; idx < buildingMgr->getVecBuilding().size(); idx++)
@@ -309,6 +396,7 @@ void CGameManager::viewFactoryMsg()
 	}
 }
 
+// 옵션 UI 출력 메시지
 void CGameManager::viewOptionMsg()
 {
 	for (int idx = 0; idx < uiMgr->getVecUI().size(); idx++)
@@ -323,6 +411,7 @@ void CGameManager::viewOptionMsg()
 	}
 }
 
+// 액션 UI 출력 메시지
 void CGameManager::viewActionMsg()
 {
 	CUnit* curUnit = nullptr;
@@ -347,11 +436,13 @@ void CGameManager::viewActionMsg()
 	}
 }
 
+// UI 종료 메시지
 void CGameManager::closeUIMsg()
 {
 	curPlayer->setOnUI(false);
 }
 
+// 빌딩 점령 메시지
 void CGameManager::captureBuildingMsg()
 {
 	CUnit* curUnit = nullptr;
@@ -378,6 +469,7 @@ void CGameManager::captureBuildingMsg()
 	commandExcute();
 }
 
+// 유닛 공격을 위한 데이터 세팅 메시지
 void CGameManager::attackUnitSettingMsg()
 {
 	CUnit* curUnit = nullptr;
@@ -392,6 +484,7 @@ void CGameManager::attackUnitSettingMsg()
 	curPlayer->setAttack(true);
 }
 
+// 유닛 공격 메시지
 void CGameManager::attackUnitMsg()
 {
 	CTile* curTile = nullptr;
@@ -430,6 +523,7 @@ void CGameManager::attackUnitMsg()
 	curPlayer->inputInit();
 }
 
+// 선택한 유닛이 공격 가능한지 판별하는 함수
 bool CGameManager::isAvailableAttack()
 {
 	CUnit* curUnit = nullptr;
@@ -448,11 +542,13 @@ bool CGameManager::isAvailableAttack()
 	return result;
 }
 
+// 선택한 유닛이 공격모드인지 판별하는 함수
 bool CGameManager::isAttackMode()
 {
 	return curPlayer->getAttack();
 }
 
+// 유닛이 커서 위에 있는지 판별하는 함수
 bool CGameManager::isUnitOnCursor()
 {
 	bool isCursorOnUnit = false;
@@ -470,6 +566,7 @@ bool CGameManager::isUnitOnCursor()
 	return isCursorOnUnit;
 }
 
+// 데미지를 예측하여 계산해주는 함수
 int CGameManager::predictDamaged()
 {
 	CUnit* curUnit = nullptr;
@@ -498,14 +595,17 @@ int CGameManager::predictDamaged()
 	return damage;
 }
 
+// 유닛 파괴 메시지
 void CGameManager::destroyUnitMsg(CUnit* unit)
 {
 	int tileIdx = unit->getTileIdx();
 	map->getTile()[tileIdx]->setUnitType(UNIT_TYPE::NONE);
 	command = new CDestroyUnitCommand(unit, unitMgr);
 	command->excute();
+	gameData->plusDeath(unit->getPlayerType());
 }
 
+// 선택한 유닛이 보급 기능을 수행할 수 있는지 판별하는 함수
 bool CGameManager::isAvailableSupply()
 {
 	CUnit* curUnit = nullptr;
@@ -530,6 +630,7 @@ bool CGameManager::isAvailableSupply()
 	return result;
 }
 
+// 유닛 보급 메시지
 void CGameManager::supplyUnitMsg()
 {
 	command = new CSupplyUnitCommand(unitMgr);
@@ -537,7 +638,8 @@ void CGameManager::supplyUnitMsg()
 	commandExcute();
 }
 
-void CGameManager::viewUnitRange()
+// 유닛의 사정거리 출력 메시지
+void CGameManager::viewUnitRangeMsg()
 {
 	CUnit* curUnit = nullptr;
 	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
@@ -552,7 +654,8 @@ void CGameManager::viewUnitRange()
 	curUnit->rangeFloodFill();
 }
 
-void CGameManager::cancelUnitRange()
+// 유닛의 사정거리 출력 취소 메시지
+void CGameManager::cancelUnitRangeMsg()
 {
 	CUnit* curUnit = nullptr;
 	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
@@ -566,6 +669,7 @@ void CGameManager::cancelUnitRange()
 	}
 }
 
+// 턴 시작 시 플레이어 돈 증가 메시지
 void CGameManager::incomeMoneyMsg()
 {
 	int income = 0;
@@ -576,12 +680,14 @@ void CGameManager::incomeMoneyMsg()
 			income += 1000;
 	}
 
+	gameData->plusIncome(curPlayer->getPlayerType(), income);
 	curPlayer->setMoney(curPlayer->getMoney() + income);
 
 	if (curPlayer->getMoney() > MONEY_MAX)
 		curPlayer->setMoney(MONEY_MAX);
 }
 
+// 유닛 회복 메시지
 void CGameManager::unitRepairMsg()
 {
 	command = new CRepairUnitCommand(curPlayer->getPlayerType(), unitMgr, buildingMgr);
@@ -589,20 +695,70 @@ void CGameManager::unitRepairMsg()
 	commandExcute();
 }
 
+// 게임 오버 체크
+void CGameManager::isGameEnd()
+{
+	// HQ 건물이 없는 경우
+	bool isPlayer1HQ = false;
+	bool isPlayer2HQ = false;
+	bool isPlayer1Unit = false;
+	bool isPlayer2Unit = false;
+
+	for (int idx = 0; idx < buildingMgr->getVecBuilding().size(); idx++)
+	{
+		CBuilding* curbuilding = buildingMgr->getVecBuilding()[idx];
+		switch (curbuilding->getPlayerType())
+		{
+		case PLAYER_TYPE::PLAYER1:
+			if(curbuilding->getIsHQ())
+				isPlayer1HQ = true;
+			break;
+		case PLAYER_TYPE::PLAYER2:
+			if (curbuilding->getIsHQ())
+				isPlayer2HQ = true;
+			break;
+		}
+	}
+
+	
+	if (gameData->getTurn() > 1)
+	{
+		for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+		{
+			CUnit* curUnit = unitMgr->getVecUnit()[idx];
+			switch (curUnit->getPlayerType())
+			{
+			case PLAYER_TYPE::PLAYER1:
+				isPlayer1Unit = true;
+				break;
+			case PLAYER_TYPE::PLAYER2:
+				isPlayer2Unit = true;
+				break;
+			}
+		}
+	}
+	else if ((unitMgr->getVecUnit().size() == 0) || (gameData->getTurn() <= 1))
+	{
+		isPlayer1Unit = true;
+		isPlayer2Unit = true;
+	}
+
+	if (!isPlayer1HQ || !isPlayer1Unit)
+	{
+		isGameover = true;
+		isKO[0] = true;
+		return;
+	}
+	else if (!isPlayer2HQ || !isPlayer2Unit)
+	{
+		isGameover = true;
+		isKO[1] = true;
+		return;
+	}
+}
+
+// 커맨드 실행 함수
 void CGameManager::commandExcute()
 {
 	command->excute();
-}
-
-bool CGameManager::isUnitArrive()
-{
-	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
-	{
-		if (unitMgr->getVecUnit()[idx]->getSelected())
-		{
-			if (!unitMgr->getVecUnit()[idx]->getArrive())
-				return false;
-		}
-	}
-	return true;
 }

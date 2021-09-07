@@ -7,7 +7,6 @@ class mainGame : public gameNode
 {
 private:
 	CMapTool* maptool;
-	CGameManager* gameMgr;
 public:
 	mainGame();
 	~mainGame();

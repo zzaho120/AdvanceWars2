@@ -103,7 +103,6 @@ void CUnit::release()
 
 void CUnit::update()
 {
-	moveFloodFill();
 	if (isSelected)
 		attackFloodFill();
 }

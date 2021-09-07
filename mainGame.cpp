@@ -1,5 +1,7 @@
 #include"framework.h"
 #include "mainGame.h"
+#include"GameScene.h"
+#include"MapToolScene.h"
 mainGame::mainGame()
 {
 }
@@ -9,13 +11,9 @@ mainGame::~mainGame()
 HRESULT mainGame::init()
 {
 	gameNode::init(true);
-	//maptool = new CMapTool;
-	//maptool->init();
-	//SUBWIN->init();
-	//SUBWIN->SetMapLink(maptool);
-	//SUBWIN->SetScene(new CMapToolSub);
-	gameMgr = new CGameManager;
-	gameMgr->init();
+	SCENE->addScene("gameScene", new CGameScene);
+	SCENE->addScene("mapToolScene", new CMapToolScene);
+	SCENE->changeScene("mapToolScene");
 	return S_OK;
 }
 
@@ -27,9 +25,11 @@ void mainGame::release()
 void mainGame::update()
 {
 	gameNode::update();
-	//maptool->update();
-	//SUBWIN->update();
-	gameMgr->update();
+	SCENE->update();
+	if(InputManager->isOnceKeyDown(VK_F3))
+		SCENE->changeScene("mapToolScene");
+	if(InputManager->isOnceKeyDown(VK_F4))
+		SCENE->changeScene("gameScene");
 }
 
 void mainGame::render(/*HDC hdc*/)
@@ -37,9 +37,7 @@ void mainGame::render(/*HDC hdc*/)
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
 	//==============================================
 	gameNode::render();
-	//maptool->render();
-	//SUBWIN->render();
-	gameMgr->render();
+	SCENE->render();
 	TIME->render(getMemDC());
 	//==============================================
 	//백버퍼의 내용을 HDC그린다.(건드리지 말것.)

@@ -249,3 +249,8 @@ void CSubWindow::FileListSet()
 	}
 	FindClose(hFind);
 }
+
+void CSubWindow::subWindowClose()
+{
+	DestroyWindow(hWnd);
+}

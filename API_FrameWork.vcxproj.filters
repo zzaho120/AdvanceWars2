@@ -163,6 +163,21 @@
     <Filter Include="Pattern\Command\SupplyUnit">
       <UniqueIdentifier>{f11afcf4-5ef3-4757-b3ea-893a8021da81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Class\GameData">
+      <UniqueIdentifier>{258fa1a6-1d0f-488f-9fac-7ea45bafe8e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{2bd20767-e32a-4ae3-a469-2c8cfb3187a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\GameScene">
+      <UniqueIdentifier>{73c7e451-be6e-4b28-9358-1284110d2fc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\MapToolScene">
+      <UniqueIdentifier>{12328b1b-2bd9-4184-9668-b58919663941}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\MainMenuScene">
+      <UniqueIdentifier>{248cdef1-49c0-4395-9b61-1a8f1f6733e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -345,6 +360,15 @@
     <ClInclude Include="SupplyUnitCommand.h">
       <Filter>Pattern\Command\SupplyUnit</Filter>
     </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>Class\GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Scene\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MapToolScene.h">
+      <Filter>Scene\MapToolScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -493,6 +517,15 @@
     </ClCompile>
     <ClCompile Include="SupplyUnitCommand.cpp">
       <Filter>Pattern\Command\SupplyUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="GameData.cpp">
+      <Filter>Class\GameData</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Scene\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MapToolScene.cpp">
+      <Filter>Scene\MapToolScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

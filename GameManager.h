@@ -5,6 +5,7 @@
 #include "Cursor.h"
 #include "Player.h"
 #include "UIManager.h"
+#include "GameData.h"
 
 class CGameManager : public gameNode
 {
@@ -20,9 +21,15 @@ private:
 	CBuildingManager* buildingMgr;
 	CUIManager* uiMgr;
 
+	CGameData* gameData;
+
 	CCommand* command;
+
+	bool isGameover;
+	bool isKO[2];
 public:
 	CGameManager();
+	CGameManager(const char* fileName);
 	~CGameManager();
 
 	HRESULT init();
@@ -74,12 +81,15 @@ public:
 	void supplyUnitMsg();
 
 	// 유닛 사정거리 출력 관련 메시지 및 함수
-	void viewUnitRange();
-	void cancelUnitRange();
+	void viewUnitRangeMsg();
+	void cancelUnitRangeMsg();
 
 	// 턴 시작 시 수행 관련 메시지 및 함수
 	void incomeMoneyMsg();
 	void unitRepairMsg();
+
+	// 게임 종료 분기점 체크 함수
+	void isGameEnd();
 
 	// 커맨드 실행
 	void commandExcute();
@@ -89,5 +99,5 @@ public:
 	CCursor* getCursor() { return cursor; }
 	CUnitManager* getUnitMgr() { return unitMgr; }
 	CBuildingManager* getBuildingMgr() { return buildingMgr; }
-
+	CGameData* getGameData() { return gameData; }
 };
