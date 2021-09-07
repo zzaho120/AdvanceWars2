@@ -9,6 +9,8 @@
 #include "CaptureBuildingCommand.h"
 #include "AttackUnitCommand.h"
 #include "DestroyUnitCommand.h"
+#include "RepairUnitCommand.h"
+#include "SupplyUnitCommand.h"
 
 CGameManager::CGameManager() :
 	cam(new CCamera),
@@ -63,6 +65,7 @@ void CGameManager::update()
 	buildingMgr->update();
 	uiMgr->update();
 
+	EFFECT->update();
 	if (!curPlayer->getOnUI())
 	{
 		curPlayer->update();
@@ -78,7 +81,7 @@ void CGameManager::render()
 	cursor->render();
 	unitMgr->render();
 	buildingMgr->render();
-
+	EFFECT->render();
 	this->getMapBuffer()->render(getMemDC(), 0, 0, cam->getCam1().x, cam->getCam1().y, cam->getCamSize().x, cam->getCamSize().y);
 	
 	// 카메라에 영향을 받지 않는 유아이 렌더
@@ -130,8 +133,7 @@ void CGameManager::completeMoveUnitMsg()
 		{
 			map->getTile()[unitMgr->getUnit(idx)->getTileIdx()]->setUnitType(unitMgr->getUnit(idx)->getUnitType());
 			unitMgr->getUnit(idx)->wait();
-			curPlayer->setUnitSelect(false);
-			curPlayer->setMove(false);
+			curPlayer->inputInit();
 			break;
 		}
 	}
@@ -406,16 +408,17 @@ void CGameManager::attackUnitMsg()
 			break;
 		}
 	}
+
 	if (curUnit->correctAttack(cursor->getCursorIdx()))
 	{
 		for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
 		{
-			if(unitMgr->getVecUnit()[idx]->getTileIdx() == cursor->getCursorIdx())
+			if (unitMgr->getVecUnit()[idx]->getTileIdx() == cursor->getCursorIdx())
 				oppositUnit = unitMgr->getVecUnit()[idx];
-
 		}
 		oppositTile = map->getTile()[oppositUnit->getTileIdx()];
 	}
+	else return;
 
 	command = new CAttackUnitCommand(curUnit, oppositUnit, curTile, oppositTile);
 	HISTORY->add(command);
@@ -424,13 +427,13 @@ void CGameManager::attackUnitMsg()
 	completeMoveUnitMsg();
 
 	curUnit->setAttack(false);
-	curPlayer->setAttack(false);
-	curPlayer->setMove(false);
+	curPlayer->inputInit();
 }
 
 bool CGameManager::isAvailableAttack()
 {
 	CUnit* curUnit = nullptr;
+	bool result = false;
 	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
 	{
 		if (unitMgr->getVecUnit()[idx]->getSelected())
@@ -439,8 +442,10 @@ bool CGameManager::isAvailableAttack()
 			break;
 		}
 	}
-
-	return curUnit->isEnemyInFocus();
+	if (curUnit->getUnitType() == UNIT_TYPE::ARTILLERY && curPlayer->getMove())
+		result = false;
+	else result = curUnit->isEnemyInFocus();
+	return result;
 }
 
 bool CGameManager::isAttackMode()
@@ -501,6 +506,66 @@ void CGameManager::destroyUnitMsg(CUnit* unit)
 	command->excute();
 }
 
+bool CGameManager::isAvailableSupply()
+{
+	CUnit* curUnit = nullptr;
+	int tileIdx = 0;
+	bool result = false;
+	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+	{
+		if (unitMgr->getVecUnit()[idx]->getSelected())
+		{
+			curUnit = unitMgr->getUnit(idx);
+			tileIdx = curUnit->getTileIdx();
+			break;
+		}
+	}
+
+	if (curUnit->getUnitType() != UNIT_TYPE::APC) return false;
+	if (tileIdx % 30 > 0) result |= (map->getTile()[tileIdx - 1]->getUnitType() != UNIT_TYPE::NONE);
+	if (tileIdx % 30 < 29) result |= (map->getTile()[tileIdx + 1]->getUnitType() != UNIT_TYPE::NONE);
+	if (tileIdx > 29) result |= (map->getTile()[tileIdx - 30]->getUnitType() != UNIT_TYPE::NONE);
+	if (tileIdx < 579) result |= (map->getTile()[tileIdx + 30]->getUnitType() != UNIT_TYPE::NONE);
+	
+	return result;
+}
+
+void CGameManager::supplyUnitMsg()
+{
+	command = new CSupplyUnitCommand(unitMgr);
+	HISTORY->add(command);
+	commandExcute();
+}
+
+void CGameManager::viewUnitRange()
+{
+	CUnit* curUnit = nullptr;
+	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+	{
+		if (unitMgr->getVecUnit()[idx]->getTileIdx() == cursor->getCursorIdx())
+		{
+			curUnit = unitMgr->getUnit(idx);
+			break;
+		}
+	}
+	curUnit->setRange(true);
+	curUnit->rangeFloodFill();
+}
+
+void CGameManager::cancelUnitRange()
+{
+	CUnit* curUnit = nullptr;
+	for (int idx = 0; idx < unitMgr->getVecUnit().size(); idx++)
+	{
+		if (unitMgr->getVecUnit()[idx]->getRange() == true)
+		{
+			curUnit = unitMgr->getUnit(idx);
+			curUnit->setRange(false);
+			break;
+		}
+	}
+}
+
 void CGameManager::incomeMoneyMsg()
 {
 	int income = 0;
@@ -515,6 +580,13 @@ void CGameManager::incomeMoneyMsg()
 
 	if (curPlayer->getMoney() > MONEY_MAX)
 		curPlayer->setMoney(MONEY_MAX);
+}
+
+void CGameManager::unitRepairMsg()
+{
+	command = new CRepairUnitCommand(curPlayer->getPlayerType(), unitMgr, buildingMgr);
+	HISTORY->add(command);
+	commandExcute();
 }
 
 void CGameManager::commandExcute()

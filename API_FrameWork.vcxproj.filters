@@ -157,6 +157,12 @@
     <Filter Include="Pattern\Command\DestroyUnit">
       <UniqueIdentifier>{b5406861-79cb-4957-bfc1-4be67754ec2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pattern\Command\RepairUnit">
+      <UniqueIdentifier>{264d27a7-bc3e-41a5-9c65-8da51b815196}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Command\SupplyUnit">
+      <UniqueIdentifier>{f11afcf4-5ef3-4757-b3ea-893a8021da81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -333,6 +339,12 @@
     <ClInclude Include="DestroyUnitCommand.h">
       <Filter>Pattern\Command\DestroyUnit</Filter>
     </ClInclude>
+    <ClInclude Include="RepairUnitCommand.h">
+      <Filter>Pattern\Command\RepairUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="SupplyUnitCommand.h">
+      <Filter>Pattern\Command\SupplyUnit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -475,6 +487,12 @@
     </ClCompile>
     <ClCompile Include="DestroyUnitCommand.cpp">
       <Filter>Pattern\Command\DestroyUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="RepairUnitCommand.cpp">
+      <Filter>Pattern\Command\RepairUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="SupplyUnitCommand.cpp">
+      <Filter>Pattern\Command\SupplyUnit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

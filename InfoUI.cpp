@@ -84,9 +84,11 @@ void CInfoUI::infoRender()
     Vec2 tileRenderFrame = 0;
     int tileNameRenderFrame = 0;
     Vec2 unitRenderFrame = 0;
+    CUnit* curUnit = nullptr;
     int unitnameRenderFrame = 0;
-    int unitHP = 0;
+    float unitHP = 0;
     int fuel = 0;
+    int ammo = 0;
     int capturePoint = 0;
     int defense = gameMgr->getMap()->getTile()[cursorIdx]->getDefense();
 
@@ -96,10 +98,12 @@ void CInfoUI::infoRender()
         {
             if (gameMgr->getUnitMgr()->getVecUnit()[idx]->getTileIdx() == cursorIdx)
             {
-                unitHP = gameMgr->getUnitMgr()->getVecUnit()[idx]->getHP();
-                fuel = gameMgr->getUnitMgr()->getVecUnit()[idx]->getFuel();
-                unitType = gameMgr->getUnitMgr()->getVecUnit()[idx]->getUnitType();
-                playerType = gameMgr->getUnitMgr()->getVecUnit()[idx]->getPlayerType();
+                curUnit = gameMgr->getUnitMgr()->getVecUnit()[idx];
+                unitHP = curUnit->getHP();
+                fuel = curUnit->getFuel();
+                ammo = curUnit->getAmmo();
+                unitType = curUnit->getUnitType();
+                playerType = curUnit->getPlayerType();
                 break;
             }
         }
@@ -152,13 +156,17 @@ void CInfoUI::infoRender()
         IMAGE->frameRender("info_icon", getMemDC(), infoPos.x - 150 + 20, infoPos.y + 90, 0, 0);
         if (unitHP > 9)
             IMAGE->frameRender("number", getMemDC(), infoPos.x - 150 + 60, infoPos.y + 95, 1, 0);
-        IMAGE->frameRender("number", getMemDC(), infoPos.x - 150 + 88, infoPos.y + 95, unitHP % 10, 0);
-
+        IMAGE->frameRender("number", getMemDC(), infoPos.x - 150 + 88, infoPos.y + 95, static_cast<int>(floor(unitHP)) % 10, 0);
 
         IMAGE->frameRender("info_icon", getMemDC(), infoPos.x - 150 + 20, infoPos.y + 130, 1, 0);
         if (fuel > 9)
             IMAGE->frameRender("number", getMemDC(), infoPos.x - 150 + 60, infoPos.y + 135, fuel / 10, 0);
         IMAGE->frameRender("number", getMemDC(), infoPos.x - 150 + 88, infoPos.y + 135, fuel % 10, 0);
+
+        IMAGE->frameRender("info_icon", getMemDC(), infoPos.x - 150 + 20, infoPos.y + 170, 4, 0);
+        if (ammo > 9)
+            IMAGE->frameRender("number", getMemDC(), infoPos.x - 150 + 60, infoPos.y + 175, ammo / 10, 0);
+        IMAGE->frameRender("number", getMemDC(), infoPos.x - 150 + 88, infoPos.y + 175, ammo % 10, 0);
     }
     else
     {
@@ -282,4 +290,6 @@ void CInfoUI::infoRender()
             IMAGE->frameRender("number", getMemDC(), infoPos.x - 150 + 43, infoPos.y - 60, gameMgr->predictDamaged() / 10, 0);
         IMAGE->frameRender("number", getMemDC(), infoPos.x - 150 + 43 + 25, infoPos.y - 60, gameMgr->predictDamaged() % 10, 0);
     }
+
+
 }

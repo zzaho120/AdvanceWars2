@@ -12,6 +12,7 @@ private:
 	bool isMove;
 	bool isAttack;
 
+
 	int money;
 	PLAYER_TYPE playerType;
 
@@ -36,9 +37,12 @@ public:
 	void enter();
 	void exit();
 
+	void inputInit();
+
 	PLAYER_TYPE getPlayerType() { return playerType; }
 	bool getOnUI() { return isOnUI; }
 	bool getAttack() { return isAttack; }
+	bool getMove() { return isMove; }
 	int getMoney() { return money; }
 
 	void setUnitSelect(bool select) { isUnitSelect = select; }

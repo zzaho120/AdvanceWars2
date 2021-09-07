@@ -80,3 +80,4 @@ void CUnitManager::setAllActive(PLAYER_TYPE player, bool active)
             (*iterUnit)->setActive(active);
     }
 }
+

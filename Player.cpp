@@ -80,9 +80,19 @@ void CPlayer::playerInput()
 void CPlayer::selectUnit()
 {
 	// 유닛 선택
-	if (!isUnitSelect && InputManager->isOnceKeyDown('Z'))
+	if (InputManager->isOnceKeyDown('Z'))
 	{
 		gameMgr->selectUnitMsg();
+	}
+	// 유닛 사정거리 범위 보기
+	if (InputManager->isStayKeyDown('X'))
+	{
+		gameMgr->viewUnitRange();
+	}
+	// 유닛 사정거리 범위 보기 취소
+	if (InputManager->isOnceKeyUp('X'))
+	{
+		gameMgr->cancelUnitRange();
 	}
 }
 
@@ -90,18 +100,33 @@ void CPlayer::actionUnit()
 {
 	if (!isMove)
 	{
-		if(!isAttack && InputManager->isOnceKeyDown('Z'))
-			gameMgr->moveUnitSettingMsg();
-		else if(isAttack && InputManager->isOnceKeyDown('Z'))
-			gameMgr->attackUnitMsg(); 
-		else if (isAttack && InputManager->isOnceKeyDown('X'))
+		if (isAttack)
 		{
-			isAttack = false;
-			gameMgr->viewActionMsg();
+			// 유닛 공격 수행
+			if (InputManager->isOnceKeyDown('Z'))
+				gameMgr->attackUnitMsg();
+			// 유닛 공격 취소
+			else if (InputManager->isOnceKeyDown('X'))
+			{
+				isAttack = false;
+				gameMgr->viewActionMsg();
+			}
 		}
-
-		if(!isAttack && InputManager->isOnceKeyDown('X'))
-			gameMgr->selectUnitCancelMsg();
+		else if (!isAttack)
+		{
+			// 유닛 이동 타일 선택
+			if (InputManager->isOnceKeyDown('Z'))
+			{
+				gameMgr->moveUnitSettingMsg();
+			}
+			// 유닛 선택 취소
+			else if (isUnitSelect && InputManager->isOnceKeyDown('X'))
+			{
+				isUnitSelect = false;
+				gameMgr->selectUnitCancelMsg();
+			}
+		}
+		
 	}
 	else if (isMove)
 	{
@@ -138,6 +163,7 @@ void CPlayer::enter()
 	isMove = false;
 
 	gameMgr->incomeMoneyMsg();
+	gameMgr->unitRepairMsg();
 }
 
 void CPlayer::exit()
@@ -145,4 +171,11 @@ void CPlayer::exit()
 	isUnitSelect = false;
 	isOnUI = false;
 	isMove = false;
+}
+
+void CPlayer::inputInit()
+{
+	isUnitSelect = false;
+	isMove = false;
+	isAttack = false;
 }

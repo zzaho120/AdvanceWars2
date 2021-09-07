@@ -12,7 +12,7 @@ private:
 	int movement;
 	int tileIdx;
 	int popIdx;
-	int healthPoint;
+	float healthPoint;
 
 	UNIT_MATCH matchType;
 	UNIT_TYPE unitType;
@@ -24,10 +24,13 @@ private:
 	bool isArrive;
 	bool isCapturing;
 	bool isAttack;
+	bool isRange;
 	bool moveSetting;
 
 	bool moveRange[TILE_NUM_X * TILE_NUM_Y];
 	bool attackRange[TILE_NUM_X * TILE_NUM_Y];
+	bool availRange[TILE_NUM_X * TILE_NUM_Y];
+	bool rangeCheck[TILE_NUM_X * TILE_NUM_Y];
 
 	CWeapon* weaponArr[static_cast<int>(WEAPON_NUMBER::END)];
 
@@ -45,14 +48,16 @@ public:
 	void move(Vec2 _pos, int idx);
 	void wait();
 	
-	// 이동 관렴 함수
+	// 이동 관련 함수
 	void moveFloodFill();
 	void checkMoveRange(int idx, int cnt, int checkfuel);
-	void checkAttackRange(int idx, int cnt, CWeapon* useWeapon);
 	bool correctMove(int idx);
 
 	// 공격 관련 함수
 	void attackFloodFill();
+	void checkAttackRange(int idx, int cnt, CWeapon* useWeapon);
+	void rangeFloodFill();
+	void checkRange(int idx, int cnt, CWeapon* useWeapon);
 	float calculateDamage(CUnit* unit, CTile* tile);
 	float weaponDamage(UNIT_TYPE type, WEAPON_NUMBER num);
 	bool correctAttack(int idx);
@@ -67,6 +72,8 @@ public:
 
 	// 보급 관련 함수
 	void supply();
+
+	void repair();
 	
 	void weaponSetting(UNIT_TYPE type);
 
@@ -74,8 +81,25 @@ public:
 	bool getActive() { return isActive; }
 	bool getMove() { return isMove; }
 	bool getArrive() { return isArrive; }
+	bool getRange() { return isRange; }
 	int getHP() { return healthPoint; }
 	int getFuel() { return fuel; }
+	int getAmmo()
+	{
+		int ammo = 0;
+		switch (weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)]->getWeaponType())
+		{
+		case WEAPON_TYPE::NONE:
+			ammo = 0;
+			break;
+		case WEAPON_TYPE::M_GUN:
+		case WEAPON_TYPE::BAZOOKA:
+		case WEAPON_TYPE::CANNON:
+			ammo = weaponArr[static_cast<int>(WEAPON_NUMBER::WEAPON1)]->getAmmo();
+			break;
+		}
+		return ammo;
+	}
 
 	UNIT_TYPE getUnitType() { return unitType; }
 	PLAYER_TYPE getPlayerType() { return playerType; }
@@ -92,4 +116,5 @@ public:
 	void setMoveSetting(bool moveSet) { moveSetting = moveSet; }
 	void setArrive(bool arrive) { isArrive = arrive; }
 	void setAttack(bool attack) { isAttack = attack; }
+	void setRange(bool range) { isRange = range; }
 };

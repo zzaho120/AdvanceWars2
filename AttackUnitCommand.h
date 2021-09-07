@@ -19,7 +19,8 @@ public:
 	virtual void excute()
 	{
 		currentUnit->attack(oppositUnit, oppositTile);
-		oppositUnit->attack(currentUnit, currentTile);
+		if(currentUnit->getUnitType() != UNIT_TYPE::ARTILLERY)
+			oppositUnit->attack(currentUnit, currentTile);
 	}
 
 	virtual void undo()

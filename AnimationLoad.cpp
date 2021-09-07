@@ -179,5 +179,8 @@ void CAnimationLoad::resourceLoad()
 	ANIMATION->addAnimation("river_3ways03", "flow_river", 72, 79, 10, false, true);
 	ANIMATION->addAnimation("river_4ways", "flow_river", 80, 87, 10, false, true);
 
-	
+	//============================ EFFECT ============================
+	//============================ EFFECT ============================
+
+	EFFECT->addEffect("ground_destroy", "images/effect/ground_destroy.bmp", 288 * 4, 32 * 4, 32 * 4, 32 * 4, 1, 0.1f, 100);
 }

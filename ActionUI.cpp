@@ -89,6 +89,8 @@ void CActionUI::render()
 		case UNIT_TYPE::APC:
 			IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5);
 			IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5 + 75);
+			if (!gameMgr->isAvailableSupply())
+				IMAGE->render("action_failed", getMemDC(), buttonX + 5, buttonY + 5 + 75 * 2);
 			break;
 		default:
 			break;
@@ -150,6 +152,13 @@ void CActionUI::chooseAction()
 			}
 			break;
 		case 2: // 보급
+			if (gameMgr->isAvailableSupply())
+			{
+				gameMgr->supplyUnitMsg();
+				gameMgr->completeMoveUnitMsg();
+				gameMgr->closeUIMsg();
+				exit();
+			}
 			break;
 		case 3: // 대기
 			gameMgr->completeMoveUnitMsg();

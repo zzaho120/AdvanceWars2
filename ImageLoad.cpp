@@ -61,8 +61,8 @@ void CImageLoad::resourceLoad()
 	IMAGE->addFrameImage("supply_message", "images/UI/supply_message.bmp", 128, 32, 2, 1);
 
 	IMAGE->addImage("black", "images/UI/bgblack.bmp", WINSIZEX, WINSIZEY);
-	IMAGE->addImage("black_info1", "images/UI/bgblack.bmp", 150, 200);
-	IMAGE->addImage("black_info2", "images/UI/bgblack.bmp", 300, 200);
+	IMAGE->addImage("black_info1", "images/UI/bgblack.bmp", 150, 210);
+	IMAGE->addImage("black_info2", "images/UI/bgblack.bmp", 300, 210);
 	IMAGE->addImage("tileTool", "images/tile/maptool_tile.bmp", TILE_SIZE_X * 8, TILE_SIZE_Y * 4);
 	IMAGE->addFrameImage("tileTool_frame", "images/tile/maptool_tile.bmp", TILE_SIZE_X * 8, TILE_SIZE_Y * 4, 8, 4);
 
@@ -88,11 +88,6 @@ void CImageLoad::resourceLoad()
 	IMAGE->addFrameImage("tile_name", "images/UI/tile_name.bmp", 100 * 10, TILE_SIZE_Y, 10, 1);
 	IMAGE->addFrameImage("unit_name", "images/UI/unit_name.bmp", 100 * 5, TILE_SIZE_Y, 5, 1);
 	IMAGE->addFrameImage("unit_type", "images/UI/unit_type.bmp", TILE_SIZE_X * 5, TILE_SIZE_Y * 2, 5, 2);
-	IMAGE->addFrameImage("info_icon", "images/UI/info_icon.bmp", 40 * 4, 40, 4, 1);
+	IMAGE->addFrameImage("info_icon", "images/UI/info_icon.bmp", 40 * 5, 40, 5, 1);
 	IMAGE->addImage("damageUI", "images/UI/damage_UI.bmp", 32 * 3, 28 * 3);
-
-	//============================ EFFECT ============================
-	//============================ EFFECT ============================
-
-	EFFECT->addEffect("ground_destroy", "images/effect/ground_destroy.bmp", 288, 32, 32, 32, 60, 0.45f, 100);
 }

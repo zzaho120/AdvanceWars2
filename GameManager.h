@@ -69,8 +69,19 @@ public:
 	// 유닛 삭제 관련 메시지 및 함수
 	void destroyUnitMsg(CUnit* unit);
 
-	void incomeMoneyMsg();
+	// 보급 관련 메시지 및 함수
+	bool isAvailableSupply();
+	void supplyUnitMsg();
 
+	// 유닛 사정거리 출력 관련 메시지 및 함수
+	void viewUnitRange();
+	void cancelUnitRange();
+
+	// 턴 시작 시 수행 관련 메시지 및 함수
+	void incomeMoneyMsg();
+	void unitRepairMsg();
+
+	// 커맨드 실행
 	void commandExcute();
 
 	CMap* getMap() { return map; }

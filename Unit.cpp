@@ -17,7 +17,7 @@ CUnit::CUnit(PLAYER_TYPE _player, UNIT_TYPE _type, Vec2 _pos, int idx, CGameMana
 	CObject(_pos, { TILE_SIZE_X, TILE_SIZE_Y }), tileIdx(idx),
 	unitType(_type), isActive(false), isArrive(false), healthPoint(10),
 	isSelected(false), isMove(false), moveSetting(false), isCapturing(false), isAttack(false),
-	gameMgr(mgr), playerType(_player)
+	gameMgr(mgr), playerType(_player), isRange(false)
 {
 	memset(moveRange, 0, sizeof(moveRange));
 	settingByType(unitType);
@@ -104,7 +104,8 @@ void CUnit::release()
 void CUnit::update()
 {
 	moveFloodFill();
-	attackFloodFill();
+	if (isSelected)
+		attackFloodFill();
 }
 
 void CUnit::render()
@@ -132,6 +133,21 @@ void CUnit::render()
 			for (int j = 0; j < TILE_NUM_X; j++)
 			{
 				if (!attackRange[i * TILE_NUM_X + j]) continue;
+
+				int left = 35 + j % TILE_NUM_X * TILE_SIZE_X - TILE_SIZE_X / 2;
+				int top = 35 + i % TILE_NUM_Y * TILE_SIZE_Y - TILE_SIZE_Y / 2;
+				IMAGE->alphaRender("attack_range", getMapDC(), left, top, 200);
+			}
+		}
+	}
+
+	if (!isSelected && isRange)
+	{
+		for (int i = 0; i < TILE_NUM_Y; i++)
+		{
+			for (int j = 0; j < TILE_NUM_X; j++)
+			{
+				if (!availRange[i * TILE_NUM_X + j]) continue;
 
 				int left = 35 + j % TILE_NUM_X * TILE_SIZE_X - TILE_SIZE_X / 2;
 				int top = 35 + i % TILE_NUM_Y * TILE_SIZE_Y - TILE_SIZE_Y / 2;
@@ -272,8 +288,8 @@ void CUnit::render()
 
 	if (isCapturing)
 		IMAGE->frameRender("unit_status_mark", getMapDC(), pos.x, pos.y + 39, 1, static_cast<int>(playerType));
-	if (healthPoint < 9)
-		IMAGE->frameRender("unit_hp", getMapDC(), pos.x + 39, pos.y + 39, healthPoint - 1, 0);
+	if (healthPoint < 10)
+		IMAGE->frameRender("unit_hp", getMapDC(), pos.x + 39, pos.y + 39, static_cast<int>(floor(healthPoint)) - 1, 0);
 }
 
 void CUnit::move(Vec2 _pos, int idx)
@@ -353,19 +369,173 @@ void CUnit::attackFloodFill()
 {
 	int cnt = 0;
 	CWeapon* useWeapon = weaponArr[0]->getMaxRange() >= weaponArr[1]->getMaxRange() ? weaponArr[0] : weaponArr[1];
-
 	memset(attackRange, 0, sizeof(attackRange));
-	if (isSelected)
-	{
-		if (tileIdx % 30 > 0 || tileIdx % 30 < 29 || tileIdx > 29 || tileIdx < 579)
-		{
-			attackRange[tileIdx] = false;
+	memset(rangeCheck, 0, sizeof(rangeCheck));
 
-			if (tileIdx % 30 > 0) checkAttackRange(tileIdx - 1, cnt, useWeapon);
-			if (tileIdx % 30 < 29) checkAttackRange(tileIdx + 1, cnt, useWeapon);
-			if (tileIdx > 29) checkAttackRange(tileIdx - 30, cnt, useWeapon);
-			if (tileIdx < 579) checkAttackRange(tileIdx + 30, cnt, useWeapon);
+	if (tileIdx % 30 > 0 || tileIdx % 30 < 29 || tileIdx > 29 || tileIdx < 579)
+	{
+		attackRange[tileIdx] = false;
+		availRange[tileIdx] = true;
+		if (tileIdx % 30 > 0) checkAttackRange(tileIdx - 1, cnt, useWeapon);
+		if (tileIdx % 30 < 29) checkAttackRange(tileIdx + 1, cnt, useWeapon);
+		if (tileIdx > 29) checkAttackRange(tileIdx - 30, cnt, useWeapon);
+		if (tileIdx < 579) checkAttackRange(tileIdx + 30, cnt, useWeapon);
+	}
+
+}
+
+void CUnit::rangeFloodFill()
+{
+	int cnt = 0;
+	CWeapon* useWeapon = weaponArr[0]->getMaxRange() >= weaponArr[1]->getMaxRange() ? weaponArr[0] : weaponArr[1];
+
+	memset(availRange, 0, sizeof(availRange));
+	memset(rangeCheck, 0, sizeof(rangeCheck));
+
+	if (tileIdx % 30 > 0 || tileIdx % 30 < 29 || tileIdx > 29 || tileIdx < 579)
+	{
+		availRange[tileIdx] = false;
+		rangeCheck[tileIdx] = true;
+		if (tileIdx % 30 > 0) checkRange(tileIdx - 1, cnt, useWeapon);
+		if (tileIdx % 30 < 29) checkRange(tileIdx + 1, cnt, useWeapon);
+		if (tileIdx > 29) checkRange(tileIdx - 30, cnt, useWeapon);
+		if (tileIdx < 579) checkRange(tileIdx + 30, cnt, useWeapon);
+	}
+}
+
+void CUnit::checkMoveRange(int idx, int cnt, int checkFuel)
+{
+	if (idx % 30 > 0 || idx % 30 < 29 || idx > 29 || idx < 579)
+	{
+		bool isUnit = gameMgr->getMap()->getTile()[idx]->getUnitType() != UNIT_TYPE::NONE;
+		bool isOppsitPlayer = false;
+
+		for (int i = 0; i < gameMgr->getUnitMgr()->getVecUnit().size(); i++)
+		{
+			if (gameMgr->getUnitMgr()->getVecUnit()[i]->getTileIdx() == idx)
+				isOppsitPlayer = gameMgr->getUnitMgr()->getVecUnit()[i]->getPlayerType() != playerType;
 		}
+
+		if (isUnit && isOppsitPlayer) return;
+
+		bool isEnoughFuel = checkFuel > 0;
+
+		if (!isEnoughFuel) return;
+
+		ENVIRONMENT_TYPE curTile = gameMgr->getMap()->getTile()[idx]->getTileType();
+		bool isOnlyInfry = (curTile == ENVIRONMENT_TYPE::MOUNTAIN) ||
+			(curTile == ENVIRONMENT_TYPE::RIVER_3WAYS) ||
+			(curTile == ENVIRONMENT_TYPE::RIVER_4WAYS) ||
+			(curTile == ENVIRONMENT_TYPE::RIVER_LINE) ||
+			(curTile == ENVIRONMENT_TYPE::RIVER_CURVE);
+		bool isSea = (curTile == ENVIRONMENT_TYPE::SEA_2WAYS) ||
+			(curTile == ENVIRONMENT_TYPE::SEA_3WAYS) ||
+			(curTile == ENVIRONMENT_TYPE::SEA_4WAYS) ||
+			(curTile == ENVIRONMENT_TYPE::SEA_5WAYS) ||
+			(curTile == ENVIRONMENT_TYPE::SEA_6WAYS) ||
+			(curTile == ENVIRONMENT_TYPE::SEA_7WAYS) ||
+			(curTile == ENVIRONMENT_TYPE::SEA_8WAYS) ||
+			(curTile == ENVIRONMENT_TYPE::SEA_HORIZONTAL00) ||
+			(curTile == ENVIRONMENT_TYPE::SEA_HORIZONTAL01) ||
+			(curTile == ENVIRONMENT_TYPE::SEA_HORIZONTAL02) ||
+			(curTile == ENVIRONMENT_TYPE::SEA_VERTICAL00) ||
+			(curTile == ENVIRONMENT_TYPE::SEA_VERTICAL01) ||
+			(curTile == ENVIRONMENT_TYPE::SEA_VERTICAL02);
+
+		switch (unitType)
+		{
+		case UNIT_TYPE::INFANTRY:
+		case UNIT_TYPE::MECH:
+			if (!isSea)
+			{
+				cnt++;
+				checkFuel--;
+				if(!isUnit)
+					moveRange[idx] = true;
+			}
+			break;
+		case UNIT_TYPE::TANK:
+		case UNIT_TYPE::ARTILLERY:
+		case UNIT_TYPE::APC:
+			if (!isOnlyInfry && !isSea)
+			{
+				cnt++;
+				checkFuel--;
+				if(!isUnit)
+					moveRange[idx] = true;
+			}
+			else if (isOnlyInfry)
+			{
+				return;
+			}
+			break;
+		default:
+			break;
+		}
+		if (cnt >= movement || isSea) return;
+		if (idx % 30 > 0) checkMoveRange(idx - 1, cnt, checkFuel);
+		if (idx % 30 < 29) checkMoveRange(idx + 1, cnt, checkFuel);
+		if (idx > 29) checkMoveRange(idx + 30, cnt, checkFuel);
+		if (idx < 579) checkMoveRange(idx - 30, cnt, checkFuel);
+	}
+}
+
+void CUnit::checkAttackRange(int idx, int cnt, CWeapon* useWeapon)
+{
+	if (idx % 30 > 0 || idx % 30 < 29 || idx > 29 || idx < 579)
+	{
+		cnt++;
+
+		if (cnt > useWeapon->getMaxRange())
+			return;
+
+		if (cnt >= useWeapon->getMinRange() && !rangeCheck[idx])
+		{
+			for (int i = 0; i < gameMgr->getUnitMgr()->getVecUnit().size(); i++)
+			{
+				if (gameMgr->getUnitMgr()->getVecUnit()[i]->getTileIdx() == idx)
+				{
+					if (gameMgr->getUnitMgr()->getVecUnit()[i]->getPlayerType() != playerType)
+						attackRange[idx] = true;
+				}
+			}
+		}
+		else
+		{
+			attackRange[idx] = false;
+			rangeCheck[idx] = true;
+		}
+
+		if (idx % 30 > 0) checkAttackRange(idx - 1, cnt, useWeapon);
+		if (idx % 30 < 29) checkAttackRange(idx + 1, cnt, useWeapon);
+		if (idx > 29) checkAttackRange(idx - 30, cnt, useWeapon);
+		if (idx < 579) checkAttackRange(idx + 30, cnt, useWeapon);
+	}
+}
+
+void CUnit::checkRange(int idx, int cnt, CWeapon* useWeapon)
+{
+	if (idx % 30 > 0 || idx % 30 < 29 || idx > 29 || idx < 579)
+	{
+		cnt++;
+
+		if (cnt > useWeapon->getMaxRange())
+			return;
+
+		if (cnt >= useWeapon->getMinRange() && !rangeCheck[idx])
+		{
+			availRange[idx] = true;
+		}
+		else
+		{
+			availRange[idx] = false;
+			rangeCheck[idx] = true;
+		}
+
+		if (idx % 30 > 0) checkRange(idx - 1, cnt, useWeapon);
+		if (idx % 30 < 29) checkRange(idx + 1, cnt, useWeapon);
+		if (idx > 29) checkRange(idx - 30, cnt, useWeapon);
+		if (idx < 579) checkRange(idx + 30, cnt, useWeapon);
 	}
 }
 
@@ -434,7 +604,7 @@ float CUnit::weaponDamage(UNIT_TYPE type, WEAPON_NUMBER num)
 		case UNIT_TYPE::TANK:
 		case UNIT_TYPE::ARTILLERY:
 		case UNIT_TYPE::APC:
-			damage = 5.5f;
+			damage = 6.5f;
 			break;
 		default:
 			break;
@@ -494,109 +664,6 @@ void CUnit::bulletCount(CUnit* oppositUnit)
 	}
 }
 
-void CUnit::checkMoveRange(int idx, int cnt, int checkFuel)
-{
-	if (idx % 30 > 0 || idx % 30 < 29 || idx > 29 || idx < 579)
-	{
-		bool isUnit = gameMgr->getMap()->getTile()[idx]->getUnitType() != UNIT_TYPE::NONE;
-		bool isOppsitPlayer = false;
-
-		for (int i = 0; i < gameMgr->getUnitMgr()->getVecUnit().size(); i++)
-		{
-			if (gameMgr->getUnitMgr()->getVecUnit()[i]->getTileIdx() == idx)
-				isOppsitPlayer = gameMgr->getUnitMgr()->getVecUnit()[i]->getPlayerType() != playerType;
-		}
-
-		if (isUnit && isOppsitPlayer) return;
-
-		bool isEnoughFuel = checkFuel > 0;
-
-		if (!isEnoughFuel) return;
-
-		ENVIRONMENT_TYPE curTile = gameMgr->getMap()->getTile()[idx]->getTileType();
-		bool isOnlyInfry = (curTile == ENVIRONMENT_TYPE::MOUNTAIN) ||
-			(curTile == ENVIRONMENT_TYPE::RIVER_3WAYS) ||
-			(curTile == ENVIRONMENT_TYPE::RIVER_4WAYS) ||
-			(curTile == ENVIRONMENT_TYPE::RIVER_LINE) ||
-			(curTile == ENVIRONMENT_TYPE::RIVER_CURVE);
-		bool isSea = (curTile == ENVIRONMENT_TYPE::SEA_2WAYS) ||
-			(curTile == ENVIRONMENT_TYPE::SEA_3WAYS) ||
-			(curTile == ENVIRONMENT_TYPE::SEA_4WAYS) ||
-			(curTile == ENVIRONMENT_TYPE::SEA_5WAYS) ||
-			(curTile == ENVIRONMENT_TYPE::SEA_6WAYS) ||
-			(curTile == ENVIRONMENT_TYPE::SEA_7WAYS) ||
-			(curTile == ENVIRONMENT_TYPE::SEA_8WAYS) ||
-			(curTile == ENVIRONMENT_TYPE::SEA_HORIZONTAL00) ||
-			(curTile == ENVIRONMENT_TYPE::SEA_HORIZONTAL01) ||
-			(curTile == ENVIRONMENT_TYPE::SEA_HORIZONTAL02) ||
-			(curTile == ENVIRONMENT_TYPE::SEA_VERTICAL00) ||
-			(curTile == ENVIRONMENT_TYPE::SEA_VERTICAL01) ||
-			(curTile == ENVIRONMENT_TYPE::SEA_VERTICAL02);
-
-		switch (unitType)
-		{
-		case UNIT_TYPE::INFANTRY:
-		case UNIT_TYPE::MECH:
-			if (!isSea)
-			{
-				cnt++;
-				checkFuel--;
-				moveRange[idx] = true;
-			}
-			break;
-		case UNIT_TYPE::TANK:
-		case UNIT_TYPE::ARTILLERY:
-		case UNIT_TYPE::APC:
-			if (!isOnlyInfry && !isSea)
-			{
-				cnt++;
-				checkFuel--;
-				moveRange[idx] = true;
-			}
-			else if (isOnlyInfry)
-			{
-				return;
-			}
-			break;
-		default:
-			break;
-		}
-		if (cnt >= movement || isSea) return;
-		if (idx % 30 > 0) checkMoveRange(idx - 1, cnt, checkFuel);
-		if (idx % 30 < 29) checkMoveRange(idx + 1, cnt, checkFuel);
-		if (idx > 29) checkMoveRange(idx + 30, cnt, checkFuel);
-		if (idx < 579) checkMoveRange(idx - 30, cnt, checkFuel);
-	}
-}
-
-void CUnit::checkAttackRange(int idx, int cnt, CWeapon* useWeapon)
-{
-	if (idx % 30 > 0 || idx % 30 < 29 || idx > 29 || idx < 579)
-	{
-		cnt++;
-
-		if (cnt > useWeapon->getMaxRange())
-			return;
-
-		if (cnt >= useWeapon->getMinRange())
-		{
-			for (int i = 0; i < gameMgr->getUnitMgr()->getVecUnit().size(); i++)
-			{
-				if (gameMgr->getUnitMgr()->getVecUnit()[i]->getTileIdx() == idx)
-				{
-					if(gameMgr->getUnitMgr()->getVecUnit()[i]->getPlayerType() != playerType)
-						attackRange[idx] = true;
-				}
-			}
-		}
-		else attackRange[idx] = false;
-
-		if (idx % 30 > 0) checkAttackRange(idx - 1, cnt, useWeapon);
-		if (idx % 30 < 29) checkAttackRange(idx + 1, cnt, useWeapon);
-		if (idx > 29) checkAttackRange(idx - 30, cnt, useWeapon);
-		if (idx < 579) checkAttackRange(idx + 30, cnt, useWeapon);
-	}
-}
 
 void CUnit::supply()
 {
@@ -630,6 +697,13 @@ void CUnit::supply()
 	default:
 		break;
 	}
+}
+
+void CUnit::repair()
+{
+	healthPoint += 2;
+	if (healthPoint > 10)
+		healthPoint = 10;
 }
 
 void CUnit::weaponSetting(UNIT_TYPE type)
