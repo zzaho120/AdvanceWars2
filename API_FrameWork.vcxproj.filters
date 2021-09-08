@@ -387,6 +387,12 @@
     <ClInclude Include="GameResult.h">
       <Filter>Class\GameResult</Filter>
     </ClInclude>
+    <ClInclude Include="SoundLoad.h">
+      <Filter>Class\ResourceLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="MapToolMgr.h">
+      <Filter>Manager\MapToolMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -553,6 +559,12 @@
     </ClCompile>
     <ClCompile Include="GameResult.cpp">
       <Filter>Class\GameResult</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundLoad.cpp">
+      <Filter>Class\ResourceLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="MapToolMgr.cpp">
+      <Filter>Manager\MapToolMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

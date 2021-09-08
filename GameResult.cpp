@@ -19,6 +19,9 @@ CGameResult::~CGameResult()
 
 HRESULT CGameResult::init()
 {
+    SOUND->stop("player1bg");
+    SOUND->stop("player2bg");
+    SOUND->play("gameover", 0.5F);
     return S_OK;
 }
 
@@ -165,5 +168,8 @@ void CGameResult::inputKey()
     if (gameMgr->getGameover() && bgAlpha < 255)
         bgAlpha += 3;
     else if (bgAlpha > 254 && InputManager->isOnceKeyDown('Z'))
+    {
+        SOUND->stop("gameover");
         SCENE->changeScene("mainMenuScene");
+    }
 }

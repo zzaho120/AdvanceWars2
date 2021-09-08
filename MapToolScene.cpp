@@ -2,51 +2,32 @@
 #include "MapToolScene.h"
 
 CMapToolScene::CMapToolScene() :
-	mapTool(nullptr),
-	mapToolSub(nullptr)
+	mapToolMgr(new CMapToolMgr)
 {
 }
 
 CMapToolScene::~CMapToolScene()
 {
-	SUBWIN->subWindowClose();
-	SUBWIN->release();
-	mapTool->release();
-	SAFE_DELETE(mapTool);
-	mapToolSub->release();
-	SAFE_DELETE(mapToolSub);
+	SAFE_DELETE(mapToolMgr);
 }
 
 HRESULT CMapToolScene::init()
 {
-	mapTool = new CMapTool;
-	mapToolSub = new CMapToolSub;
-	mapTool->init();
-	mapToolSub->init();
-	SUBWIN->init();
-	SUBWIN->SetMapLink(mapTool);
-	SUBWIN->SetScene(mapToolSub);
+	mapToolMgr->init();
 	return S_OK;
 }
 
 void CMapToolScene::release()
 {
-	SUBWIN->subWindowClose();
-	SUBWIN->release();
-	mapTool->release();
-	SAFE_DELETE(mapTool);
-	mapToolSub->release();
-	SAFE_DELETE(mapToolSub);
+	mapToolMgr->release();
 }
 
 void CMapToolScene::update()
 {
-	mapTool->update();
-	SUBWIN->update();
+	mapToolMgr->update();
 }
 
 void CMapToolScene::render()
 {
-	mapTool->render();
-	SUBWIN->render();
+	mapToolMgr->render();
 }

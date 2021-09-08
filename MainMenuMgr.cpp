@@ -6,6 +6,7 @@ CMainMenuMgr::CMainMenuMgr() :
 	menuAlpha(0),
 	isTitle(true)
 {
+	SOUND->play("title", 0.5F);
 }
 
 CMainMenuMgr::~CMainMenuMgr()
@@ -26,8 +27,6 @@ void CMainMenuMgr::release()
 
 void CMainMenuMgr::update()
 {
-	
-	
 	menuInput();
 }
 
@@ -71,12 +70,20 @@ void CMainMenuMgr::menuInput()
 		if (titleAlpha > 254)
 		{
 			if (InputManager->isOnceKeyDown('Z'))
+			{
 				isTitle = false;
+				SOUND->stop("title");
+			}
 		}
 	}
 	else
 	{
-		if (menuAlpha < 255) menuAlpha += 3;
+		if (menuAlpha < 255)
+		{
+			menuAlpha += 3;
+			if(menuAlpha == 3)
+				SOUND->play("mainmenu", 0.5F);
+		}
 		if (menuAlpha > 254)
 		{
 			if (InputManager->isOnceKeyDown('Z'))
@@ -98,9 +105,11 @@ void CMainMenuMgr::chooseMenu()
 	switch (selectIdx)
 	{
 	case 0:
+		SOUND->stop("mainmenu");
 		SCENE->changeScene("gameScene");
 		break;
 	case 1:
+		SOUND->stop("mainmenu");
 		SCENE->changeScene("mapToolScene");
 		break;
 	case 2:

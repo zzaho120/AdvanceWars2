@@ -181,6 +181,7 @@
     <ClInclude Include="MainMenuScene.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapTool.h" />
+    <ClInclude Include="MapToolMgr.h" />
     <ClInclude Include="MapToolScene.h" />
     <ClInclude Include="MapToolSub.h" />
     <ClInclude Include="MoveUnitCommand.h" />
@@ -193,6 +194,7 @@
     <ClInclude Include="ResourceLoadFacade.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="singleton.h" />
+    <ClInclude Include="SoundLoad.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="SubWindow.h" />
     <ClInclude Include="SupplyUnitCommand.h" />
@@ -246,6 +248,7 @@
     <ClCompile Include="MainMenuScene.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapTool.cpp" />
+    <ClCompile Include="MapToolMgr.cpp" />
     <ClCompile Include="MapToolScene.cpp" />
     <ClCompile Include="MapToolSub.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -254,6 +257,7 @@
     <ClCompile Include="RepairUnitCommand.cpp" />
     <ClCompile Include="ResourceLoadFacade.cpp" />
     <ClCompile Include="sceneManager.cpp" />
+    <ClCompile Include="SoundLoad.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="SubWindow.cpp" />
     <ClCompile Include="SupplyUnitCommand.cpp" />

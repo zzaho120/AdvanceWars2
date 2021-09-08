@@ -13,4 +13,5 @@ void CResourceLoadFacade::resourceLoad()
 {
 	imgLoad.resourceLoad();
 	aniLoad.resourceLoad();
+	soundLoad.resourceLoad();
 }

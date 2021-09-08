@@ -161,13 +161,30 @@ void CPlayer::enter()
 	isUnitSelect = false;
 	isOnUI = false;
 	isMove = false;
-
+	switch (playerType)
+	{
+	case PLAYER_TYPE::PLAYER1:
+		SOUND->play("player1bg", 0.5F);
+		break;
+	case PLAYER_TYPE::PLAYER2:
+		SOUND->play("player2bg", 0.5F);
+		break;
+	}
 	gameMgr->incomeMoneyMsg();
 	gameMgr->unitRepairMsg();
 }
 
 void CPlayer::exit()
 {
+	switch (playerType)
+	{
+	case PLAYER_TYPE::PLAYER1:
+		SOUND->stop("player1bg");
+		break;
+	case PLAYER_TYPE::PLAYER2:
+		SOUND->stop("player2bg");
+		break;
+	}
 	isUnitSelect = false;
 	isOnUI = false;
 	isMove = false;

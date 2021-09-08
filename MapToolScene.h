@@ -1,12 +1,10 @@
 #pragma once
 #include"gameNode.h"
-#include"MapTool.h"
-#include"MapToolSub.h"
+#include"MapToolMgr.h"
 class CMapToolScene : public gameNode
 {
 private:
-	CMapTool* mapTool;
-	CMapToolSub* mapToolSub;
+	CMapToolMgr* mapToolMgr;
 public:
 	CMapToolScene();
 	~CMapToolScene();

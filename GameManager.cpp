@@ -134,7 +134,9 @@ void CGameManager::update()
 		isExitGame();
 	}
 	else if (isGameover)
+	{
 		gameResult->update();
+	}
 
 }
 
@@ -745,12 +747,20 @@ void CGameManager::isGameEnd()
 	{
 		isGameover = true;
 		isKO[0] = true;
+
+		SOUND->stop("player1bg");
+		SOUND->stop("player2bg");
+		SOUND->play("gameover", 0.5F);
 		return;
 	}
 	else if (!isPlayer2HQ || !isPlayer2Unit)
 	{
 		isGameover = true;
 		isKO[1] = true;
+
+		SOUND->stop("player1bg");
+		SOUND->stop("player2bg");
+		SOUND->play("gameover", 0.5F);
 		return;
 	}
 }
