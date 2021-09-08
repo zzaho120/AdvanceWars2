@@ -18,6 +18,7 @@ private:
 public:
 	CMap();
 	CMap(Vec2 startPos, Vec2 size);
+	CMap(CMap* map);
 	CMap(const char* fileName);
 	CMap(const char* fileName, CCamera* camera);
 	~CMap();

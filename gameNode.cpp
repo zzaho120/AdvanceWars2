@@ -79,6 +79,7 @@ void gameNode::release()
 		BUILDINGFACTORY->releaseSingleton();
 		ASTAR->releaseSingleton();
 		HISTORY->releaseSingleton();
+		MAPDATA->releaseSingleton();
 
 		SCENE->release();
 		IMAGE->release();

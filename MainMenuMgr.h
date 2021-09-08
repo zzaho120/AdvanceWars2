@@ -7,10 +7,12 @@ private:
 	int titleAlpha;
 	int menuAlpha;
 	int guideIdx;
+	int mapIdx;
 
 	bool isTitle;
 	bool isSelect;
 	bool isGuide;
+	bool isMapSelect;
 
 	char guideStr[128];
 public:

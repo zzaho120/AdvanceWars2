@@ -180,6 +180,7 @@
     <ClInclude Include="MainMenuMgr.h" />
     <ClInclude Include="MainMenuScene.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="MapDataManager.h" />
     <ClInclude Include="MapTool.h" />
     <ClInclude Include="MapToolMgr.h" />
     <ClInclude Include="MapToolScene.h" />
@@ -247,6 +248,7 @@
     <ClCompile Include="MainMenuMgr.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapDataManager.cpp" />
     <ClCompile Include="MapTool.cpp" />
     <ClCompile Include="MapToolMgr.cpp" />
     <ClCompile Include="MapToolScene.cpp" />

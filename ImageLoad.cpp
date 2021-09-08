@@ -121,4 +121,6 @@ void CImageLoad::resourceLoad()
 	IMAGE->addImage("APC_blue", "images/UI/APC_blue.bmp", 350, 550);
 
 	IMAGE->addFrameImage("key", "images/UI/key.bmp", 24 * 2 * 2, 12 * 4, 2, 1);
+	IMAGE->addImage("map_select_panel", "images/UI/action_panel_red.bmp", 500, 700);
+	IMAGE->addImage("map_select_black", "images/UI/bgblack.bmp", 380, 580);
 }

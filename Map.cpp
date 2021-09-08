@@ -29,6 +29,12 @@ CMap::CMap(Vec2 startPos, Vec2 size) :
 	}
 }
 
+CMap::CMap(CMap* map) :
+	isDebug(false), cam(nullptr)
+{
+
+}
+
 CMap::CMap(const char* fileName, CCamera* camera) :
 	cam(camera), gameMgr(nullptr)
 {

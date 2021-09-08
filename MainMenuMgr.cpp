@@ -4,7 +4,9 @@
 CMainMenuMgr::CMainMenuMgr() :
 	selectIdx(0), titleAlpha(0),
 	menuAlpha(0), isGuide(false),
-	isTitle(true), guideIdx(0)
+	isTitle(true), guideIdx(0),
+	mapIdx(0),
+	isMapSelect(false)
 {
 	memset(guideStr, 0, sizeof(guideStr));
 	SOUND->play("title", 0.5F);
@@ -16,9 +18,12 @@ CMainMenuMgr::~CMainMenuMgr()
 
 HRESULT CMainMenuMgr::init()
 {
+	MAPDATA->init();
 	selectIdx = 0;
 	titleAlpha = 0;
 	menuAlpha = 0;
+	mapIdx = 0;
+	isMapSelect = false;
 	return S_OK;
 }
 
@@ -84,7 +89,20 @@ void CMainMenuMgr::render()
 			IMAGE->frameRender("help", getMemDC(), 200, 0, guideIdx, 0);
 		if (menuAlpha > 254 && !isGuide)
 			TextOut(getMemDC(), 50, 720, guideStr, strlen(guideStr));
-		
+
+		if (isMapSelect)
+		{
+			TCHAR str[64];
+			IMAGE->render("map_select_panel", getMemDC(), 100, 0);
+			IMAGE->alphaRender("map_select_black", getMemDC(), 150, 50, 150);
+			for (int idx = 0; idx < MAPDATA->getVecMap().size(); idx++)
+			{
+				wsprintf(str, "%d¹ø ¸Ê", idx + 1);
+				TextOut(getMemDC(), 160, 60 + idx * 50, str, strlen(str));
+			}
+
+			IMAGE->render("factory_arrow", getMemDC(), 80, 60 + mapIdx * 50);
+		}
 	}
 
 }
@@ -114,7 +132,7 @@ void CMainMenuMgr::menuInput()
 				SOUND->stop("select_menu");
 			menuAlpha += 3;
 		}
-		if (menuAlpha > 254 && !isGuide)
+		if (menuAlpha > 254 && !isGuide && !isMapSelect)
 		{
 			if (InputManager->isOnceKeyDown('Z'))
 			{
@@ -172,8 +190,36 @@ void CMainMenuMgr::menuInput()
 			if (guideIdx < 0) guideIdx = 0;
 			if (guideIdx > 16) guideIdx = 16;
 		}
-	}
+		else if (isMapSelect)
+		{
+			if (InputManager->isOnceKeyDown(VK_UP))
+			{
+				mapIdx--;
+				if (SOUND->isPlaySound("move_menu"))
+					SOUND->stop("move_menu");
+				if (!SOUND->isPlaySound("move_menu"))
+					SOUND->play("move_menu", 0.4F);
+			}
+			else if (InputManager->isOnceKeyDown(VK_DOWN))
+			{
+				mapIdx++;
+				if (SOUND->isPlaySound("move_menu"))
+					SOUND->stop("move_menu");
+				if (!SOUND->isPlaySound("move_menu"))
+					SOUND->play("move_menu", 0.4F);
+			}
 
+			if (InputManager->isOnceKeyDown('Z'))
+			{
+				SOUND->stop("mainmenu");
+				MAPDATA->setCurMap(mapIdx);
+				SCENE->changeScene("gameScene");
+			}
+
+			if (mapIdx < 0) mapIdx = MAPDATA->getVecMap().size() - 1;
+			if (mapIdx > MAPDATA->getVecMap().size() - 1) mapIdx = 0;
+		}
+	}
 }
 
 void CMainMenuMgr::guideStrSetting()
@@ -197,21 +243,23 @@ void CMainMenuMgr::guideStrSetting()
 
 void CMainMenuMgr::chooseMenu()
 {
-	switch (selectIdx)
+	if (!isMapSelect)
 	{
-	case 0:
-		SOUND->stop("mainmenu");
-		SCENE->changeScene("gameScene");
-		break;
-	case 1:
-		SOUND->stop("mainmenu");
-		SCENE->changeScene("mapToolScene");
-		break;
-	case 2:
-		isGuide = true;
-		break;
-	case 3:
-		PostQuitMessage(0);
-		break;
+		switch (selectIdx)
+		{
+		case 0:
+			isMapSelect = true;
+			break;
+		case 1:
+			SOUND->stop("mainmenu");
+			SCENE->changeScene("mapToolScene");
+			break;
+		case 2:
+			isGuide = true;
+			break;
+		case 3:
+			PostQuitMessage(0);
+			break;
+		}
 	}
 }

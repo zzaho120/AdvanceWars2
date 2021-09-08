@@ -55,6 +55,7 @@
 #include"BuildingFactory.h"
 #include"Astar.h"
 #include"CommandHistory.h"
+#include"MapDataManager.h"
 //======================================
 //##			매니저들			  ##
 //======================================
@@ -71,6 +72,7 @@
 #define BUILDINGFACTORY	CBuildingFactory::getSingleton()
 #define ASTAR			CAstar::getSingleton()
 #define HISTORY			CCommandHistory::getSingleton()
+#define MAPDATA			CMapDataManager::getSingleton()
 //==========================================
 //			메인게임 릴리즈에서 사용
 //==========================================

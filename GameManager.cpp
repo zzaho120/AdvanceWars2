@@ -14,7 +14,7 @@
 
 CGameManager::CGameManager() :
 	cam(new CCamera),
-	map(new CMap("save/beansisland.map")),
+	map(MAPDATA->getCurMap()),
 	cursor(new CCursor(map->getTile()[158]->getPos(), 158)),
 	unitMgr(new CUnitManager),
 	buildingMgr(new CBuildingManager),

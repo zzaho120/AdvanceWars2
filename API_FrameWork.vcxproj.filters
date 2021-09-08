@@ -187,6 +187,9 @@
     <Filter Include="Manager\MainMenuMgr">
       <UniqueIdentifier>{b82b4787-b545-498e-b604-fd52a1f8b9e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager\MapDataMgr">
+      <UniqueIdentifier>{9ae11c7b-7c28-4583-8f67-99dfd26f01a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -393,6 +396,9 @@
     <ClInclude Include="MapToolMgr.h">
       <Filter>Manager\MapToolMgr</Filter>
     </ClInclude>
+    <ClInclude Include="MapDataManager.h">
+      <Filter>Manager\MapDataMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -565,6 +571,9 @@
     </ClCompile>
     <ClCompile Include="MapToolMgr.cpp">
       <Filter>Manager\MapToolMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="MapDataManager.cpp">
+      <Filter>Manager\MapDataMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
