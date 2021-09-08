@@ -178,6 +178,15 @@
     <Filter Include="Scene\MainMenuScene">
       <UniqueIdentifier>{248cdef1-49c0-4395-9b61-1a8f1f6733e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager\MapToolMgr">
+      <UniqueIdentifier>{89251a98-b42c-4760-9bee-4d2ee416c49a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\GameResult">
+      <UniqueIdentifier>{4dd9800f-79c7-4f10-99e7-50192b68aad4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\MainMenuMgr">
+      <UniqueIdentifier>{b82b4787-b545-498e-b604-fd52a1f8b9e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -369,6 +378,15 @@
     <ClInclude Include="MapToolScene.h">
       <Filter>Scene\MapToolScene</Filter>
     </ClInclude>
+    <ClInclude Include="MainMenuScene.h">
+      <Filter>Scene\MainMenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuMgr.h">
+      <Filter>Manager\MainMenuMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="GameResult.h">
+      <Filter>Class\GameResult</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="API_FrameWork.cpp">
@@ -526,6 +544,15 @@
     </ClCompile>
     <ClCompile Include="MapToolScene.cpp">
       <Filter>Scene\MapToolScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuScene.cpp">
+      <Filter>Scene\MainMenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuMgr.cpp">
+      <Filter>Manager\MainMenuMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="GameResult.cpp">
+      <Filter>Class\GameResult</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

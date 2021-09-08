@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "UIManager.h"
 #include "GameData.h"
+#include "GameResult.h"
 
 class CGameManager : public gameNode
 {
@@ -22,10 +23,12 @@ private:
 	CUIManager* uiMgr;
 
 	CGameData* gameData;
+	CGameResult* gameResult;
 
 	CCommand* command;
 
 	bool isGameover;
+	bool isExit;
 	bool isKO[2];
 public:
 	CGameManager();
@@ -94,10 +97,17 @@ public:
 	// 커맨드 실행
 	void commandExcute();
 
+	// 게임 종료
+	void isExitGame();
+
 	CMap* getMap() { return map; }
 	CPlayer* getCurPlayer() { return curPlayer; }
 	CCursor* getCursor() { return cursor; }
 	CUnitManager* getUnitMgr() { return unitMgr; }
 	CBuildingManager* getBuildingMgr() { return buildingMgr; }
 	CGameData* getGameData() { return gameData; }
+	bool getGameover() { return isGameover; }
+	bool getKO(int idx) { return isKO[idx]; }
+
+	void setExit(bool exit) { isExit = exit; }
 };

@@ -167,6 +167,7 @@
     <ClInclude Include="GameData.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="gameNode.h" />
+    <ClInclude Include="GameResult.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GenerateUnitCommand.h" />
     <ClInclude Include="globalValue.h" />
@@ -176,6 +177,8 @@
     <ClInclude Include="InfoUI.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="mainGame.h" />
+    <ClInclude Include="MainMenuMgr.h" />
+    <ClInclude Include="MainMenuScene.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapTool.h" />
     <ClInclude Include="MapToolScene.h" />
@@ -230,6 +233,7 @@
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="gameNode.cpp" />
+    <ClCompile Include="GameResult.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GenerateUnitCommand.cpp" />
     <ClCompile Include="image.cpp" />
@@ -238,6 +242,8 @@
     <ClCompile Include="InfoUI.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="mainGame.cpp" />
+    <ClCompile Include="MainMenuMgr.cpp" />
+    <ClCompile Include="MainMenuScene.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapTool.cpp" />
     <ClCompile Include="MapToolScene.cpp" />

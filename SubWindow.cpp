@@ -161,7 +161,9 @@ LRESULT CSubWindow::WndLogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 				}
 				break;
 			case CTRL::CTRL_EXIT:
+				SCENE->changeScene("mainMenuScene");
 				DestroyWindow(hWnd);
+				
 				break;
 			}
 			break;

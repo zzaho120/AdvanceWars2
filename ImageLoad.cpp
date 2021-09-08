@@ -90,4 +90,18 @@ void CImageLoad::resourceLoad()
 	IMAGE->addFrameImage("unit_type", "images/UI/unit_type.bmp", TILE_SIZE_X * 5, TILE_SIZE_Y * 2, 5, 2);
 	IMAGE->addFrameImage("info_icon", "images/UI/info_icon.bmp", 40 * 5, 40, 5, 1);
 	IMAGE->addImage("damageUI", "images/UI/damage_UI.bmp", 32 * 3, 28 * 3);
+	IMAGE->addImage("result", "images/UI/result.bmp", WINSIZEX, WINSIZEY);
+	IMAGE->addFrameImage("result_player", "images/UI/result_player.bmp", 200, 100, 2, 1);
+	IMAGE->addFrameImage("result_info", "images/UI/result_info.bmp", 400, 100, 4, 1);
+	IMAGE->addFrameImage("result_number", "images/UI/number.bmp", 40 * 11, 40, 11, 1);
+	IMAGE->addFrameImage("result_arrow", "images/UI/result_arrow.bmp", 70 * 2, 70, 2, 1);
+
+	IMAGE->addImage("mainmenu_bg", "images/UI/mainmenu_bg.bmp", 768 * 3, WINSIZEY);
+	IMAGE->addImage("mainmenu_selectmode", "images/UI/mainmenu_selectmode.bmp", 132 * 5, 24 * 5);
+	IMAGE->addImage("mainmenu_catherine", "images/UI/mainmenu_catherine.bmp", 86 * 5, 160 * 5);
+
+	IMAGE->addFrameImage("mainmenu_menu", "images/UI/mainmenu_menu.bmp", 132 * 5, 24 * 5 * 3, 1, 3);
+	IMAGE->addFrameImage("mainmenu_menu_small", "images/UI/mainmenu_menu_small.bmp", 132 * 5, 24 * 5 * 3, 1, 3);
+
+	IMAGE->addImage("title", "images/UI/title.bmp", WINSIZEX, WINSIZEY);
 }

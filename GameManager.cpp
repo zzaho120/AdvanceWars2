@@ -20,9 +20,11 @@ CGameManager::CGameManager() :
 	buildingMgr(new CBuildingManager),
 	uiMgr(new CUIManager),
 	gameData(new CGameData),
+	gameResult(new CGameResult),
 	curPlayer(nullptr),
 	command(nullptr),
-	isGameover(false)
+	isGameover(false),
+	isExit(false)
 {
 	playerArr[0] = new CPlayer(PLAYER_TYPE::PLAYER1);
 	playerArr[1] = new CPlayer(PLAYER_TYPE::PLAYER2);
@@ -39,9 +41,11 @@ CGameManager::CGameManager(const char* fileName) :
 	buildingMgr(new CBuildingManager),
 	uiMgr(new CUIManager),
 	gameData(new CGameData),
+	gameResult(new CGameResult),
 	curPlayer(nullptr),
 	command(nullptr),
-	isGameover(false)
+	isGameover(false),
+	isExit(false)
 {
 	playerArr[0] = new CPlayer(PLAYER_TYPE::PLAYER1);
 	playerArr[1] = new CPlayer(PLAYER_TYPE::PLAYER2);
@@ -52,22 +56,15 @@ CGameManager::CGameManager(const char* fileName) :
 
 CGameManager::~CGameManager()
 {
-	map->release();
 	SAFE_DELETE(map);
-	cam->release();
 	SAFE_DELETE(cam);
-	cursor->release();
 	SAFE_DELETE(cursor);
 	for (int idx = 0; idx < 2; idx++)
 	{
 		playerArr[idx]->release();
 		SAFE_DELETE(playerArr[idx]);
 	}
-	unitMgr->release();
 	SAFE_DELETE(unitMgr);
-	buildingMgr->release();
-	SAFE_DELETE(buildingMgr);
-	uiMgr->release();
 	SAFE_DELETE(uiMgr);
 	SAFE_DELETE(gameData);
 	command = nullptr;
@@ -79,6 +76,7 @@ HRESULT CGameManager::init()
 	map->init(this);
 	cursor->init(this);
 	unitMgr->init(this);
+	gameResult->init(this);
 
 	uiMgr->addUI(new CFactoryUI(this));
 	uiMgr->addUI(new COptionUI(this));
@@ -98,22 +96,15 @@ HRESULT CGameManager::init()
 
 void CGameManager::release()
 {
-	map->release();
 	SAFE_DELETE(map);
-	cam->release();
 	SAFE_DELETE(cam);
-	cursor->release();
 	SAFE_DELETE(cursor);
 	for (int idx = 0; idx < 2; idx++)
 	{
 		playerArr[idx]->release();
 		SAFE_DELETE(playerArr[idx]);
 	}
-	unitMgr->release();
 	SAFE_DELETE(unitMgr);
-	buildingMgr->release();
-	SAFE_DELETE(buildingMgr);
-	uiMgr->release();
 	SAFE_DELETE(uiMgr);
 	SAFE_DELETE(gameData);
 	command = nullptr;
@@ -140,7 +131,11 @@ void CGameManager::update()
 		}
 
 		isGameEnd();
+		isExitGame();
 	}
+	else if (isGameover)
+		gameResult->update();
+
 }
 
 void CGameManager::render()
@@ -154,6 +149,9 @@ void CGameManager::render()
 	
 	// 카메라에 영향을 받지 않는 유아이 렌더
 	uiMgr->render();
+
+	if (isGameover)
+		gameResult->render();
 }
 
 void CGameManager::initObject()
@@ -761,4 +759,10 @@ void CGameManager::isGameEnd()
 void CGameManager::commandExcute()
 {
 	command->excute();
+}
+
+void CGameManager::isExitGame()
+{
+	if(isExit)
+		SCENE->changeScene("mainMenuScene");
 }

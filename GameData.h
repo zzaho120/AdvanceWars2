@@ -20,7 +20,7 @@ public:
 	Vec2 getUnitGenerate() { return unitGenerate; }
 	Vec2 getUnitDeath() { return unitDeath; }
 	Vec2 getMoneyIncome() { return moneyIncome; }
-	Vec2 getMoneySpending() { return moneyIncome; }
+	Vec2 getMoneySpending() { return moneySpending; }
 
 	void setTurn(int curTurn) { turn = curTurn; }
 	void setUnitGenerate(Vec2 generate) { unitGenerate = generate; }

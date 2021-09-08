@@ -2,6 +2,7 @@
 #include "mainGame.h"
 #include"GameScene.h"
 #include"MapToolScene.h"
+#include"MainMenuScene.h"
 mainGame::mainGame()
 {
 }
@@ -13,7 +14,8 @@ HRESULT mainGame::init()
 	gameNode::init(true);
 	SCENE->addScene("gameScene", new CGameScene);
 	SCENE->addScene("mapToolScene", new CMapToolScene);
-	SCENE->changeScene("mapToolScene");
+	SCENE->addScene("mainMenuScene", new CMainMenuScene);
+	SCENE->changeScene("mainMenuScene");
 	return S_OK;
 }
 
@@ -26,10 +28,6 @@ void mainGame::update()
 {
 	gameNode::update();
 	SCENE->update();
-	if(InputManager->isOnceKeyDown(VK_F3))
-		SCENE->changeScene("mapToolScene");
-	if(InputManager->isOnceKeyDown(VK_F4))
-		SCENE->changeScene("gameScene");
 }
 
 void mainGame::render(/*HDC hdc*/)
