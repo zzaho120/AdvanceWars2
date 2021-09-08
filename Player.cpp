@@ -6,20 +6,26 @@ CPlayer::CPlayer() :
 	isUnitSelect(false),
 	isOnUI(false),
     isMove(false),
+	isAttack(false),
 	money(0),
 	playerType(PLAYER_TYPE::NONE),
 	gameMgr(nullptr)
 {
+	memset(key_Z, 0, sizeof(key_Z));
+	memset(key_X, 0, sizeof(key_X));
 }
 
 CPlayer::CPlayer(PLAYER_TYPE player) :
 	isUnitSelect(false),
 	isOnUI(false),
 	isMove(false),
+	isAttack(false),
 	money(0),
 	playerType(player),
 	gameMgr(nullptr)
 {
+	memset(key_Z, 0, sizeof(key_Z));
+	memset(key_X, 0, sizeof(key_X));
 }
 
 CPlayer::~CPlayer()
@@ -44,6 +50,15 @@ void CPlayer::release()
 void CPlayer::update()
 {
 	playerInput();
+}
+
+void CPlayer::render()
+{
+	keyStrSetting();
+	IMAGE->frameRender("key", getMemDC(), 50, 710, 0, 0);
+	TextOut(getMemDC(), 110, 715, key_Z, strlen(key_Z));
+	IMAGE->frameRender("key", getMemDC(), 160, 710, 1, 0);
+	TextOut(getMemDC(), 220, 715, key_X, strlen(key_X));
 }
 
 
@@ -195,4 +210,23 @@ void CPlayer::inputInit()
 	isUnitSelect = false;
 	isMove = false;
 	isAttack = false;
+}
+
+void CPlayer::keyStrSetting()
+{
+	if (isOnUI)
+	{
+		strcpy(key_Z, "선택");
+		strcpy(key_X, "취소");
+	}
+	else if (isUnitSelect)
+	{
+		strcpy(key_Z, "이동");
+		strcpy(key_X, "취소");
+	}
+	else
+	{
+		strcpy(key_Z, "메뉴");
+		strcpy(key_X, "유닛 사정거리");
+	}
 }

@@ -12,6 +12,8 @@ private:
 	bool isMove;
 	bool isAttack;
 
+	char key_Z[32];
+	char key_X[32];
 
 	int money;
 	PLAYER_TYPE playerType;
@@ -26,6 +28,7 @@ public:
 	HRESULT init(CGameManager* mgr);
 	void release();
 	void update();
+	void render();
 	
 	void playerInput();
 
@@ -38,6 +41,7 @@ public:
 	void exit();
 
 	void inputInit();
+	void keyStrSetting();
 
 	PLAYER_TYPE getPlayerType() { return playerType; }
 	bool getOnUI() { return isOnUI; }

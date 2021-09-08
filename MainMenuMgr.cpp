@@ -42,6 +42,12 @@ void CMainMenuMgr::render()
 	if (isTitle)
 	{
 		IMAGE->alphaRender("title", getMemDC(), 0, 0, titleAlpha);
+
+		if (titleAlpha > 254)
+		{
+			IMAGE->frameRender("key", getMemDC(), 450, 600, 0, 0);
+			TextOut(getMemDC(), 515, 605, "시작", strlen("시작"));
+		}
 	}
 	else
 	{
@@ -50,7 +56,13 @@ void CMainMenuMgr::render()
 		IMAGE->alphaRender("mainmenu_catherine", getMemDC(), 680, 60, menuAlpha);
 		IMAGE->alphaRender("black", getMemDC(), 0, 700, menuAlpha);
 
-
+		if (menuAlpha > 254)
+		{
+			IMAGE->frameRender("key", getMemDC(), 700, 710, 0, 0);
+			TextOut(getMemDC(), 760, 715, "선택", strlen("선택"));
+			//IMAGE->frameRender("key", getMemDC(), 850, 710, 1, 0);
+		}
+		
 		if (selectIdx != 0)
 			IMAGE->alphaFrameRender("mainmenu_menu_small", getMemDC(), 20, 200, 0, 0, menuAlpha);
 		else

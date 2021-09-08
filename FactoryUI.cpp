@@ -43,7 +43,7 @@ void CFactoryUI::render()
         switch (curPlayerType)
         {
         case PLAYER_TYPE::PLAYER1:
-            IMAGE->render("factory_panel_red", getMemDC(), 50, 120);
+            IMAGE->render("factory_panel_red", getMemDC(), 50, 100);
             switch (cursorIdx)
             {
             case 0:
@@ -68,7 +68,7 @@ void CFactoryUI::render()
             }
             break;
         case PLAYER_TYPE::PLAYER2:
-            IMAGE->render("factory_panel_blue", getMemDC(), 50, 120);
+            IMAGE->render("factory_panel_blue", getMemDC(), 50, 100);
             switch (cursorIdx)
             {
             case 0:

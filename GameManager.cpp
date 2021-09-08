@@ -149,6 +149,7 @@ void CGameManager::render()
 	EFFECT->render();
 	this->getMapBuffer()->render(getMemDC(), 0, 0, cam->getCam1().x, cam->getCam1().y, cam->getCamSize().x, cam->getCamSize().y);
 	
+	curPlayer->render();
 	// 카메라에 영향을 받지 않는 유아이 렌더
 	uiMgr->render();
 

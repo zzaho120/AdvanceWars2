@@ -119,4 +119,6 @@ void CImageLoad::resourceLoad()
 	IMAGE->addImage("tank_blue", "images/UI/tank_blue.bmp", 350, 550);
 	IMAGE->addImage("artil_blue", "images/UI/artil_blue.bmp", 350, 550);
 	IMAGE->addImage("APC_blue", "images/UI/APC_blue.bmp", 350, 550);
+
+	IMAGE->addFrameImage("key", "images/UI/key.bmp", 24 * 2 * 2, 12 * 4, 2, 1);
 }
