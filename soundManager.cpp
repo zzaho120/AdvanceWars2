@@ -97,6 +97,7 @@ void soundManager::play(string keyName, float volume)
 		{
 			m_system->playSound(FMOD_CHANNEL_FREE, *iter->second, false, &m_channel[count]);
 			m_channel[count]->setVolume(volume);
+			break;
 		}
 	}
 }

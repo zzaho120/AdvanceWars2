@@ -74,8 +74,24 @@ void COptionUI::exit()
 
 void COptionUI::cursorMove()
 {
-    if (InputManager->isOnceKeyDown(VK_UP)) cursorIdx--;
-    else if (InputManager->isOnceKeyDown(VK_DOWN)) cursorIdx++;
+    if (InputManager->isOnceKeyDown(VK_UP))
+    {
+        cursorIdx--;
+
+        if (SOUND->isPlaySound("move_menu"))
+            SOUND->stop("move_menu");
+        if (!SOUND->isPlaySound("move_menu"))
+            SOUND->play("move_menu", 0.4F);
+    }
+    else if (InputManager->isOnceKeyDown(VK_DOWN))
+    {
+        cursorIdx++;
+
+        if (SOUND->isPlaySound("move_menu"))
+            SOUND->stop("move_menu");
+        if (!SOUND->isPlaySound("move_menu"))
+            SOUND->play("move_menu", 0.4F);
+    }
 
     if (cursorIdx < 0) cursorIdx = 3;
     if (cursorIdx > 3) cursorIdx = 0;
@@ -89,6 +105,7 @@ void COptionUI::turnOver()
         {
         case 0:
             gameMgr->changePlayerMsg();
+
             exit();
             break;
         case 3:

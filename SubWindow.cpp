@@ -4,7 +4,6 @@
 #include "gameNode.h"
 
 POINT CSubWindow::ptMouse = POINT{ 0,0 };
-CTRL CSubWindow::currentCTRL = CTRL::CTRL_DRAW;
 CSubWindow::CSubWindow()
 {
 	backBuffer = new image();
@@ -28,7 +27,7 @@ void CSubWindow::init()
 	int btnWidth = 90;
 	int btnHeight = 25;
 
-	btnDraw = CreateWindow("button", "그리기",
+	btnDraw = CreateWindow("button", "채우기",
 		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
 		startX, startY, btnWidth, btnHeight, hWnd, HMENU(0), m_hInstance, NULL);
 
@@ -117,7 +116,7 @@ LRESULT CSubWindow::WndLogProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 			switch ((CTRL)LOWORD(wParam))
 			{
 			case CTRL::CTRL_DRAW:
-				currentCTRL = (CTRL)(LOWORD(wParam));
+				SUBWIN->getMap()->setAllTile(SUBWIN->GetTileFrame());
 				break;
 
 			case CTRL::CTRL_INIT:

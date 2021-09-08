@@ -26,7 +26,6 @@ private:
 	HWND listFile;
 	HWND btnRemoveFile;
 
-	static CTRL currentCTRL;
 	POINT tileFrame;
 
 	int clickIndex;
@@ -52,9 +51,6 @@ public:
 	HWND GetHwnd() { return hWnd; }
 
 	static POINT GetMousePos() { return ptMouse; }
-
-	static CTRL GetCTRL() { return currentCTRL; }
-	void SetCTRL(CTRL ctrl) { currentCTRL = ctrl; }
 
 	void SetIsActive(bool isActive) { this->isActive = isActive; }
 	bool GetIsActive() { return isActive; }

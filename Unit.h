@@ -45,13 +45,15 @@ public:
 	void update();
 	void render();
 
-	void move(Vec2 _pos, int idx);
 	void wait();
 	
 	// 이동 관련 함수
+	void move(Vec2 _pos, int idx);
 	void moveFloodFill();
 	void checkMoveRange(int idx, int cnt, int checkfuel);
 	bool correctMove(int idx);
+	void playMoveSound();
+	void stopMoveSound();
 
 	// 공격 관련 함수
 	void attackFloodFill();

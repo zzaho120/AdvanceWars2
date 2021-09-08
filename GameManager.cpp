@@ -78,9 +78,9 @@ HRESULT CGameManager::init()
 	unitMgr->init(this);
 	gameResult->init(this);
 
-	uiMgr->addUI(new CFactoryUI(this));
 	uiMgr->addUI(new COptionUI(this));
 	uiMgr->addUI(new CInfoUI(this));
+	uiMgr->addUI(new CFactoryUI(this));
 	uiMgr->addUI(new CActionUI(this));
 
 	for (int idx = 0; idx < static_cast<int>(PLAYER_TYPE::NONE); idx++)
@@ -202,6 +202,10 @@ void CGameManager::completeMoveUnitMsg()
 			map->getTile()[unitMgr->getUnit(idx)->getTileIdx()]->setUnitType(unitMgr->getUnit(idx)->getUnitType());
 			unitMgr->getUnit(idx)->wait();
 			curPlayer->inputInit();
+			if (SOUND->isPlaySound("select"))
+				SOUND->stop("select");
+			if (!SOUND->isPlaySound("select"))
+				SOUND->play("select", 0.4F);
 			break;
 		}
 	}
@@ -272,6 +276,11 @@ void CGameManager::selectUnitMsg()
 				unitMgr->getUnit(idx)->setSelected(true);
 				unitMgr->getUnit(idx)->moveFloodFill();
 				curPlayer->setUnitSelect(true);
+
+				if (SOUND->isPlaySound("select_unit"))
+					SOUND->stop("select_unit");
+				if (!SOUND->isPlaySound("select_unit"))
+					SOUND->play("select_unit", 0.4F);
 				break;
 			}
 		}
@@ -287,6 +296,11 @@ void CGameManager::selectUnitCancelMsg()
 		{
 			unitMgr->getUnit(idx)->setSelected(false);
 			curPlayer->setUnitSelect(false);
+			
+			if (SOUND->isPlaySound("cancel"))
+				SOUND->stop("cancel");
+			if (!SOUND->isPlaySound("cancel"))
+				SOUND->play("cancel", 0.4F);
 			break;
 		}
 	}
@@ -329,6 +343,13 @@ void CGameManager::moveUnitSettingMsg()
 		curUnit->setMove(true);
 		viewActionMsg();
 	}
+	else
+	{
+		if (SOUND->isPlaySound("unavailable"))
+			SOUND->stop("unavailable");
+		if (!SOUND->isPlaySound("unavailable"))
+			SOUND->play("unavailable", 0.4F);
+	}
 }
 
 // 이동 취소 메세지
@@ -343,6 +364,11 @@ void CGameManager::moveUndoMsg()
 			unitMgr->getUnit(idx)->setMove(false);
 			map->getTile()[unitMgr->getUnit(idx)->getTileIdx()]->setUnitType(unitMgr->getUnit(idx)->getUnitType());
 			curPlayer->setMove(false);
+
+			if (SOUND->isPlaySound("cancel"))
+				SOUND->stop("cancel");
+			if (!SOUND->isPlaySound("cancel"))
+				SOUND->play("cancel", 0.4F);
 			break;
 		}
 	}
@@ -371,6 +397,11 @@ void CGameManager::changePlayerMsg()
 		if (isInfoUI)
 			uiMgr->enterUI(idx);
 	}
+
+	if (SOUND->isPlaySound("select"))
+		SOUND->stop("select");
+	if (!SOUND->isPlaySound("select"))
+		SOUND->play("select", 0.4F);
 }
 
 // 공장 생산 UI 출력 메시지
@@ -388,6 +419,11 @@ void CGameManager::viewFactoryMsg()
 				{
 					uiMgr->enterUI(j);
 					curPlayer->setOnUI(true);
+
+					if (SOUND->isPlaySound("select"))
+						SOUND->stop("select");
+					if (!SOUND->isPlaySound("select"))
+						SOUND->play("select", 0.4F);
 					break;
 				}
 			}
@@ -406,6 +442,11 @@ void CGameManager::viewOptionMsg()
 		{
 			uiMgr->enterUI(idx);
 			curPlayer->setOnUI(true);
+
+			if (SOUND->isPlaySound("select"))
+				SOUND->stop("select");
+			if (!SOUND->isPlaySound("select"))
+				SOUND->play("select", 0.4F);
 			break;
 		}
 	}
@@ -420,6 +461,11 @@ void CGameManager::viewActionMsg()
 		if (unitMgr->getVecUnit()[idx]->getSelected())
 		{
 			curUnit = unitMgr->getVecUnit()[idx];
+
+			if (SOUND->isPlaySound("select"))
+				SOUND->stop("select");
+			if (!SOUND->isPlaySound("select"))
+				SOUND->play("select", 0.4F);
 		}
 	}
 	curUnit->setAttack(false);
@@ -440,6 +486,7 @@ void CGameManager::viewActionMsg()
 void CGameManager::closeUIMsg()
 {
 	curPlayer->setOnUI(false);
+
 }
 
 // 빌딩 점령 메시지
@@ -511,7 +558,14 @@ void CGameManager::attackUnitMsg()
 		}
 		oppositTile = map->getTile()[oppositUnit->getTileIdx()];
 	}
-	else return;
+	else
+	{
+		if (SOUND->isPlaySound("unavailable"))
+			SOUND->stop("unavailable");
+		if (!SOUND->isPlaySound("unavailable"))
+			SOUND->play("unavailable", 0.4F);
+		return;
+	}
 
 	command = new CAttackUnitCommand(curUnit, oppositUnit, curTile, oppositTile);
 	HISTORY->add(command);
@@ -647,6 +701,12 @@ void CGameManager::viewUnitRangeMsg()
 		if (unitMgr->getVecUnit()[idx]->getTileIdx() == cursor->getCursorIdx())
 		{
 			curUnit = unitMgr->getUnit(idx);
+
+
+			if (SOUND->isPlaySound("select_unit"))
+				SOUND->stop("select_unit");
+			if (!SOUND->isPlaySound("select_unit"))
+				SOUND->play("select_unit", 0.4F);
 			break;
 		}
 	}
@@ -664,6 +724,7 @@ void CGameManager::cancelUnitRangeMsg()
 		{
 			curUnit = unitMgr->getUnit(idx);
 			curUnit->setRange(false);
+
 			break;
 		}
 	}
@@ -773,6 +834,15 @@ void CGameManager::commandExcute()
 
 void CGameManager::isExitGame()
 {
-	if(isExit)
+	if (isExit)
+	{
+		if (SOUND->isPlaySound("select"))
+			SOUND->stop("select");
+		if (!SOUND->isPlaySound("select"))
+			SOUND->play("select", 0.4F);
+		SOUND->stop("gameover");
+		SOUND->stop("player1bg");
+		SOUND->stop("player2bg");
 		SCENE->changeScene("mainMenuScene");
+	}
 }

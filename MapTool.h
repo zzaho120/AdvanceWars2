@@ -40,7 +40,7 @@ public:
 	bool save(const char* fileName);
 	bool load(const char* fileName);
 
-	void setAllTile(ENVIRONMENT_TYPE type);
+	void setAllTile(Vec2 type);
 
 	// 옵저버 패턴 구현 전
 	//void subscribe(CObject* obj);

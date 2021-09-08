@@ -26,6 +26,7 @@ void mainGame::release()
 
 void mainGame::update()
 {
+	
 	gameNode::update();
 	SCENE->update();
 }
@@ -35,8 +36,11 @@ void mainGame::render(/*HDC hdc*/)
 	PatBlt(getMemDC(), 0, 0, WINSIZEX, WINSIZEY, WHITENESS);
 	//==============================================
 	gameNode::render();
-	SCENE->render();
-	TIME->render(getMemDC());
+	SCENE->render();/*
+	TIME->render(getMemDC()); 
+	TCHAR str[128];
+	wsprintf(str, "%d 으아아아ㅏ", SOUND->getSize());
+	TextOut(getMemDC(), 100, 100, str, strlen(str));*/
 	//==============================================
 	//백버퍼의 내용을 HDC그린다.(건드리지 말것.)
 	//this->getBackBuffer()->render(getHDC(), 0, 0);

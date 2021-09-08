@@ -41,7 +41,6 @@ void CActionUI::update()
 	if (isActive && curPlayerType != PLAYER_TYPE::NONE)
 	{
 		checkCapture();
-		checkAttack();
 		cursorMove();
 		chooseAction();
 	}
@@ -139,7 +138,15 @@ void CActionUI::chooseAction()
 				gameMgr->attackUnitSettingMsg();
 				gameMgr->closeUIMsg();
 				isAttack = true;
+
 				exit();
+			}
+			else
+			{
+				if (SOUND->isPlaySound("unavailable"))
+					SOUND->stop("unavailable");
+				if (!SOUND->isPlaySound("unavailable"))
+					SOUND->play("unavailable", 0.4F);
 			}
 			break;
 		case 1: // 점령
@@ -150,6 +157,13 @@ void CActionUI::chooseAction()
 				gameMgr->closeUIMsg();
 				exit();
 			}
+			else
+			{
+				if (SOUND->isPlaySound("unavailable"))
+					SOUND->stop("unavailable");
+				if (!SOUND->isPlaySound("unavailable"))
+					SOUND->play("unavailable", 0.4F);
+			}
 			break;
 		case 2: // 보급
 			if (gameMgr->isAvailableSupply())
@@ -158,6 +172,13 @@ void CActionUI::chooseAction()
 				gameMgr->completeMoveUnitMsg();
 				gameMgr->closeUIMsg();
 				exit();
+			}
+			else
+			{
+				if (SOUND->isPlaySound("unavailable"))
+					SOUND->stop("unavailable");
+				if (!SOUND->isPlaySound("unavailable"))
+					SOUND->play("unavailable", 0.4F);
 			}
 			break;
 		case 3: // 대기
@@ -199,8 +220,4 @@ void CActionUI::checkCapture()
 			}
 		}
 	}
-}
-
-void CActionUI::checkAttack()
-{
 }

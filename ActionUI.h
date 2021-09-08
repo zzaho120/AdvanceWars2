@@ -29,5 +29,4 @@ public:
 	void cursorMove();
 	void chooseAction();
 	void checkCapture();
-	void checkAttack();
 };

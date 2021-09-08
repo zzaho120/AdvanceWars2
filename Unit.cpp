@@ -300,6 +300,7 @@ void CUnit::move(Vec2 _pos, int idx)
 		ASTAR->update();
 		popIdx = ASTAR->getRoadList().top();
 		moveSetting = true;
+		playMoveSound();
 	}
 
 
@@ -312,8 +313,11 @@ void CUnit::move(Vec2 _pos, int idx)
 		{
 			popIdx = ASTAR->getRoadList().top();
 		}
-		else if(!isArrive)
+		else if (!isArrive)
+		{
 			isArrive = true;
+			stopMoveSound();
+		}
 	}
 	if (pos.x < getLeftTopVec2(tile[popIdx]->getPos(), TILE_SIZE).x)
 	{
@@ -736,6 +740,46 @@ void CUnit::weaponSetting(UNIT_TYPE type)
 bool CUnit::correctMove(int idx)
 {
 	return moveRange[idx];
+}
+
+void CUnit::playMoveSound()
+{
+	switch (unitType)
+	{
+	case UNIT_TYPE::INFANTRY:
+	case UNIT_TYPE::MECH:
+		if (!SOUND->isPlaySound("walk"))
+			SOUND->play("walk", 0.4F);
+		break;
+	case UNIT_TYPE::TANK:
+	case UNIT_TYPE::ARTILLERY:
+	case UNIT_TYPE::APC:
+		if (!SOUND->isPlaySound("caterpillar_start"))
+			SOUND->play("caterpillar_start", 0.4F);
+		break;
+	default:
+		break;
+	}
+}
+
+void CUnit::stopMoveSound()
+{
+	switch (unitType)
+	{
+	case UNIT_TYPE::INFANTRY:
+	case UNIT_TYPE::MECH:
+		if (SOUND->isPlaySound("walk"))
+			SOUND->stop("walk");
+		break;
+	case UNIT_TYPE::TANK:
+	case UNIT_TYPE::ARTILLERY:
+	case UNIT_TYPE::APC:
+		if (SOUND->isPlaySound("caterpillar_start"))
+			SOUND->stop("caterpillar_start");
+		break;
+	default:
+		break;
+	}
 }
 
 void CUnit::capture()

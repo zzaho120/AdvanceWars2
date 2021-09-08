@@ -85,7 +85,7 @@ void CPlayer::selectUnit()
 		gameMgr->selectUnitMsg();
 	}
 	// 유닛 사정거리 범위 보기
-	if (InputManager->isStayKeyDown('X'))
+	if (InputManager->isOnceKeyDown('X'))
 	{
 		gameMgr->viewUnitRangeMsg();
 	}

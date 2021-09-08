@@ -44,9 +44,53 @@ void CFactoryUI::render()
         {
         case PLAYER_TYPE::PLAYER1:
             IMAGE->render("factory_panel_red", getMemDC(), 50, 120);
+            switch (cursorIdx)
+            {
+            case 0:
+                IMAGE->render("infry_red", getMemDC(), 655, 170);
+                break;
+
+            case 1:
+                IMAGE->render("mech_red", getMemDC(), 655, 170);
+                break;
+
+            case 2:
+                IMAGE->render("tank_red", getMemDC(), 655, 170);
+                break;
+
+            case 3:
+                IMAGE->render("artil_red", getMemDC(), 655, 170);
+                break;
+
+            case 4:
+                IMAGE->render("APC_red", getMemDC(), 655, 170);
+                break;
+            }
             break;
         case PLAYER_TYPE::PLAYER2:
             IMAGE->render("factory_panel_blue", getMemDC(), 50, 120);
+            switch (cursorIdx)
+            {
+            case 0:
+                IMAGE->render("infry_blue", getMemDC(), 655, 170);
+                break;
+
+            case 1:
+                IMAGE->render("mech_blue", getMemDC(), 655, 170);
+                break;
+
+            case 2:
+                IMAGE->render("tank_blue", getMemDC(), 655, 170);
+                break;
+
+            case 3:
+                IMAGE->render("artil_blue", getMemDC(), 655, 170);
+                break;
+
+            case 4:
+                IMAGE->render("APC_blue", getMemDC(), 655, 170);
+                break;
+            }
             break;
         default:
             break;
@@ -71,8 +115,22 @@ void CFactoryUI::exit()
 
 void CFactoryUI::cursorMove()
 {
-    if (InputManager->isOnceKeyDown(VK_UP) && cursorIdx > 0) cursorIdx--;
-    else if (InputManager->isOnceKeyDown(VK_DOWN) && cursorIdx < UNIT_MAX_NUM) cursorIdx++;
+    if (InputManager->isOnceKeyDown(VK_UP) && cursorIdx > 0)
+    {
+        if (SOUND->isPlaySound("move_menu"))
+            SOUND->stop("move_menu");
+        if (!SOUND->isPlaySound("move_menu"))
+            SOUND->play("move_menu", 0.4F);
+        cursorIdx--;
+    }
+    else if (InputManager->isOnceKeyDown(VK_DOWN) && cursorIdx < UNIT_MAX_NUM)
+    {
+        if (SOUND->isPlaySound("move_menu"))
+            SOUND->stop("move_menu");
+        if (!SOUND->isPlaySound("move_menu"))
+            SOUND->play("move_menu", 0.4F);
+        cursorIdx++;
+    }
 }
 
 void CFactoryUI::unitGenerate()
@@ -101,9 +159,21 @@ void CFactoryUI::unitGenerate()
 
         if (cost <= gameMgr->getCurPlayer()->getMoney())
         {
+            if (SOUND->isPlaySound("select"))
+                SOUND->stop("select");
+            if (!SOUND->isPlaySound("select"))
+                SOUND->play("select", 0.4F);
+
             gameMgr->generateUnitMsg(static_cast<UNIT_TYPE>(cursorIdx + 1));
             gameMgr->closeUIMsg();
             exit();
+        }
+        else
+        {
+            if (SOUND->isPlaySound("unavailable"))
+                SOUND->stop("unavailable");
+            if (!SOUND->isPlaySound("unavailable"))
+                SOUND->play("unavailable", 0.4F);
         }
     }
 }

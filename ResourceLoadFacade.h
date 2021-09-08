@@ -1,8 +1,9 @@
 #pragma once
+#include"gameNode.h"
 #include"ImageLoad.h"
 #include"AnimationLoad.h"
 #include"SoundLoad.h"
-class CResourceLoadFacade
+class CResourceLoadFacade : public gameNode
 {
 private:
 	CImageLoad imgLoad;

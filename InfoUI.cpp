@@ -49,19 +49,23 @@ void CInfoUI::render()
     infoRender();
 
     int curMoney = gameMgr->getCurPlayer()->getMoney();
+    int curTurn = gameMgr->getGameData()->getTurn();
     if(curMoney > 99999)
-        IMAGE->frameRender("number", getMemDC(), panelPos.x + 50, panelPos.y + 10, curMoney % 1000000 / 100000, 0); // 100000의 자리
+        IMAGE->frameRender("number", getMemDC(), panelPos.x + 60, panelPos.y + 10, curMoney % 1000000 / 100000, 0); // 100000의 자리
     if(curMoney > 9999)
-        IMAGE->frameRender("number", getMemDC(), panelPos.x + 80, panelPos.y + 10, curMoney % 100000 / 10000, 0); // 10000의 자리
+        IMAGE->frameRender("number", getMemDC(), panelPos.x + 90, panelPos.y + 10, curMoney % 100000 / 10000, 0); // 10000의 자리
     if (curMoney > 999)
-        IMAGE->frameRender("number", getMemDC(), panelPos.x + 110, panelPos.y + 10, curMoney % 10000 / 1000, 0); // 1000의 자리
+        IMAGE->frameRender("number", getMemDC(), panelPos.x + 120, panelPos.y + 10, curMoney % 10000 / 1000, 0); // 1000의 자리
     if (curMoney > 99)
-        IMAGE->frameRender("number", getMemDC(), panelPos.x + 140, panelPos.y + 10, curMoney % 1000 / 100, 0); // 100의 자리
+        IMAGE->frameRender("number", getMemDC(), panelPos.x + 150, panelPos.y + 10, curMoney % 1000 / 100, 0); // 100의 자리
     if (curMoney > 9)
-        IMAGE->frameRender("number", getMemDC(), panelPos.x + 170, panelPos.y + 10, curMoney % 100 / 10, 0); // 10의 자리
-    IMAGE->frameRender("number", getMemDC(), panelPos.x + 200, panelPos.y + 10, curMoney % 10, 0); // 1의 자리
-
+        IMAGE->frameRender("number", getMemDC(), panelPos.x + 180, panelPos.y + 10, curMoney % 100 / 10, 0); // 10의 자리
+    IMAGE->frameRender("number", getMemDC(), panelPos.x + 210, panelPos.y + 10, curMoney % 10, 0); // 1의 자리.
     
+    if (curTurn > 9)
+        IMAGE->frameRender("number", getMemDC(), panelPos.x + 20, panelPos.y + 55, curTurn % 100 / 10, 0); // 10의 자리
+    IMAGE->frameRender("number", getMemDC(), panelPos.x + 50, panelPos.y + 55, curTurn % 10, 0); // 1의 자리.
+    IMAGE->render("turn", getMemDC(), panelPos.x + 80, panelPos.y + 55);
 }
 
 void CInfoUI::enter()
@@ -286,10 +290,8 @@ void CInfoUI::infoRender()
     if (gameMgr->isAttackMode() && gameMgr->isUnitOnCursor())
     {
         IMAGE->render("damageUI", getMemDC(), infoPos.x - 150 + 30, infoPos.y - 95);
-        if(gameMgr->predictDamaged() > 9)
+        if (gameMgr->predictDamaged() > 9)
             IMAGE->frameRender("number", getMemDC(), infoPos.x - 150 + 43, infoPos.y - 60, gameMgr->predictDamaged() / 10, 0);
         IMAGE->frameRender("number", getMemDC(), infoPos.x - 150 + 43 + 25, infoPos.y - 60, gameMgr->predictDamaged() % 10, 0);
     }
-
-
 }

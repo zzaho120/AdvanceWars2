@@ -31,9 +31,6 @@ void CMapTool::update()
 	if (!SUBWIN->GetIsActive() && InputManager->isOnceKeyDown('Z'))
 		setMap();
 
-	if (InputManager->isOnceKeyDown('J'))
-		setAllTile(ENVIRONMENT_TYPE::SEA);
-
 	map->update();
 	cam->setTargetVec2(cursor);
 	cam->update();
@@ -51,10 +48,42 @@ void CMapTool::render()
 
 void CMapTool::cursorMove()
 {	
-	if (InputManager->isOnceKeyDown(VK_LEFT)) cursor.x -= TILE_SIZE_X;
-	else if (InputManager->isOnceKeyDown(VK_RIGHT)) cursor.x += TILE_SIZE_X;
-	else if (InputManager->isOnceKeyDown(VK_UP)) cursor.y -= TILE_SIZE_Y;
-	else if (InputManager->isOnceKeyDown(VK_DOWN)) cursor.y += TILE_SIZE_Y;
+	if (InputManager->isOnceKeyDown(VK_LEFT))
+	{
+		cursor.x -= TILE_SIZE_X;
+
+		if (SOUND->isPlaySound("move_cursor"))
+			SOUND->stop("move_cursor");
+		if (!SOUND->isPlaySound("move_cursor"))
+			SOUND->play("move_cursor", 0.4F);
+	}
+	else if (InputManager->isOnceKeyDown(VK_RIGHT))
+	{
+		cursor.x += TILE_SIZE_X;
+
+		if (SOUND->isPlaySound("move_cursor"))
+			SOUND->stop("move_cursor");
+		if (!SOUND->isPlaySound("move_cursor"))
+			SOUND->play("move_cursor", 0.4F);
+	}
+	else if (InputManager->isOnceKeyDown(VK_UP))
+	{
+		cursor.y -= TILE_SIZE_Y;
+
+		if (SOUND->isPlaySound("move_cursor"))
+			SOUND->stop("move_cursor");
+		if (!SOUND->isPlaySound("move_cursor"))
+			SOUND->play("move_cursor", 0.4F);
+	}
+	else if (InputManager->isOnceKeyDown(VK_DOWN))
+	{
+		cursor.y += TILE_SIZE_Y;
+
+		if (SOUND->isPlaySound("move_cursor"))
+			SOUND->stop("move_cursor");
+		if (!SOUND->isPlaySound("move_cursor"))
+			SOUND->play("move_cursor", 0.4F);
+	}
 }
 
 void CMapTool::setMap()
@@ -164,6 +193,10 @@ void CMapTool::setMap()
 					break;
 				}
 			}
+			if (SOUND->isPlaySound("maptool_set"))
+				SOUND->stop("maptool_set");
+			if (!SOUND->isPlaySound("maptool_set"))
+				SOUND->play("maptool_set", 0.4F);
 		}
 	}
 }
@@ -950,8 +983,87 @@ bool CMapTool::load(const char* fileName)
 	return result;
 }
 
-void CMapTool::setAllTile(ENVIRONMENT_TYPE type)
+void CMapTool::setAllTile(Vec2 type)
 {
+	ENVIRONMENT_TYPE environment = ENVIRONMENT_TYPE::NONE;
+	BUILDING_TYPE building = BUILDING_TYPE::NONE;
+	PLAYER_TYPE player = PLAYER_TYPE::NONE;
+	if (type.y == 0)
+	{
+		if (type.x == 0)
+			environment = ENVIRONMENT_TYPE::PLAIN;
+		if (type.x == 1)
+			environment = ENVIRONMENT_TYPE::WOOD;
+		if (type.x == 2)
+			environment = ENVIRONMENT_TYPE::MOUNTAIN;
+		if (type.x == 3)
+			environment = ENVIRONMENT_TYPE::SEA;
+		if (type.x == 4)
+			environment = ENVIRONMENT_TYPE::RIVER;
+		if (type.x == 5)
+			environment = ENVIRONMENT_TYPE::ROAD;
+	}
+	else if (type.y == 1)
+	{
+		if (type.x == 0)
+		{
+			environment = ENVIRONMENT_TYPE::NONE;
+			building = BUILDING_TYPE::CITY;
+			player = PLAYER_TYPE::PLAYER1;
+		}
+		if (type.x == 1)
+		{
+			environment = ENVIRONMENT_TYPE::NONE;
+			building = BUILDING_TYPE::CITY;
+			player = PLAYER_TYPE::PLAYER2;
+		}
+		if (type.x == 5)
+		{
+			environment = ENVIRONMENT_TYPE::NONE;
+			building = BUILDING_TYPE::CITY;
+			player = PLAYER_TYPE::NONE;
+		}
+	}
+	else if (type.y == 2)
+	{
+		if (type.x == 0)
+		{
+			environment = ENVIRONMENT_TYPE::NONE;
+			building = BUILDING_TYPE::FACTORY;
+			player = PLAYER_TYPE::PLAYER1;
+		}
+		if (type.x == 1)
+		{
+			environment = ENVIRONMENT_TYPE::NONE;
+			building = BUILDING_TYPE::FACTORY;
+			player = PLAYER_TYPE::PLAYER2;
+		}
+		if (type.x == 5)
+		{
+			environment = ENVIRONMENT_TYPE::NONE;
+			building = BUILDING_TYPE::FACTORY;
+			player = PLAYER_TYPE::NONE;
+		}
+	}
+	else if (type.y == 3)
+	{
+		if (type.x == 0)
+		{
+			environment = ENVIRONMENT_TYPE::NONE;
+			building = BUILDING_TYPE::HEADQUATERS;
+			player = PLAYER_TYPE::PLAYER1;
+		}
+		if (type.x == 1)
+		{
+			environment = ENVIRONMENT_TYPE::NONE;
+			building = BUILDING_TYPE::HEADQUATERS;
+			player = PLAYER_TYPE::PLAYER2;
+		}
+	}
 	for (int idx = 0; idx < TILE_NUM_X * TILE_NUM_Y; idx++)
-		map->getTile()[idx]->setTileType(type);
+	{
+		map->getTile()[idx]->setTileType(environment);
+		map->getTile()[idx]->setPlayerType(player);
+		map->getTile()[idx]->setBuildingType(building);
+	}
 }

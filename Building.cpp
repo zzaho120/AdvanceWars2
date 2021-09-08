@@ -46,6 +46,18 @@ void CBuilding::capture(CUnit* unit)
 		{
 			playerType = unit->getPlayerType();
 			unCapture();
+
+			if (SOUND->isPlaySound("capture_finish"))
+				SOUND->stop("capture_finish");
+			if (!SOUND->isPlaySound("capture_finish"))
+				SOUND->play("capture_finish", 0.4F);
+		}
+		else
+		{
+			if (SOUND->isPlaySound("capturing"))
+				SOUND->stop("capturing");
+			if (!SOUND->isPlaySound("capturing"))
+				SOUND->play("capturing", 0.4F);
 		}
 	}
 }

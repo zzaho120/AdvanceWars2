@@ -53,20 +53,36 @@ void CCursor::cursorMove()
 	{
 		pos.x -= TILE_SIZE_X;
 		tileIdx -= 1;
+		if (SOUND->isPlaySound("move_cursor"))
+			SOUND->stop("move_cursor");
+		if (!SOUND->isPlaySound("move_cursor"))
+			SOUND->play("move_cursor", 0.4F);
 	}
 	else if (InputManager->isOnceKeyDown(VK_RIGHT))
 	{
 		pos.x += TILE_SIZE_X;
 		tileIdx += 1;
+		if (SOUND->isPlaySound("move_cursor"))
+			SOUND->stop("move_cursor");
+		if (!SOUND->isPlaySound("move_cursor"))
+			SOUND->play("move_cursor", 0.4F);
 	}
 	else if (InputManager->isOnceKeyDown(VK_UP))
 	{
 		pos.y -= TILE_SIZE_Y;
 		tileIdx -= 30;
+		if (SOUND->isPlaySound("move_cursor"))
+			SOUND->stop("move_cursor");
+		if (!SOUND->isPlaySound("move_cursor"))
+			SOUND->play("move_cursor", 0.4F);
 	}
 	else if (InputManager->isOnceKeyDown(VK_DOWN))
 	{
 		pos.y += TILE_SIZE_Y;
 		tileIdx += 30;
+		if (SOUND->isPlaySound("move_cursor"))
+			SOUND->stop("move_cursor");
+		if (!SOUND->isPlaySound("move_cursor"))
+			SOUND->play("move_cursor", 0.4F);
 	}
 }

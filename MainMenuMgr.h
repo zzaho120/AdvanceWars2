@@ -6,8 +6,13 @@ private:
 	int selectIdx;
 	int titleAlpha;
 	int menuAlpha;
+	int guideIdx;
+
 	bool isTitle;
 	bool isSelect;
+	bool isGuide;
+
+	char guideStr[128];
 public:
 	CMainMenuMgr();
 	~CMainMenuMgr();
@@ -18,5 +23,6 @@ public:
 	void render();
 
 	void menuInput();
+	void guideStrSetting();
 	void chooseMenu();
 };

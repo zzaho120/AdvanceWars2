@@ -52,6 +52,7 @@ void CImageLoad::resourceLoad()
 
 	IMAGE->addFrameImage("cursor", "images/UI/cursor.bmp", 64 * 5, 64, 5, 1);
 	IMAGE->addFrameImage("number", "images/UI/number.bmp", 30 * 11, 30, 11, 1);
+	IMAGE->addImage("turn", "images/UI/turn.bmp", 30 * 4, 30);
 
 	IMAGE->addFrameImage("unit_hp", "images/UI/unit_hp.bmp", 25 * 10, 25, 10, 1);
 	IMAGE->addFrameImage("unit_status_mark", "images/UI/unit_status_mark.bmp", 25 * 3, 25 * 5, 3, 5);
@@ -73,8 +74,8 @@ void CImageLoad::resourceLoad()
 	IMAGE->addImage("option_panel_red", "images/UI/option_panel_red.bmp", 300, 400);
 	IMAGE->addImage("option_panel_blue", "images/UI/option_panel_blue.bmp", 300, 400);
 
-	IMAGE->addImage("infoUI_gold_red", "images/UI/infoUI_gold_red.bmp", 250, 100);
-	IMAGE->addImage("infoUI_gold_blue", "images/UI/infoUI_gold_blue.bmp", 250, 100);
+	IMAGE->addImage("infoUI_gold_red", "images/UI/infoUI_gold_red.bmp", 260, 100);
+	IMAGE->addImage("infoUI_gold_blue", "images/UI/infoUI_gold_blue.bmp", 260, 100);
 
 	IMAGE->addImage("action_panel_red", "images/UI/action_panel_red.bmp", 250, 360);
 	IMAGE->addImage("action_panel_blue", "images/UI/action_panel_blue.bmp", 250, 360);
@@ -100,8 +101,22 @@ void CImageLoad::resourceLoad()
 	IMAGE->addImage("mainmenu_selectmode", "images/UI/mainmenu_selectmode.bmp", 132 * 5, 24 * 5);
 	IMAGE->addImage("mainmenu_catherine", "images/UI/mainmenu_catherine.bmp", 86 * 5, 160 * 5);
 
-	IMAGE->addFrameImage("mainmenu_menu", "images/UI/mainmenu_menu.bmp", 132 * 5, 24 * 5 * 3, 1, 3);
-	IMAGE->addFrameImage("mainmenu_menu_small", "images/UI/mainmenu_menu_small.bmp", 132 * 5, 24 * 5 * 3, 1, 3);
+	IMAGE->addFrameImage("mainmenu_menu", "images/UI/mainmenu_menu.bmp", 132 * 5, 24 * 5 * 4, 1, 4);
+	IMAGE->addFrameImage("mainmenu_menu_small", "images/UI/mainmenu_menu_small.bmp", 132 * 5, 24 * 5 * 4, 1, 4);
 
 	IMAGE->addImage("title", "images/UI/title.bmp", WINSIZEX, WINSIZEY);
+
+	IMAGE->addFrameImage("help", "images/UI/help.bmp", 5253 * 2, 360 * 2, 17, 1);
+	
+	IMAGE->addImage("infry_red", "images/UI/infry_red.bmp", 350, 550);
+	IMAGE->addImage("mech_red", "images/UI/mech_red.bmp", 350, 550);
+	IMAGE->addImage("tank_red", "images/UI/tank_red.bmp", 350, 550);
+	IMAGE->addImage("artil_red", "images/UI/artil_red.bmp", 350, 550);
+	IMAGE->addImage("APC_red", "images/UI/APC_red.bmp", 350, 550);
+
+	IMAGE->addImage("infry_blue", "images/UI/infry_blue.bmp", 350, 550);
+	IMAGE->addImage("mech_blue", "images/UI/mech_blue.bmp", 350, 550);
+	IMAGE->addImage("tank_blue", "images/UI/tank_blue.bmp", 350, 550);
+	IMAGE->addImage("artil_blue", "images/UI/artil_blue.bmp", 350, 550);
+	IMAGE->addImage("APC_blue", "images/UI/APC_blue.bmp", 350, 550);
 }

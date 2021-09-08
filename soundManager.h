@@ -42,5 +42,7 @@ public:
 	bool isPlaySound(string keyName);
 	//일시 정지 중이냐
 	bool isPauseSound(string keyName);
+
+	int getSize() { return m_totalSounds.size(); }
 };
 
