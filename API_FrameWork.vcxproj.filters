@@ -1,0 +1,592 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="gameNode">
+      <UniqueIdentifier>{2a0be0e6-62fd-43de-a606-55b511847593}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="singleton">
+      <UniqueIdentifier>{87bf2d5b-3654-459b-adb0-5178817b9f2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mainGame">
+      <UniqueIdentifier>{f28c5d41-82f0-4ccf-9c33-7c155409d006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{77fc1430-c839-4247-ae8d-f85644be1aa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UTIL">
+      <UniqueIdentifier>{693a5e0e-cac8-4d85-bbd8-7c6f50294b06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="image">
+      <UniqueIdentifier>{f246c95e-8530-4564-a361-9e48ca56eb83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="타이머">
+      <UniqueIdentifier>{153e0e81-aff6-49db-8d0b-f53ec02a7782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="애니메이션">
+      <UniqueIdentifier>{f76728bc-10bf-45ed-82bd-a7a8932a210f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="이펙트">
+      <UniqueIdentifier>{799f9037-ac59-46a7-8c21-272e269886bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class">
+      <UniqueIdentifier>{21985008-db27-4774-b9a8-8ae93d4859b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object">
+      <UniqueIdentifier>{cd66a7a1-0144-444a-be2d-224b94db9547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Map">
+      <UniqueIdentifier>{08c21ad6-974b-4de2-8e42-0ac773efb975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\MapTool">
+      <UniqueIdentifier>{35fe68ac-b1fe-45d8-8cb5-801a9264073a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\Buliding">
+      <UniqueIdentifier>{cfbea72d-5b87-4bb1-955c-0c91c556ce6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\ResourceLoad">
+      <UniqueIdentifier>{fca9051c-ba62-4248-a31b-94d72e604844}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Camera">
+      <UniqueIdentifier>{74b4145e-c631-4821-aaff-e916208f0260}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\SubWindow">
+      <UniqueIdentifier>{cbb2f53f-d5ac-438f-94ec-d59203a7c69a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\animationMgr">
+      <UniqueIdentifier>{d9bcce12-d232-4958-bf25-61290afd20f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\effectMgr">
+      <UniqueIdentifier>{7f0f7442-8ed1-47cb-b3ff-ec0c4ac1c0dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\imageMgr">
+      <UniqueIdentifier>{03e6775a-3bcc-4b42-b36e-8842e48c489b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\inputMgr">
+      <UniqueIdentifier>{6d6869dd-3ae2-4cc4-b74f-e8f0154c5d7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\sceneMgr">
+      <UniqueIdentifier>{8ed5ace4-cc5f-464a-bddb-c4129cda9d60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\soundMgr">
+      <UniqueIdentifier>{991c2d90-651d-4611-8686-f2f405ad08b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\timeMgr">
+      <UniqueIdentifier>{bcdc498b-bfe9-49b8-bc01-aeabf3adcf9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\Tile">
+      <UniqueIdentifier>{ee643981-644b-44fa-ad4f-5770380a956f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern">
+      <UniqueIdentifier>{8efb82d4-0476-411a-97df-a003f5b7978f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Factory">
+      <UniqueIdentifier>{eac2d70f-96d2-4841-9fa8-2b21f5f737af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Command">
+      <UniqueIdentifier>{54a1a10c-4e8e-45d6-bb55-426a110fe2e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\Unit">
+      <UniqueIdentifier>{74ae5c6b-2b66-4616-95fb-816109eade81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Astar">
+      <UniqueIdentifier>{88e9bed6-ff89-4770-a4c9-9d80ef98c57b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\buildingMgr">
+      <UniqueIdentifier>{3748b163-3902-4c1b-bb31-f1f535a31863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\Cursor">
+      <UniqueIdentifier>{e988c281-da25-4c33-91e0-db24dd61a4af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Player">
+      <UniqueIdentifier>{4d1a8767-f722-462e-a632-d3a650aef556}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\CommandHistory">
+      <UniqueIdentifier>{8c6992ca-9a78-460c-8a81-96ad40cc709a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Weapon">
+      <UniqueIdentifier>{92bdda6d-bb14-4de1-b11c-830b06eee73f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\UI">
+      <UniqueIdentifier>{439a5e34-20de-4286-87fd-a129b7c327f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\UI\FactoryUI">
+      <UniqueIdentifier>{daafec18-3dc4-4695-bf2c-799bbef8d68a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Command\GenerateUnit">
+      <UniqueIdentifier>{5b588f9f-8b2d-4ba9-a30d-1389758c5ddb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Command\MoveUnit">
+      <UniqueIdentifier>{2d528c68-2772-4518-8709-5070955237e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\UIMgr">
+      <UniqueIdentifier>{54d84d15-bd69-4186-8fed-e9376bfca96f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\GameMgr">
+      <UniqueIdentifier>{e25f7b3d-4654-45bf-a6bc-debaf283c441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\UI\OptionUI">
+      <UniqueIdentifier>{ea6062b9-9fa7-47ae-b702-ef953c8e64d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\UI\InfoUI">
+      <UniqueIdentifier>{ebce1f58-9642-41ae-a448-22e8e0c700ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\Object\UI\AcionUI">
+      <UniqueIdentifier>{0732b2ca-5c16-49bf-9c24-4b09ee00d0b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Command\CaptureBuilding">
+      <UniqueIdentifier>{455fb440-c83c-4576-b841-787ca93f5bd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\UnitMgr">
+      <UniqueIdentifier>{4f146de9-b125-4a04-98d3-11b6220a7adf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Command\AttackUnit">
+      <UniqueIdentifier>{4c1bb701-c038-4c9c-9682-54dcca1f0144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Command\DestroyUnit">
+      <UniqueIdentifier>{b5406861-79cb-4957-bfc1-4be67754ec2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Command\RepairUnit">
+      <UniqueIdentifier>{264d27a7-bc3e-41a5-9c65-8da51b815196}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pattern\Command\SupplyUnit">
+      <UniqueIdentifier>{f11afcf4-5ef3-4757-b3ea-893a8021da81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\GameData">
+      <UniqueIdentifier>{258fa1a6-1d0f-488f-9fac-7ea45bafe8e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{2bd20767-e32a-4ae3-a469-2c8cfb3187a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\GameScene">
+      <UniqueIdentifier>{73c7e451-be6e-4b28-9358-1284110d2fc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\MapToolScene">
+      <UniqueIdentifier>{12328b1b-2bd9-4184-9668-b58919663941}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\MainMenuScene">
+      <UniqueIdentifier>{248cdef1-49c0-4395-9b61-1a8f1f6733e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\MapToolMgr">
+      <UniqueIdentifier>{89251a98-b42c-4760-9bee-4d2ee416c49a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class\GameResult">
+      <UniqueIdentifier>{4dd9800f-79c7-4f10-99e7-50192b68aad4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\MainMenuMgr">
+      <UniqueIdentifier>{b82b4787-b545-498e-b604-fd52a1f8b9e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\MapDataMgr">
+      <UniqueIdentifier>{9ae11c7b-7c28-4583-8f67-99dfd26f01a8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="API_FrameWork.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="commonMacroFunction.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton.h">
+      <Filter>singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="gameNode.h">
+      <Filter>gameNode</Filter>
+    </ClInclude>
+    <ClInclude Include="mainGame.h">
+      <Filter>mainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="randomFunction.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>UTIL</Filter>
+    </ClInclude>
+    <ClInclude Include="image.h">
+      <Filter>image</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>타이머</Filter>
+    </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>애니메이션</Filter>
+    </ClInclude>
+    <ClInclude Include="effect.h">
+      <Filter>이펙트</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Class\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="enum.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Class\Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="MapTool.h">
+      <Filter>Class\MapTool</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Class\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Class\Object\Buliding</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceLoadFacade.h">
+      <Filter>Class\ResourceLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageLoad.h">
+      <Filter>Class\ResourceLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationLoad.h">
+      <Filter>Class\ResourceLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Class\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="SubWindow.h">
+      <Filter>Class\SubWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="MapToolSub.h">
+      <Filter>Class\MapTool</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>Class\Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="animationManager.h">
+      <Filter>Manager\animationMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="effectManager.h">
+      <Filter>Manager\effectMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="imageManager.h">
+      <Filter>Manager\imageMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Manager\inputMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneManager.h">
+      <Filter>Manager\sceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="soundManager.h">
+      <Filter>Manager\soundMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="timeManager.h">
+      <Filter>Manager\timeMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitManager.h">
+      <Filter>Manager\UnitMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitFactory.h">
+      <Filter>Pattern\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Pattern\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="globalValue.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Astar.h">
+      <Filter>Class\Astar</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Manager\GameMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingManager.h">
+      <Filter>Manager\buildingMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Cursor.h">
+      <Filter>Class\Object\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Class\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandHistory.h">
+      <Filter>Manager\CommandHistory</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Class\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildingFactory.h">
+      <Filter>Pattern\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Class\Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FactoryUI.h">
+      <Filter>Class\Object\UI\FactoryUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GenerateUnitCommand.h">
+      <Filter>Pattern\Command\GenerateUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveUnitCommand.h">
+      <Filter>Pattern\Command\MoveUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Manager\UIMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionUI.h">
+      <Filter>Class\Object\UI\OptionUI</Filter>
+    </ClInclude>
+    <ClInclude Include="InfoUI.h">
+      <Filter>Class\Object\UI\InfoUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionUI.h">
+      <Filter>Class\Object\UI\AcionUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CaptureBuildingCommand.h">
+      <Filter>Pattern\Command\CaptureBuilding</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackUnitCommand.h">
+      <Filter>Pattern\Command\AttackUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="DestroyUnitCommand.h">
+      <Filter>Pattern\Command\DestroyUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="RepairUnitCommand.h">
+      <Filter>Pattern\Command\RepairUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="SupplyUnitCommand.h">
+      <Filter>Pattern\Command\SupplyUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>Class\GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Scene\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MapToolScene.h">
+      <Filter>Scene\MapToolScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuScene.h">
+      <Filter>Scene\MainMenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuMgr.h">
+      <Filter>Manager\MainMenuMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="GameResult.h">
+      <Filter>Class\GameResult</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundLoad.h">
+      <Filter>Class\ResourceLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="MapToolMgr.h">
+      <Filter>Manager\MapToolMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="MapDataManager.h">
+      <Filter>Manager\MapDataMgr</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="API_FrameWork.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="gameNode.cpp">
+      <Filter>gameNode</Filter>
+    </ClCompile>
+    <ClCompile Include="mainGame.cpp">
+      <Filter>mainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>UTIL</Filter>
+    </ClCompile>
+    <ClCompile Include="image.cpp">
+      <Filter>image</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>타이머</Filter>
+    </ClCompile>
+    <ClCompile Include="animation.cpp">
+      <Filter>애니메이션</Filter>
+    </ClCompile>
+    <ClCompile Include="effect.cpp">
+      <Filter>이펙트</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Class\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Class\Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="MapTool.cpp">
+      <Filter>Class\MapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Class\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Class\Object\Buliding</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceLoadFacade.cpp">
+      <Filter>Class\ResourceLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageLoad.cpp">
+      <Filter>Class\ResourceLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationLoad.cpp">
+      <Filter>Class\ResourceLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Class\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="SubWindow.cpp">
+      <Filter>Class\SubWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="MapToolSub.cpp">
+      <Filter>Class\MapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>Class\Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="animationManager.cpp">
+      <Filter>Manager\animationMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="effectManager.cpp">
+      <Filter>Manager\effectMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="imageManager.cpp">
+      <Filter>Manager\imageMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Manager\inputMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneManager.cpp">
+      <Filter>Manager\sceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="soundManager.cpp">
+      <Filter>Manager\soundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="timeManager.cpp">
+      <Filter>Manager\timeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitManager.cpp">
+      <Filter>Manager\UnitMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitFactory.cpp">
+      <Filter>Pattern\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Astar.cpp">
+      <Filter>Class\Astar</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Manager\GameMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingManager.cpp">
+      <Filter>Manager\buildingMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Cursor.cpp">
+      <Filter>Class\Object\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Class\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandHistory.cpp">
+      <Filter>Manager\CommandHistory</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Class\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildingFactory.cpp">
+      <Filter>Pattern\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Class\Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="FactoryUI.cpp">
+      <Filter>Class\Object\UI\FactoryUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GenerateUnitCommand.cpp">
+      <Filter>Pattern\Command\GenerateUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Manager\UIMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionUI.cpp">
+      <Filter>Class\Object\UI\OptionUI</Filter>
+    </ClCompile>
+    <ClCompile Include="InfoUI.cpp">
+      <Filter>Class\Object\UI\InfoUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionUI.cpp">
+      <Filter>Class\Object\UI\AcionUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CaptureBuildingCommand.cpp">
+      <Filter>Pattern\Command\CaptureBuilding</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackUnitCommand.cpp">
+      <Filter>Pattern\Command\AttackUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="DestroyUnitCommand.cpp">
+      <Filter>Pattern\Command\DestroyUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="RepairUnitCommand.cpp">
+      <Filter>Pattern\Command\RepairUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="SupplyUnitCommand.cpp">
+      <Filter>Pattern\Command\SupplyUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="GameData.cpp">
+      <Filter>Class\GameData</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Scene\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MapToolScene.cpp">
+      <Filter>Scene\MapToolScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuScene.cpp">
+      <Filter>Scene\MainMenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuMgr.cpp">
+      <Filter>Manager\MainMenuMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="GameResult.cpp">
+      <Filter>Class\GameResult</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundLoad.cpp">
+      <Filter>Class\ResourceLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="MapToolMgr.cpp">
+      <Filter>Manager\MapToolMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="MapDataManager.cpp">
+      <Filter>Manager\MapDataMgr</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="API_FrameWork.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="API_FrameWork.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
