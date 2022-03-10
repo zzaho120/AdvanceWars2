@@ -18,7 +18,7 @@ public:
 	{
 		SOUND->play("destroy", 0.3F);
 		EFFECT->play("ground_destroy", curUnit->getPos().x + TILE_SIZE_X / 2, curUnit->getPos().y + TILE_SIZE_Y / 2);
-		unitMgr->eraseUnit(curUnit);
+		unitMgr->removeUnit(curUnit);
 	}
 
 	virtual void undo()

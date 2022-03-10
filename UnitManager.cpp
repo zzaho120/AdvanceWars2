@@ -52,7 +52,7 @@ void CUnitManager::addUnit(PLAYER_TYPE player, UNIT_TYPE type, Vec2 pos, int idx
     vecUnit.push_back(tempUnit);
 }
 
-void CUnitManager::eraseUnit(CUnit* unit)
+void CUnitManager::removeUnit(CUnit* unit)
 {
     for (int idx = 0; idx < vecUnit.size(); idx++)
     {
